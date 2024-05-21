@@ -1,4 +1,8 @@
-# Base layout template with Gulp, SCSS and Stylelint
-1. Create a repo using this template
-1. Replace `<your_account>` and `<repo_name>` with your Github username and the new repo name
-    - [DEMO LINK](https://<your_account>.github.io/<repo_name>/)
+# Wine Library Frontend
+
+### Scripts
+
+* `pnpm dev` — Launches the app in development mode
+* `pnpm build` — Compiles and bundles the app for deployment
+* `pnpm lint` — Validate the code using ESLint
+* `pnpm tsc` — Validate the code using TypeScript compiler
