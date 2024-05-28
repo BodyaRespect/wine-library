@@ -1,0 +1,125 @@
+$primary-color: black;
+$secondary-color: grey;
+$border-color: #ccc;
+$input-padding: 10px;
+$border-radius: 5px;
+$font-family: Arial, sans-serif;
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 150px auto;
+  padding: 20px;
+  font-family: $font-family;
+
+  .login-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      padding: 0 10px;
+
+      &.create-account {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .google-login-button {
+    width: 100%;
+    padding: $input-padding;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid $border-color;
+      position: relative;
+      top: 50%;
+    }
+
+    span {
+      padding: 0 10px;
+      background: white;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: $input-padding;
+      margin-bottom: 20px;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .login-button {
+    padding: $input-padding;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+
+  .terms {
+    font-size: 12px;
+    color: $secondary-color;
+    margin-top: 20px;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+
+  .forgot-password {
+    display: block;
+    margin-top: 20px;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: $primary-color;
+  }
+}

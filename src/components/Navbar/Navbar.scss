@@ -1,0 +1,242 @@
+.nav-bar {
+  @include cancel-padding;
+
+  position: fixed;
+  top: 0;
+  left: 16px;
+
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFBF1;
+  text-transform: uppercase;
+
+  z-index: 500;
+
+  box-shadow: 0 1px 0 0 $element-color;
+  width: 100%;
+
+  height: 64px;
+
+  @include on-mobile {
+    max-width: 100vw;
+  }
+
+  @include on-tablet {
+    height: 72px;
+  }
+
+  @include on-desktop {
+    height: 96px;
+  }
+
+  &__left-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 16px;
+
+    @include on-tablet {
+      margin-inline: 0;
+    }
+
+    @include on-desktop {
+      gap: 24px;
+      margin-inline: 72px;
+    }
+  }
+
+  &__logo {
+    background-image: url(../../icons/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    height: 22px;
+    width: 64px;
+
+    @include on-tablet {
+      margin-left: 20px;
+      height: 40px;
+      width: 66px;
+    }
+
+    @include on-desktop {
+      height: 60px;
+      width: 100px;
+    }
+  }
+
+  &__links {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    gap: 32px;
+
+    @include on-tablet {
+      gap: 16px;
+    }
+
+    @include on-desktop {
+      gap: 46px;
+    }
+  }
+
+  &__link {
+    margin: 0;
+    letter-spacing: 0.04em;
+    text-wrap: nowrap;
+
+    @include on-tablet {
+      @include text-type-full(12px, 20px, "Cinzel", $secondary-color);
+    }
+
+    @include on-desktop {
+      @include text-type-full(20px, 30px, "Cinzel", $secondary-color);
+    }
+
+    transition: all .3s ease-in-out .1s;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  &__right-group {
+    display: flex;
+    padding: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 48px;
+    width: 48px;
+
+    cursor: pointer;
+
+    @include on-tablet {
+      height: 48px;
+      width: 48px;
+    }
+
+    @include on-desktop {
+      height: 96px;
+      width: 56px;
+    }
+
+    &:hover {
+      border-color: $primary-color transparent;
+    }
+  }
+
+  &__search {
+    position: relative;
+    background-image: url(../../../public/icons/icon_search.svg);
+  }
+
+  &__profile {
+    position: relative;
+    background-image: url(../../../public/icons/icon_profile.svg);
+  }
+
+  &__favorite {
+    position: relative;
+    background-image: url(../../../public/icons/icon_favorites.svg)
+  }
+
+  &__cart {
+    position: relative;
+    background-image: url(../../../public/icons/icon_cart.svg);
+  }
+
+  &__icon-text {
+    position: absolute;
+    top: -5px;
+    right: -6px;
+
+    @include flex-center;
+
+    height: 16px;
+    width: 16px;
+
+    background-color: $red;
+
+    border: 1px solid $white;
+    border-radius: 50%;
+
+    @include text-type-full(9px, 11.5px, "Mont-semi-bold", $white);
+  }
+
+  &__menu, &__close {
+    @include on-hover-icon;
+  }
+
+  &__menu {
+    background-image: url(../../icons/menu.svg);
+  }
+
+  &__close {
+    background-image: url(../../icons/close.svg);
+  }
+}
+
+.selected-link {
+  display: inline;
+
+  position: relative;
+  color: $primary-color;
+
+  &::after {
+    bottom: -10px; // approximate
+
+    @include selected-tab(link-underline);
+
+    @include on-tablet {
+      bottom: -26px; // approximate
+    }
+
+    @include on-desktop {
+      bottom: -33px; // approximate 
+    }
+  }
+}
+
+.selected-tab {
+  position: relative;
+
+  &::after {
+    bottom: 0;
+
+    @include on-tablet {
+      bottom: -12px; // approximate
+    }
+
+    @include on-desktop {
+      bottom: 0px; // approximate
+    }
+
+    @include selected-tab(link-underline);
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes link-underline {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(100%);
+  }
+}
