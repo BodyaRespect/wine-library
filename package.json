@@ -39,8 +39,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "pnpm tsc",
-      "pnpm format"
+      "pnpm format",
+      "bash -c 'pnpm tsc'"
     ]
   }
 }
