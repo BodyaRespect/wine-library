@@ -138,22 +138,22 @@
 
   &__search {
     position: relative;
-    background-image: url(../../../public/icons/icon_search.svg);
+    background-image: url(icons/icon_search.svg);
   }
 
   &__profile {
     position: relative;
-    background-image: url(../../../public/icons/icon_profile.svg);
+    background-image: url(icons/icon_profile.svg);
   }
 
   &__favorite {
     position: relative;
-    background-image: url(../../../public/icons/icon_favorites.svg)
+    background-image: url(icons/icon_favorites.svg)
   }
 
   &__cart {
     position: relative;
-    background-image: url(../../../public/icons/icon_cart.svg);
+    background-image: url(icons/icon_cart.svg);
   }
 
   &__icon-text {
@@ -203,7 +203,7 @@
     }
 
     @include on-desktop {
-      bottom: -33px; // approximate 
+      bottom: -33px; // approximate
     }
   }
 }

@@ -11,7 +11,7 @@
   }
 
   &__logo {
-    background-image: url(../../../public/icons/logo.svg);
+    background-image: url(icons/logo.svg);
     background-size: contain;
     background-repeat: no-repeat;
     display: flex;
@@ -28,7 +28,7 @@
   }
 
   &__close {
-    background-image: url(../../../public/icons/icon_close.svg);
+    background-image: url(icons/icon_close.svg);
     background-size: contain;
     background-repeat: no-repeat;
     display: block;
