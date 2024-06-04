@@ -1,32 +1,32 @@
 .nav-bar {
-  @include cancel-padding;
-
   position: fixed;
   top: 0;
-  left: 16px;
+  left: auto;
+  right: auto;
+  
+  margin-inline: 56px;
+  margin-top: 16px;
 
   display: flex;
   justify-content: space-between;
-  background-color: #FFFBF1;
-  text-transform: uppercase;
+  border-radius: 14px;
+  background-color: rgba(224, 221, 213, 0.5);
 
   z-index: 500;
 
   box-shadow: 0 1px 0 0 $element-color;
-  width: 100%;
-
-  height: 64px;
+  width: 1328px;
 
   @include on-mobile {
     max-width: 100vw;
   }
 
   @include on-tablet {
-    height: 72px;
+    height: 60px;
   }
 
   @include on-desktop {
-    height: 96px;
+    height: 60px;
   }
 
   &__left-group {
@@ -35,36 +35,25 @@
     justify-content: space-between;
     align-items: center;
 
-    gap: 16px;
+    gap: 40px;
 
     @include on-tablet {
       margin-inline: 0;
     }
 
     @include on-desktop {
-      gap: 24px;
-      margin-inline: 72px;
+      gap: 40px;
     }
   }
 
   &__logo {
-    background-image: url(../../icons/logo.svg);
+    background-image: url(/icons/logo.svg);
     background-size: contain;
     background-repeat: no-repeat;
 
-    height: 22px;
-    width: 64px;
-
-    @include on-tablet {
-      margin-left: 20px;
-      height: 40px;
-      width: 66px;
-    }
-
-    @include on-desktop {
-      height: 60px;
-      width: 100px;
-    }
+    height: 40.5px;
+    width: 100px;
+    margin: 10px 0 10px 16px;
   }
 
   &__links {
@@ -90,13 +79,15 @@
     margin: 0;
     letter-spacing: 0.04em;
     text-wrap: nowrap;
+    text-align: center;
+    font-weight: 400;
 
     @include on-tablet {
-      @include text-type-full(12px, 20px, "Cinzel", $secondary-color);
+      @include text-type-full(22px, 33px, "Inter", $secondary-color);
     }
 
     @include on-desktop {
-      @include text-type-full(20px, 30px, "Cinzel", $secondary-color);
+      @include text-type-full(22px, 33px, "Inter", $secondary-color);
     }
 
     transition: all .3s ease-in-out .1s;
@@ -108,7 +99,9 @@
 
   &__right-group {
     display: flex;
+    gap: 32px;
     padding: 0;
+    margin-right: 16px;
   }
 
   &__icon {
@@ -116,19 +109,19 @@
     align-items: center;
     justify-content: center;
 
-    height: 48px;
-    width: 48px;
+    height: 32px;
+    width: 32px;
 
     cursor: pointer;
 
     @include on-tablet {
-      height: 48px;
-      width: 48px;
+      height: 32px;
+      width: 32px;
     }
 
     @include on-desktop {
-      height: 96px;
-      width: 56px;
+      height: 32px;
+      width: 32px;
     }
 
     &:hover {
@@ -138,22 +131,22 @@
 
   &__search {
     position: relative;
-    background-image: url(icons/icon_search.svg);
+    background-image: url(/icons/icon_search.svg);
   }
 
   &__profile {
     position: relative;
-    background-image: url(icons/icon_profile.svg);
+    background-image: url(/icons/icon_profile.svg);
   }
 
   &__favorite {
     position: relative;
-    background-image: url(icons/icon_favorites.svg)
+    background-image: url(/icons/icon_favourites.svg)
   }
 
   &__cart {
     position: relative;
-    background-image: url(icons/icon_cart.svg);
+    background-image: url(/icons/icon_cart.svg);
   }
 
   &__icon-text {
@@ -166,7 +159,7 @@
     height: 16px;
     width: 16px;
 
-    background-color: $red;
+    background-color: #872031;
 
     border: 1px solid $white;
     border-radius: 50%;
@@ -179,11 +172,11 @@
   }
 
   &__menu {
-    background-image: url(../../icons/menu.svg);
+    background-image: url(/icons/menu.svg);
   }
 
   &__close {
-    background-image: url(../../icons/close.svg);
+    background-image: url(/icons/close.svg);
   }
 }
 
@@ -199,27 +192,29 @@
     @include selected-tab(link-underline);
 
     @include on-tablet {
-      bottom: -26px; // approximate
+      bottom: -14px; // approximate
     }
 
     @include on-desktop {
-      bottom: -33px; // approximate
+      bottom: -14px; // approximate
     }
   }
 }
 
 .selected-tab {
   position: relative;
+  width: 80%;
 
   &::after {
     bottom: 0;
+    
 
     @include on-tablet {
       bottom: -12px; // approximate
     }
 
     @include on-desktop {
-      bottom: 0px; // approximate
+      bottom: -14px; // approximate
     }
 
     @include selected-tab(link-underline);
@@ -227,8 +222,8 @@
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
 }
 
 @keyframes link-underline {
