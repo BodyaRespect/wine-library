@@ -52,10 +52,6 @@ export const NavBar = () => {
               </ul>
 
               <ul className="nav-bar__right-group">
-                <NavLink className={getActiveTab} to="/search">
-                  <div className="nav-bar__search icon"></div>
-                </NavLink>
-
                 <NavLink className={getActiveTab} to="/profile">
                   <div className="nav-bar__profile icon"></div>
                 </NavLink>

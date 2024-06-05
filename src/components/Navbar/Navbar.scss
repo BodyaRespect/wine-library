@@ -1,9 +1,7 @@
 .nav-bar {
   position: fixed;
   top: 0;
-  left: auto;
-  right: auto;
-  
+
   margin-inline: 56px;
   margin-top: 16px;
 
@@ -83,11 +81,11 @@
     font-weight: 400;
 
     @include on-tablet {
-      @include text-type-full(22px, 33px, "Inter", $secondary-color);
+      @include text-type-full(22px, 33px, "Arial", $secondary-color);
     }
 
     @include on-desktop {
-      @include text-type-full(22px, 33px, "Inter", $secondary-color);
+      @include text-type-full(22px, 33px, "Arial", $secondary-color);
     }
 
     transition: all .3s ease-in-out .1s;

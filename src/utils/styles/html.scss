@@ -8,23 +8,13 @@ html {
 }
 
 body {
-  --padding: 16px;
-
-  padding-inline: var(--padding);
   width: 100vw;
 
-  @include on-tablet {
-    --padding: 24px;
-  }
-
   @media (min-width: 1440px) {
-    --padding: 152px;
+    margin: auto;
 
     max-width: 1440px;
-    margin-inline: auto;
   }
-
-  margin: 0;
 }
 
 main {
