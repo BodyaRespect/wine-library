@@ -1,125 +1,96 @@
-$primary-color: black;
-$secondary-color: grey;
-$border-color: #ccc;
-$input-padding: 10px;
-$border-radius: 5px;
-$font-family: Arial, sans-serif;
-
 .login-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 150px auto;
-  padding: 20px;
-  font-family: $font-family;
-
-  .login-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-
-    h2 {
-      margin: 0;
-      padding: 0 10px;
-
-      &.create-account {
-        color: $secondary-color;
-      }
-    }
+  width: 850px;
+  height: 560;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #faf6f1;
+  border: 1px solid #e0dcd5;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  
+  h2 {
+    font-family: Baskerville Old Face;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 64px;
+    text-align: left;
+    color: #02402B;
+    margin: 0 0 0 2px;
   }
 
-  .google-login-button {
-    width: 100%;
-    padding: $input-padding;
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    cursor: pointer;
-
-    img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-    }
+  p {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28.8px;
+    text-align: left;
+    color: #02402B;
   }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
-    text-align: center;
-
-    &::before,
-    &::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid $border-color;
-      position: relative;
-      top: 50%;
-    }
-
-    span {
-      padding: 0 10px;
-      background: white;
-    }
-  }
-
-  .login-form {
+  form {
     display: flex;
     flex-direction: column;
 
     label {
-      margin-bottom: 5px;
-      font-weight: bold;
+      width: 774px;
+      font-family: Inter;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 30px;
+      text-align: left;
+      color: #02402B;
+      margin: 0 0 8px 2px;
     }
 
     input {
-      padding: $input-padding;
-      margin-bottom: 20px;
-      border: 1px solid $border-color;
-      border-radius: $border-radius;
+      width: 774px;
+      padding: 10px 12px 10px 12px;
+      gap: 10px;
+      opacity: 0px;
+      height: 42px;
+      margin-bottom: 15px;
+      border: 2px solid #E1DBC5;
+      border-radius: 8px;
+      font-family: Inter;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 27px;
+      text-align: left;
+      color: #02402B;
     }
 
-    .remember-me {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+    button {
+      margin: 0;
+      width: 774px;
+      height: 54px;
+      padding: 8px 10px 8px 10px;
+      gap: 10px;
+      border-radius: 10px;
+      border: 1px;
+      opacity: 0px;
+      background-color: #872031;
+      color: white;
+      font-family: Inter;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 38.4px;
+      text-align: center;
+      cursor: pointer;
 
-      input {
-        margin-right: 10px;
+      &:hover {
+        background-color: rgb(177, 14, 14);
       }
     }
-  }
 
-  .login-button {
-    padding: $input-padding;
-    background-color: $primary-color;
-    color: white;
-    border: none;
-    border-radius: $border-radius;
-    cursor: pointer;
-  }
-
-  .terms {
-    font-size: 12px;
-    color: $secondary-color;
-    margin-top: 20px;
-
-    a {
-      color: $primary-color;
-      text-decoration: none;
+    .consent {
+      margin: 44px 0 24px 2px;
+      color: #7B7B75;
+      margin-top: 10px;
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 24px;
+      text-align: left;
     }
-  }
-
-  .forgot-password {
-    display: block;
-    margin-top: 20px;
-    font-size: 12px;
-    text-align: center;
-    text-decoration: none;
-    color: $primary-color;
   }
 }

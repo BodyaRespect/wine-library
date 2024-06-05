@@ -8,25 +8,17 @@ html {
 }
 
 body {
-  --padding: 16px;
-
-  padding-inline: var(--padding);
   width: 100vw;
 
-  @include on-tablet {
-    --padding: 24px;
-  }
-
   @media (min-width: 1440px) {
-    max-width: 1440px;
-    margin-inline: auto;
-  }
+    margin: auto;
 
-  margin: 0;
+    max-width: 1440px;
+  }
 }
 
 main {
-  margin-top: calc(48px + 24px); // header height + title top margin
+  margin-top: calc(60px + 44px); // header height + title top margin
   min-height: 54vh;
 
   @include on-tablet {
