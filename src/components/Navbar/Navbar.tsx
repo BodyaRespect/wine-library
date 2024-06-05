@@ -47,7 +47,7 @@ export const NavBar = () => {
                   Selection
                 </NavLink>
                 <NavLink className={getActiveLink} to="/products">
-                  All Products
+                  Snack & Trinkets
                 </NavLink>
               </ul>
 
