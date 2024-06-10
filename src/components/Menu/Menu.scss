@@ -53,7 +53,7 @@
   &__link {
     width: fit-content;
 
-    @include text-type-full(4vw, 12px, "Cinzel", $secondary-color);
+    @include text-type-full(4vw, 12px, "Inter", #000);
 
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -68,7 +68,7 @@
     display: flex;
     gap: 0;
 
-    border-top: 1px solid $element-color;
+    border-top: 1px solid #000;
   }
 
   &__icon {
@@ -77,13 +77,13 @@
     width: 50vw;
     height: 64px;
 
-    box-shadow: -1px 0 0 0 $element-color;
+    box-shadow: -1px 0 0 0 #000;
     border: 1px solid transparent;
 
     transition: all .3s ease-in-out .1s;
 
     &:hover {
-      border-top-color: $primary-color;
+      border-top-color: #000;
     }
   }
 }

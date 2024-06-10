@@ -1,14 +1,17 @@
-html {
-  font-family: Mont, sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-
-  background-color: $bg-color;
 }
 
 body {
   font-family: $font-secondary;
+  background-color: $color-text-1;
 }
 
 button {

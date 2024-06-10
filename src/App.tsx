@@ -9,9 +9,7 @@ import './App.scss'
 function App() {
   return (
     <div className="App">
-      <header>
-        <NavBar />
-      </header>
+      <NavBar />
 
       <main className="main">
         <Routes>
