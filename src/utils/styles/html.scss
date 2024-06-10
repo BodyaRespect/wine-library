@@ -18,7 +18,7 @@ body {
 }
 
 main {
-  margin-top: calc(60px + 44px); // header height + title top margin
+  margin-top: calc(60px + 96px); // header height + title top margin
   min-height: 54vh;
 
   @include on-tablet {

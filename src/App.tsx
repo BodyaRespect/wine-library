@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <header>
         <NavBar />
+
       </header>
 
       <main className="main">
