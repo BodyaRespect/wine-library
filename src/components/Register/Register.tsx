@@ -39,6 +39,7 @@ export const Register = () => {
         else {
           newErrors.firstName = ''
         }
+
         break
 
       case 'lastName':
@@ -49,6 +50,7 @@ export const Register = () => {
         else {
           newErrors.lastName = ''
         }
+
         break
 
       case 'email':
@@ -58,6 +60,7 @@ export const Register = () => {
         else {
           newErrors.email = ''
         }
+
         break
 
       case 'password':
@@ -77,6 +80,7 @@ export const Register = () => {
         else {
           newErrors.repeatPassword = ''
         }
+
         break
 
       case 'repeatPassword':
@@ -86,6 +90,7 @@ export const Register = () => {
         else {
           newErrors.repeatPassword = ''
         }
+
         break
 
       default:

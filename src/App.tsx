@@ -1,5 +1,5 @@
-import { Login } from './components/Login'
 import { NavBar } from './components/Navbar'
+import { Register } from './components/Register/Register'
 
 import './App.scss'
 
@@ -12,7 +12,7 @@ function App() {
       </header>
 
       <main className="main">
-        <Login />
+        <Register />
       </main>
 
       <footer className="footer footer-fixed"></footer>
