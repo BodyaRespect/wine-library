@@ -1,0 +1,34 @@
+@use "sass:math";
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    display: table;
+    content: " ";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin container-fixed($gutter: $grid-gutter-width) {
+  padding-right: ceil(math.div($gutter, 2));
+  padding-left: floor(math.div($gutter, 2));
+  margin-right: auto;
+  margin-left: auto;
+  @include clearfix;
+}
+
+.container {
+  @include container-fixed;
+
+  @media (min-width: $screen-sm-min) {
+    width: $container-sm;
+  }
+  @media (min-width: $screen-md-min) {
+    width: $container-md;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: $container-lg;
+  }
+}

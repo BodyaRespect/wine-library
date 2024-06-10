@@ -1,0 +1,16 @@
+html {
+  font-family: Mont, sans-serif;
+
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+
+  background-color: $bg-color;
+}
+
+body {
+  font-family: $font-secondary;
+}
+
+button {
+  cursor: pointer;
+}

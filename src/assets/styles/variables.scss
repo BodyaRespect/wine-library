@@ -1,0 +1,40 @@
+// fonts
+
+@import url(https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);
+
+$font-primary: 'Lora', serif;
+$font-secondary: 'Inter', sans-serif;
+
+// colors
+
+$primary-color: #313237;
+$secondary-color: #89939A;
+$icon-color: #B4BDC3;
+$element-color: #E2E6E9;
+$bg-color: #FAFBFC;
+$white: #fff;
+$green: #27AE60;
+$red: #EB5757;
+
+$color-accent: #872031;
+$color-accent-stroke: #731423;
+$color-text-1: #F2ECD4;
+
+// container
+
+$grid-gutter-width: 30px !default;
+
+$screen-sm: 768px !default;
+$screen-sm-min: $screen-sm !default;
+$screen-md: 992px !default;
+$screen-md-min: $screen-md !default;
+$screen-lg: 1200px !default;
+$screen-lg-min: $screen-lg !default;
+
+$container-tablet: (720px + $grid-gutter-width) !default;
+$container-sm: $container-tablet !default;
+$container-desktop: (940px + $grid-gutter-width) !default;
+$container-md: $container-desktop !default;
+$container-large-desktop: (1140px + $grid-gutter-width) !default;
+$container-lg: $container-large-desktop !default;

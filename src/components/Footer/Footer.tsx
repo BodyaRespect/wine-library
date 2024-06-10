@@ -15,7 +15,7 @@ const getActiveTab = ({ isActive }: { isActive: boolean }) => {
   })
 }
 
-export const NavBar = () => {
+export const Footer = () => {
   const [viewport, setViewport] = useState(window.innerWidth)
 
   useEffect(() => {

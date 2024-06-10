@@ -1,5 +1,8 @@
-import { Login } from './components/Login'
-import { NavBar } from './components/Navbar'
+import { Footer } from '@/components/Footer'
+import { NavBar } from '@/components/Navbar'
+import { Home as PageHome } from '@/pages/Home'
+import { NotFound as PageNotFound } from '@/pages/NotFound'
+import { Route, Routes } from 'react-router-dom'
 
 import './App.scss'
 
@@ -11,10 +14,15 @@ function App() {
       </header>
 
       <main className="main">
-        <Login />
+        <Routes>
+          <Route path="/">
+            <Route element={<PageHome />} index />
+            <Route element={<PageNotFound />} path="*" />
+          </Route>
+        </Routes>
       </main>
 
-      <footer className="footer footer-fixed"></footer>
+      <Footer />
     </div>
   )
 }
