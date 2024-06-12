@@ -31,9 +31,6 @@ export const NavBar = () => {
               <NavLink className={getActiveLink} to="/selection">
                 Selection
               </NavLink>
-              <NavLink className={getActiveLink} to="/products">
-                Snack & Trinkets
-              </NavLink>
             </ul>
 
             <ul className="nav-bar__right-group">
