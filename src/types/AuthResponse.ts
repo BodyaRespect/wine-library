@@ -1,7 +1,4 @@
-import type { User } from './User'
-
 export interface AuthResponse {
-  user: User
+  [x: string]: any
   accessToken: string
-  refreshToken: string
 }

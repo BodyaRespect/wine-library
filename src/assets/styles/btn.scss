@@ -1,0 +1,36 @@
+.btn {
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  display: inline-block;
+  font-family: inherit;
+}
+
+.btn-arrow {
+  background-color: $color-accent;
+  padding: 8px 80px 8px 24px;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 400;
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid $color-accent-stroke;
+  color: #fff;
+
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    background: url(/icons/icon_arrow_down.svg) no-repeat center center / contain;
+    position: absolute;
+    top: calc(50% - 16px);
+    right: 24px;
+  }
+
+  b, strong {
+    font-weight: 500;
+  }
+}

@@ -1,5 +1,7 @@
 export interface RegisterDetails {
+  firstName: string
+  lastName: string
   email: string
   password: string
-  name: string
+  repeatedPassword: string
 }

@@ -1,8 +1,9 @@
 .login-container {
   width: 850px;
   height: 560;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 40px;
+  position: relative;
   background-color: #faf6f1;
   border: 1px solid #e0dcd5;
   border-radius: 12px;
@@ -19,6 +20,7 @@
   }
 
   p {
+    margin: 8px 0 44px 2px;
     font-family: Inter;
     font-size: 18px;
     font-weight: 400;
@@ -39,7 +41,7 @@
       line-height: 30px;
       text-align: left;
       color: #02402B;
-      margin: 0 0 8px 2px;
+      margin: 0 0 0 2px;
     }
 
     input {
@@ -91,6 +93,27 @@
       font-weight: 300;
       line-height: 24px;
       text-align: left;
+    }
+  }
+}
+
+.error {
+  position: absolute;
+  top: 155px;
+  color: #d32f2f;
+  font-size: 1.1rem;
+  margin: 0 0 0 3px;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

@@ -1,21 +1,26 @@
-import { NavBar } from './components/Navbar'
-import { Register } from './components/Register/Register'
+import { Footer } from '@/components/Footer'
+import { NavBar } from '@/components/Navbar'
+import { Home as PageHome } from '@/pages/Home'
+import { NotFound as PageNotFound } from '@/pages/NotFound'
+import { Route, Routes } from 'react-router-dom'
 
 import './App.scss'
 
 function App() {
   return (
     <div className="App">
-      <header>
-        <NavBar />
-
-      </header>
+      <NavBar />
 
       <main className="main">
-        <Register />
+        <Routes>
+          <Route path="/">
+            <Route element={<PageHome />} index />
+            <Route element={<PageNotFound />} path="*" />
+          </Route>
+        </Routes>
       </main>
 
-      <footer className="footer footer-fixed"></footer>
+      <Footer />
     </div>
   )
 }

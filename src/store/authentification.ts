@@ -1,6 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 import type { AuthResponse } from '../types/AuthResponse'
 import type { AuthState } from '../types/AuthState'
@@ -10,7 +11,6 @@ import type { RegisterDetails } from '../types/RegisterDetails'
 const initialState: AuthState = {
   user: null,
   accessToken: null,
-  refreshToken: null,
   loading: false,
   error: null,
 }
@@ -19,23 +19,18 @@ export const login = createAsyncThunk<AuthResponse, LoginCredentials, { rejectVa
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:8081/auth/login', credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        return thunkAPI.rejectWithValue(data.message)
-      }
-
-      return data
+      return response.data
     }
     catch (error) {
+      if (axios.isAxiosError(error)) {
+        return thunkAPI.rejectWithValue(error.response?.data.message || 'Failed to login')
+      }
       return thunkAPI.rejectWithValue('Network Error')
     }
   },
@@ -45,24 +40,25 @@ export const register = createAsyncThunk<AuthResponse, RegisterDetails, { reject
   'auth/register',
   async (userDetails, thunkAPI) => {
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:8081/auth/register', userDetails, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userDetails),
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        return thunkAPI.rejectWithValue(data.message)
+      if (response.status !== 200) {
+        throw new Error(response.data.message || 'Registration error')
       }
 
-      return data
+      return response.data
     }
     catch (error) {
-      return thunkAPI.rejectWithValue('Network Error')
+      if (axios.isAxiosError(error)) {
+        return thunkAPI.rejectWithValue(error.response?.data.message || 'Network error')
+      }
+      else {
+        return thunkAPI.rejectWithValue('Unknown error')
+      }
     }
   },
 )
@@ -74,7 +70,6 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null
       state.accessToken = null
-      state.refreshToken = null
     },
   },
 
@@ -89,7 +84,6 @@ const authSlice = createSlice({
         state.loading = false
         state.user = action.payload.user
         state.accessToken = action.payload.accessToken
-        state.refreshToken = action.payload.refreshToken
         state.error = null
       })
 
@@ -107,7 +101,6 @@ const authSlice = createSlice({
         state.loading = false
         state.user = action.payload.user
         state.accessToken = action.payload.accessToken
-        state.refreshToken = action.payload.refreshToken
         state.error = null
       })
 

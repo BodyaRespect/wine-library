@@ -1,12 +1,18 @@
+import { login, register } from '@/store/authentification'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import Cookies from 'js-cookie'
 import { useState } from 'react'
 
 export const Register = () => {
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector(state => state.auth)
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    repeatedPassword: '',
   })
 
   const [errors, setErrors] = useState({
@@ -14,13 +20,13 @@ export const Register = () => {
     lastName: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    repeatedPassword: '',
   })
 
   const [showPasswordFields, setShowPasswordFields] = useState(false)
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
 
-  const handleChange = (e: { target: { name: any, value: any } }) => {
+  const handleChange = (e: { target: { name: string, value: string } }) => {
     const { name, value } = e.target
 
     setFormData({
@@ -33,64 +39,59 @@ export const Register = () => {
     switch (name) {
       case 'firstName':
         if (!/^[A-Z][a-zA-Z]*$/.test(value)) {
-          newErrors.firstName
-            = 'Firstname must start with a capital letter and contain only letters.'
+          newErrors.firstName = 'First name must start with a capital letter and contain only letters.'
         }
         else {
           newErrors.firstName = ''
         }
-
         break
 
       case 'lastName':
         if (!/^[A-Z][a-zA-Z]*$/.test(value)) {
-          newErrors.lastName
-            = 'Last name must start with a capital letter and contain only letters.'
+          newErrors.lastName = 'Last name must start with a capital letter and contain only letters.'
         }
         else {
           newErrors.lastName = ''
         }
-
         break
 
       case 'email':
-        if (!/\S+@\S+\.\S+/.test(value)) {
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
           newErrors.email = 'Email address is invalid.'
+        }
+        else if (value.includes('..')) {
+          newErrors.email = 'Email address cannot contain consecutive dots.'
+        }
+        else if (value.trim() !== value) {
+          newErrors.email = 'Email address cannot start or end with whitespace.'
         }
         else {
           newErrors.email = ''
         }
-
         break
 
       case 'password':
-        if (
-          !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(value)
-        ) {
-          newErrors.password
-            = 'Password must be at least 8 characters long, contain uppercase, lowercase, numbers, and special characters.'
+        if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(value)) {
+          newErrors.password = 'Password must be at least 8 characters long, contain uppercase, lowercase, numbers, and special characters.'
         }
         else {
           newErrors.password = ''
         }
-
-        if (formData.repeatPassword && formData.repeatPassword !== value) {
-          newErrors.repeatPassword = 'Passwords do not match.'
+        if (formData.repeatedPassword && formData.repeatedPassword !== value) {
+          newErrors.repeatedPassword = 'Passwords do not match.'
         }
         else {
-          newErrors.repeatPassword = ''
+          newErrors.repeatedPassword = ''
         }
-
         break
 
-      case 'repeatPassword':
+      case 'repeatedPassword':
         if (formData.password !== value) {
-          newErrors.repeatPassword = 'Passwords do not match.'
+          newErrors.repeatedPassword = 'Passwords do not match.'
         }
         else {
-          newErrors.repeatPassword = ''
+          newErrors.repeatedPassword = ''
         }
-
         break
 
       default:
@@ -101,14 +102,10 @@ export const Register = () => {
 
     if (['firstName', 'lastName', 'email'].includes(name)) {
       setIsNextButtonDisabled(
-        !(
-          formData.firstName
-          && formData.lastName
-          && formData.email
-          && /^[A-Z][a-zA-Z]*$/.test(formData.firstName)
-          && /^[A-Z][a-zA-Z]*$/.test(formData.lastName)
-          && /\S+@\S+\.\S+/.test(formData.email)
-        ),
+        !(formData.firstName && formData.lastName && formData.email
+        && /^[A-Z][a-zA-Z]*$/.test(formData.firstName)
+        && /^[A-Z][a-zA-Z]*$/.test(formData.lastName)
+        && /\S+@\S+\.\S+/.test(formData.email)),
       )
     }
   }
@@ -119,10 +116,26 @@ export const Register = () => {
     setIsNextButtonDisabled(true)
   }
 
-  const handleRegister = (e: { preventDefault: () => void }) => {
+  const handleRegister = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
-    console.log('Registration Data:', formData)
+    const resultAction = await dispatch(register(formData))
+    console.log(resultAction)
+
+    if (register.fulfilled.match(resultAction)) {
+      try {
+        const loginResult = await dispatch(login(formData)).unwrap()
+
+        const { token } = loginResult
+        Cookies.set('accessToken', token)
+      }
+      catch (err) {
+        console.error('Failed to login:', err)
+      }
+    }
+    else {
+      console.error('Failed to register:', resultAction.payload)
+    }
   }
 
   return (
@@ -132,79 +145,103 @@ export const Register = () => {
       <p>We are glad to see you again in our wine community</p>
 
       <form onSubmit={handleRegister}>
-        <label htmlFor="firstName">First name</label>
-        <input
-          autoComplete="off"
-          name="firstName"
-          onChange={handleChange}
-          type="text"
-          value={formData.firstName}
-          required
-        />
+        <label htmlFor="firstName">
+          First name
+          <input
+            autoComplete="off"
+            name="firstName"
+            onChange={handleChange}
+            type="text"
+            value={formData.firstName}
+            required
+          />
+        </label>
+
         {errors.firstName && <p className="error-message">{errors.firstName}</p>}
 
-        <label htmlFor="lastName">Last name</label>
-        <input
-          autoComplete="off"
-          name="lastName"
-          onChange={handleChange}
-          type="text"
-          value={formData.lastName}
-          required
-        />
+        <label htmlFor="lastName">
+          Last name
+          <input
+            autoComplete="off"
+            name="lastName"
+            onChange={handleChange}
+            type="text"
+            value={formData.lastName}
+            required
+          />
+        </label>
+
         {errors.lastName && <p className="error-message">{errors.lastName}</p>}
 
-        <label htmlFor="email">Email address</label>
-        <input
-          autoComplete="off"
-          name="email"
-          onChange={handleChange}
-          type="email"
-          value={formData.email}
-          required
-        />
+        <label htmlFor="email">
+          Email address
+          <input
+            autoComplete="off"
+            name="email"
+            onChange={handleChange}
+            type="email"
+            value={formData.email}
+            required
+          />
+        </label>
+
         {errors.email && <p className="error-message">{errors.email}</p>}
 
         {showPasswordFields
           ? (
             <>
-              <label htmlFor="password">Password</label>
-              <input
-                name="password"
-                onChange={handleChange}
-                type="password"
-                value={formData.password}
-                required
-              />
+              <label htmlFor="password">
+                Password
+                <input
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  value={formData.password}
+                  required
+                />
+              </label>
+
               {errors.password && <p className="error-message">{errors.password}</p>}
 
-              <label htmlFor="repeatPassword">Repeat password</label>
-              <input
-                name="repeatPassword"
-                onChange={handleChange}
-                type="password"
-                value={formData.repeatPassword}
-                required
-              />
-              {errors.repeatPassword && <p className="error-message">{errors.repeatPassword}</p>}
+              <label htmlFor="repeatPassword">
+                Repeat password
+                <input
+                  name="repeatedPassword"
+                  onChange={handleChange}
+                  type="password"
+                  value={formData.repeatedPassword}
+                  required
+                />
+              </label>
+
+              {errors.repeatedPassword && <p className="error-message">{errors.repeatedPassword}</p>}
             </>
             )
           : (
             <p className="consent">
-              By clicking the "Next" button, you confirm your consent to the
-              transfer of personal data
-              <br />
+              By clicking the "Next" button, you confirm your consent to the transfer of personal data
               and confirm that you have read our privacy policy.
             </p>
             )}
 
-        <button
-          disabled={isNextButtonDisabled}
-          onClick={!showPasswordFields ? handleNext : undefined}
-          type="submit"
-        >
-          {showPasswordFields ? 'Register' : 'Next'}
-        </button>
+        {!showPasswordFields
+          ? (
+            <button
+              disabled={isNextButtonDisabled}
+              onClick={handleNext}
+              type="submit"
+            >
+              Next
+            </button>
+            )
+          : (
+            <button
+              disabled={loading}
+              type="submit"
+            >
+              Register
+            </button>
+            )}
       </form>
     </div>
   )

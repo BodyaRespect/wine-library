@@ -1,14 +1,10 @@
-* {
-  box-sizing: border-box;
-}
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+@import '@/assets/styles/html';
+@import '@/assets/styles/container';
+@import '@/assets/styles/btn';
 
-@import './utils/styles/mixins';
-@import './utils/styles/variables';
-@import './utils/styles/extra';
-@import './utils/styles/html';
-
-@import './components/Navbar/Navbar';
-@import './components/Login/Login';
-@import './components/Menu/Menu';
-@import './components/Login/Login';
-@import './components/Register/Register';
+@import '@/components/Navbar/Navbar';
+@import '@/components/Login/Login';
+@import '@/components/Menu/Menu';
+@import '@/components/HeroSlider/HeroSlider';
