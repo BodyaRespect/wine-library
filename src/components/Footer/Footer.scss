@@ -1,0 +1,46 @@
+.footer {
+  background-image: url('./../../../public/backgrounds/footer-bg.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 60px 0;
+  height: 780px;
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(12, 88px);
+    grid-gap: 24px;
+    padding: 0 60px;
+    height: 100%;
+    align-items: center;
+
+    .footer-left {
+      grid-column: 7 / 12;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .footer-right {
+      grid-column: 7 / 13;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
