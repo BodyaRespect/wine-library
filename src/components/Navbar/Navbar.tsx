@@ -22,7 +22,7 @@ export const NavBar = () => {
             <Link className="nav-bar__logo" to="/" />
 
             <ul className="nav-bar__links">
-              <NavLink className={getActiveLink} to="/">
+              <NavLink className={getActiveLink} to="/about-us">
                 About us
               </NavLink>
               <NavLink className={getActiveLink} to="/production">
