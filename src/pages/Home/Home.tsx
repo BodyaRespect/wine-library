@@ -1,5 +1,6 @@
 import type { Slide } from '@/components/HeroSlider'
 
+import { CardItem } from '@/components/CardItem'
 import { HeroSlider } from '@/components/HeroSlider'
 
 const slides: Slide[] = [
@@ -27,6 +28,7 @@ export function Home() {
   return (
     <>
       <HeroSlider slides={slides} />
+      <CardItem />
     </>
   )
 }
