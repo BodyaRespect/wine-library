@@ -1,6 +1,6 @@
 import wineImage from '/images/wine_tamplate.png'
 
-export const CardItem = () => {
+export const CartItem = () => {
   return (
     <div className="card">
       <div className="card__content">

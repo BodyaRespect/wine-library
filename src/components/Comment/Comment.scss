@@ -1,0 +1,165 @@
+.comment {
+  margin: 10px auto;
+  width: 650px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid #E1DBC5;
+  background-color: #FFFFFF;
+
+  ul {
+    margin-bottom: 16px;
+    list-style: none;
+  }
+
+  li {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color:#02402B;
+  }
+
+  &__header {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+
+    .stars {
+      display: flex;
+    
+      &__star {
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+        background-image: url(/icons/icon_empty_glass.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &--half {
+          width: 24px;
+          height: 24px;
+          margin-right: 4px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: url(/icons/icon_half_glass.svg);
+        }
+      }
+    }
+    
+    .stars--1 .stars__star:nth-child(-n + 1),
+    .stars--2 .stars__star:nth-child(-n + 2),
+    .stars--3 .stars__star:nth-child(-n + 3),
+    .stars--4 .stars__star:nth-child(-n + 4),
+    .stars--5 .stars__star:nth-child(-n + 5) {
+      background-image: url(/icons/icon_full_glass.svg);
+    }
+  }
+
+  &__name {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    color: #02402B;
+  }
+
+  &__date {
+    padding-bottom: 11px;
+    align-items: start;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 21px;
+    text-align: left;
+    color: #7B7B75;
+  }
+
+  &__content {
+    margin-bottom: 16px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 25.6px;
+    text-align: left;
+    color: #02402B;
+  }
+
+  &__pros {
+    margin-bottom: 4px;
+    width: 18px;
+    height: 18px;
+    background-image: url(/icons/icon_plus.svg);
+  }
+
+  &__cons {
+    margin-bottom: 4px;
+    width: 18px;
+    height: 18px;
+    background-image: url(/icons/icon_minus.svg);
+  }
+
+  &__bottom {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__reply {
+    display: flex;
+    align-items: center;
+    width: 76px;
+    height: 26px;
+    padding: 3px 10px;
+    gap: 4px;
+    border-radius: 8px;
+    border: 0.5px solid #7B7B75;
+    background-color: white;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    color: #7B7B75;
+  }
+
+  &__next {
+    width: 20px;
+    height: 20px;
+    background-image: url(/icons/icon_reply.svg);
+  }
+
+  &__estimation {
+    height: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__like {
+    border: none;
+    width: 24px;
+    height: 24px;
+    background-color: #FFFFFF;
+    background-image: url(/icons/icon_like.svg);
+  }
+
+  &__dislike {
+    border: none;
+    width: 24px;
+    height: 24px;
+    background-color: #FFFFFF;
+    background-image: url(/icons/icon_dislike.svg);
+  }
+}
