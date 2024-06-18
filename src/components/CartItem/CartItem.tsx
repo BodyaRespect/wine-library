@@ -6,7 +6,7 @@ export const CartItem = () => {
       <div className="card__content">
         <div className="card__image">
           <img
-            alt="IMacPhoto"
+            alt="wineImage"
             className="card__picture"
             src={wineImage}
           />

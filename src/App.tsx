@@ -1,8 +1,9 @@
 import { Footer } from '@/components/Footer'
 import { NavBar } from '@/components/Navbar'
-import { Home as PageHome } from '@/pages/Home'
 import { NotFound as PageNotFound } from '@/pages/NotFound'
 import { Route, Routes } from 'react-router-dom'
+
+import { ProductDetails } from './pages/ProductDetails/ProductDetails'
 
 import './App.scss'
 
@@ -14,7 +15,7 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/">
-            <Route element={<PageHome />} index />
+            <Route element={<ProductDetails />} index />
             <Route element={<PageNotFound />} path="*" />
           </Route>
         </Routes>

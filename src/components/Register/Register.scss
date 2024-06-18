@@ -1,0 +1,111 @@
+.registration-container {
+  width: 850px;
+  background-color: #faf6f1;
+  border: 1px solid #e0dcd5;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 40px auto;
+  font-family: 'Arial, sans-serif';
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-family: Baskerville Old Face;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 64px;
+    text-align: left;
+    color: #02402B;
+    margin: 0 0 0 2px;
+  }
+
+  p {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28.8px;
+    text-align: left;
+    color: #02402B;
+  }
+
+  label {
+    width: 774px;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    color: #02402B;
+    margin: 0px 0 0px 2px;
+  }
+
+  input {
+    width: 774px;
+    padding: 10px 12px 10px 12px;
+    gap: 10px;
+    opacity: 0px;
+    height: 42px;
+    margin: 8px 0 5px 0;
+    border: 2px solid #E1DBC5;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: left;
+    color: #02402B;
+  }
+
+  .consent {
+    margin: 44px 0 24px 2px;
+    color: #7B7B75;
+    margin-top: 10px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  button {
+    margin: 14px 0 0 0;
+    width: 774px;
+    height: 54px;
+    padding: 8px 10px 8px 10px;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px;
+    opacity: 0px;
+    background-color: #872031;
+    color: white;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 38.4px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(177, 14, 14);
+    }
+  }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin: 0 0 0 3px;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+

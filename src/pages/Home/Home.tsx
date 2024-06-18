@@ -3,6 +3,8 @@ import type { Slide } from '@/components/HeroSlider'
 import { CartItem } from '@/components/CartItem'
 import { Comment } from '@/components/Comment/Comment'
 import { HeroSlider } from '@/components/HeroSlider'
+import { Login } from '@/components/Login'
+import { Register } from '@/components/Register/Register'
 
 const slides: Slide[] = [
   {
@@ -29,8 +31,9 @@ export function Home() {
   return (
     <>
       <HeroSlider slides={slides} />
+      <Register />
+      <Login />
       <CartItem />
-
       <Comment />
     </>
   )
