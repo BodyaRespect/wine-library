@@ -91,19 +91,9 @@
 }
 
 @mixin page-grid {
-  --columns: 4;
+  --columns: 12;
 
   display: grid;
-
-  // might be 32px
   grid-template-columns: repeat(var(--columns), 1fr);
-  gap: 16px;
-
-  @include on-tablet {
-    --columns: 12;
-  }
-
-  @include on-desktop {
-    --columns: 24;
-  }
+  grid-column-gap: 30px;
 }

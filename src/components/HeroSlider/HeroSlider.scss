@@ -18,9 +18,7 @@
   }
 
   &__content {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-column-gap: 30px;
+    @include page-grid;
   }
 
   &__title {
