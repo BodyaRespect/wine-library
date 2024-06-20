@@ -10,6 +10,8 @@ export const CartItem = () => {
             className="card__picture"
             src={wineImage}
           />
+
+          <button className="card__picture-like"></button>
         </div>
 
         <div className="card__info">

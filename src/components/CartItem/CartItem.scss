@@ -1,12 +1,10 @@
 .card {
-  margin: 100px auto;
-  width: 312px;
-  height: 596px;
   background-color: #fff;
   padding: 16px 24px;
   border-radius: 16px;
   border: 1.5px solid #E1DBC5;
   transition: border-color 0.3s ease, border-radius 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -32,6 +30,20 @@
   &__picture {
     width: 264px;
     height: 368px;
+
+    &-like {
+      border: none;
+      background-color: $color-white;
+      z-index: 10;
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      width: 24px;
+      height: 24px;
+      background-image: url(/icons/icon_card_like_empty.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   }
 
   &__info {

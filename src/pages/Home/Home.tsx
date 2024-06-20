@@ -34,7 +34,7 @@ export function Home() {
       <Register />
       <Login />
       <CartItem />
-      <Comment />
+      <Comment id={1} />
     </>
   )
 }

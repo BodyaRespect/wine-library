@@ -3,13 +3,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 138px;
   align-items: center;
-
-  &__left,
-  &__right {
-    display: grid;
-    grid-template-rows: auto;
-    row-gap: 32px;
-  }
+  row-gap: 32px;
 
   &__characterisctic {
     display: grid;

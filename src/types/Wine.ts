@@ -1,20 +1,19 @@
+export interface RecommendedFood {
+  name: 'MEAT' | 'CHEESE' | 'COLD SNACKS' | 'FISH' | 'POULTRY' | 'SEAFOOD'
+}
+
 export interface Wine {
   id: number
   name: string
   trademark: string
   country: string
-  year: {
-    value: number
-    leap: boolean
-  }
+  year: string
   liquidVolume: number
   alcoholContent: number
-  wineType: 'RED' | 'WHITE' | 'ROSE' | 'SPARKLING' | 'DESSERT' | 'FORTIFIED'
-  recommendedFood: {
-    name: string
-  }[]
-  sweetness: 'DRY' | 'SEMI_DRY' | 'SWEET'
-  acidity: 'LOW' | 'MEDIUM' | 'HIGH'
+  wineType: 'RED' | 'WHITE' | 'ROSE' // Оновлено тип
+  recommendedFood: { name: string }[]
+  sweetness: string
+  acidity: 'LOW' | 'MEDIUM' | 'HIGH' // Оновлено тип
   description: string
   inventory: number
   price: number
