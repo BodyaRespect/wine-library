@@ -101,7 +101,7 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
                   <Characteristic
                     text={(
                       <>
-                        <span className="characterisctics__text-flag"></span>
+                        <span className="characterisctics__text-flag" style={{ backgroundImage: `url(${wineData.countryFlagUrl})` }}></span>
                         {wineData.country}
                       </>
                     )}

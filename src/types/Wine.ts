@@ -7,6 +7,7 @@ export interface Wine {
   name: string
   trademark: string
   country: string
+  countryFlagUrl: string
   year: string
   liquidVolume: number
   alcoholContent: number
