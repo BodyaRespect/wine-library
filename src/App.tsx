@@ -15,7 +15,7 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/">
-            <Route element={<ProductDetails id={39} />} index />
+            <Route element={<ProductDetails id={7} />} index />
             <Route element={<PageNotFound />} path="*" />
           </Route>
         </Routes>
