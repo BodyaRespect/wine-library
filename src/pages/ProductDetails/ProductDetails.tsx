@@ -1,6 +1,5 @@
 import type { Wine } from '@/types/Wine'
 
-import { CartItem } from '@/components/CartItem'
 import { Characteristic } from '@/components/Characteristic'
 import { Comment } from '@/components/Comment/Comment'
 import { renderStars } from '@/components/Stars/Stars'
@@ -181,27 +180,7 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
         </div>
 
         <div className="container">
-          <div className="more">
-            <h2 className="more__title">You might also like</h2>
-
-            <div className="more__cards">
-              <div className="more__cards-card">
-                <CartItem />
-              </div>
-
-              <div className="more__cards-card">
-                <CartItem />
-              </div>
-
-              <div className="more__cards-card">
-                <CartItem />
-              </div>
-
-              <div className="more__cards-card">
-                <CartItem />
-              </div>
-            </div>
-          </div>
+          {/* <ProductList /> */}
         </div>
       </div>
     </>
