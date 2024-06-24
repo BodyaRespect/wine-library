@@ -12,7 +12,7 @@ export const renderStars = (rate: number) => {
       {[...Array(emptyStars)].map((_, i) => (
         <span className="stars__star" key={`empty-${i}`}></span>
       ))}
-      <p className="stars__rating">{`${rate} / 5`}</p>
+      <p className="stars__rating">{`${rate}/5`}</p>
     </div>
   )
 }

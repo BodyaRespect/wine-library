@@ -1,6 +1,5 @@
 import type { Slide } from '@/components/HeroSlider'
 
-import { CartItem } from '@/components/CartItem'
 import { Comment } from '@/components/Comment/Comment'
 import { HeroSlider } from '@/components/HeroSlider'
 import { Login } from '@/components/Login'
@@ -33,7 +32,6 @@ export function Home() {
       <HeroSlider slides={slides} />
       <Register />
       <Login />
-      <CartItem />
       <Comment id={1} />
     </>
   )

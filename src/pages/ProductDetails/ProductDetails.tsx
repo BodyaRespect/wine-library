@@ -2,6 +2,7 @@ import type { Wine } from '@/types/Wine'
 
 import { Characteristic } from '@/components/Characteristic'
 import { Comment } from '@/components/Comment/Comment'
+import { ProductList } from '@/components/ProductList/ProductList'
 import { renderStars } from '@/components/Stars/Stars'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -29,7 +30,6 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
   useEffect(() => {
     axios.get(`http://ec2-54-196-216-102.compute-1.amazonaws.com/wines/${id}/ratings`)
       .then((response) => {
-        console.log('Ratings data:', response.data)
         const averageRate = response.data.average
         if (typeof averageRate === 'number' && averageRate >= 0 && averageRate <= 5) {
           setRate(averageRate)
@@ -52,6 +52,8 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
   const handleReadMoreClick = () => {
     setShowFullDescription(!showFullDescription)
   }
+
+  console.log(wineData)
 
   return (
     <>
@@ -99,15 +101,27 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
                   <Characteristic text={`${wineData.acidity}`} title="Acidity" />
                   <Characteristic
                     text={(
-                      <>
+                      <div className="characterisctics__item">
                         <span className="characterisctics__text-flag" style={{ backgroundImage: `url(${wineData.countryFlagUrl})` }}></span>
                         {wineData.country}
-                      </>
+                      </div>
                     )}
                     title="Geography"
                   />
                   <Characteristic text={wineData.sweetness} title="Sweetness" />
-                  <Characteristic text={wineData.recommendedFood.map((food: { name: string }) => food.name).join(', ')} title="Recommended Food" />
+                  <Characteristic
+                    text={(
+                      <>
+                        {wineData.recommendedFood.map((food, index) => (
+                          <div className="characterisctics__item" key={index}>
+                            <span className="characterisctics__text-food" style={{ backgroundImage: `url(${food.imageUrl})` }}></span>
+                            {food.name}
+                          </div>
+                        ))}
+                      </>
+                    )}
+                    title="Recommended Food"
+                  />
                 </div>
               )}
 
@@ -180,7 +194,7 @@ export const ProductDetails: React.FC<Props> = ({ id }) => {
         </div>
 
         <div className="container">
-          {/* <ProductList /> */}
+          <ProductList wines={[]} />
         </div>
       </div>
     </>

@@ -1,24 +1,53 @@
-import type { SetStateAction } from 'react'
+import type { Wine } from '@/types/Wine'
 
 import { Message } from '@/components/Message'
+import { ProductList } from '@/components/ProductList/ProductList'
+import axios from 'axios'
 import { useState } from 'react'
 
 export const SelectionPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [requests, setRequests] = useState<string[]>([])
-  // const [responses, serResponses] = useState<string[]>([])
+  const [advice, setAdvice] = useState<string>('')
+  const [wines, setWines] = useState<Wine[]>([])
+  const [error, setError] = useState('')
 
-  const handleInputChange = (e: { target: { value: SetStateAction<string> } }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
+    setError('')
+
+    if (inputValue.length < 10) {
+      setError('Please, provide more informaion!')
+    }
+
     if (inputValue.trim() !== '') {
-      setRequests((prevResponses) => {
-        const newResponses = [...prevResponses, inputValue]
-        return newResponses.slice(-5)
+      const userQuery = inputValue
+
+      setRequests((prevRequests) => {
+        const newRequests = [...prevRequests, inputValue]
+        return newRequests.slice(-5)
       })
+
       setInputValue('')
+
+      try {
+        const response = await axios.post('http://ec2-54-196-216-102.compute-1.amazonaws.com/selection', {
+          userQuery: userQuery,
+        })
+
+        const { advice, wines } = response.data
+
+        console.log(wines)
+
+        setAdvice(advice)
+        setWines(wines.slice(0, 4))
+      }
+      catch (error) {
+        setError(`${error}`)
+      }
     }
   }
 
@@ -31,20 +60,34 @@ export const SelectionPage = () => {
   return (
     <div className="container">
       <div className="selection-container">
-        {requests.length
+        {requests.length > 0
           ? (
-            <div className="request__list">
-              {requests.map((message, index) => (
-                <>
-                  <Message key={index} message={message} />
-                </>
-              ))}
-            </div>
+            <>
+              <div className="chat-container">
+                <div className="request__list">
+                  {requests.map((message, index) => (
+                    <Message key={index} message={message} />
+                  ))}
+                </div>
+
+                {advice && (
+                  <div className="response">
+                    <div className="responses__text">
+                      <Message message={advice} />
+                    </div>
+
+                    <div className="responses__wines">
+                      <ProductList wines={wines} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
             )
           : (
             <>
               <h1>
-                Make a request to help Yarik
+                Make a request to help Bobik
                 <br />
                 find the perfect bottle of wine for you
               </h1>
@@ -55,7 +98,7 @@ export const SelectionPage = () => {
               </p>
               <div className="query-list">
                 As examples:
-                <Message message="I have a budget of 1000 UAH. Suggest something semi-sweet" />
+                <Message message="I have a budget of 1000 $. Suggest something semi-sweet" />
                 <Message message="What are your most popular rosé wines?" />
                 <Message message="I want to make a gift for my husband, what would you recommend?" />
                 <Message message="My favourite wine is Italian, give me some advice" />
@@ -69,7 +112,7 @@ export const SelectionPage = () => {
             <input
               className="selection-input"
               onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
+              onKeyUp={handleKeyPress}
               value={inputValue}
             />
 
@@ -77,6 +120,8 @@ export const SelectionPage = () => {
               <div className="selection-button-icon"></div>
             </button>
           </label>
+
+          {error && (<span className="selection__error">{error}</span>)}
         </div>
       </div>
     </div>

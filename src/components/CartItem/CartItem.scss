@@ -1,5 +1,6 @@
 .card {
   background-color: #fff;
+  min-height: 500px;
   padding: 16px 24px;
   border-radius: 16px;
   border: 1.5px solid #E1DBC5;
@@ -22,11 +23,13 @@
   }
 
   &__image {
+    display: flex;
+    justify-content: center;
     background-color: #fff;
   }
 
   &__picture {
-    height: 306px;
+    height: 262px;
 
     &-like {
       border: none;
@@ -44,13 +47,13 @@
   }
 
   &__info {
-    height: 180px;
     gap: 12px;
     display: flex;
     flex-direction: column;
   }
 
   &__name {
+    height: 48px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
@@ -61,13 +64,16 @@
 
   &__country {
     display: flex;
+    align-items: center;
 
     &-flag {
       background-image: url(/icons/icon_italy_flag.svg);
-      background-repeat: no-repeat;
       margin-right: 5px;
       height: 24px;
       width: 24px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     &-name {
@@ -76,16 +82,29 @@
       font-weight: 300;
       line-height: 24px;
       text-align: left;
+      text-wrap: nowrap;
       color:#02402B;
     }
   }
 
   &__estimates {
     display: flex;
+    align-items: center;
     gap: 16px;
 
     .stars {
       display: flex;
+
+      &__rating {
+        margin: 0;
+        height: 24px;
+        font-family: $font-secondary;;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 21px;
+        text-align: center;
+        color: $color-text-2;
+      }
     
       &__star {
         width: 24px;
@@ -121,7 +140,6 @@
     justify-content: center;
     align-items: center;
     width: 42px;
-    height: 24px;
 
     &-icon {
       width: 24px;
@@ -133,7 +151,6 @@
 
     &-count {
       width: 20px;
-      height: 24px;
       font-family: Inter;
       font-size: 16px;
       font-weight: 300;
@@ -144,12 +161,12 @@
   }
 
   &__shipping {
-    height: 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     &-price {
+      margin: 0;
       font-family: Inter;
       font-size: 20px;
       font-weight: 600;

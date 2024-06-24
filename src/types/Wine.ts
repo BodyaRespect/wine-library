@@ -12,7 +12,10 @@ export interface Wine {
   liquidVolume: number
   alcoholContent: number
   wineType: 'RED' | 'WHITE' | 'ROSE' // Оновлено тип
-  recommendedFood: { name: string }[]
+  recommendedFood: [{
+    name: string
+    imageUrl: string
+  }]
   sweetness: string
   acidity: 'LOW' | 'MEDIUM' | 'HIGH' // Оновлено тип
   description: string

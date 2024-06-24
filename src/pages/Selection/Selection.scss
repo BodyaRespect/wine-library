@@ -1,11 +1,22 @@
 .selection-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 24px;
   width: 100%;
   height: 100vh;
-  position: relative;
+
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+  }
 
   .selection {
+    width: 100%;
+    margin-bottom: 54px;
+    position: relative;
+
     &-label {
-      position: sticky;
       display: flex;
       justify-content: space-between;
       max-width: 1140px;
@@ -47,6 +58,25 @@
         background-image: url('/icons/icon_selection_input.svg');
       }
     }
+
+    &__error {
+      position: absolute;
+      color: #d32f2f;
+      font-size: 1.1rem;
+      margin: 10px 3px;
+      animation: fadeIn 0.3s ease-out forwards;
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   h1 {
@@ -75,7 +105,6 @@
     justify-content: end;
     flex-direction: column;
     width: 100%;
-    height: 40vh;
     gap: 16px;
     text-align: left;
     font-family: $font-secondary;
@@ -87,7 +116,6 @@
 
   .request {
     &__list {
-      height: 83.5vh;
       margin-bottom: 32px;
       display: flex;
       flex-direction: column;
@@ -99,23 +127,25 @@
     }
   }
 
-  .response {
-    &__list {
-      height: 83.5vh;
+  .responses {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    &__text {
       margin-bottom: 32px;
       display: flex;
+      max-width: 1000px;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: flex-start;
       justify-content: end;
       width: 100%;
       gap: 16px;
-      text-align: right;
+      text-align: left;
     }
     
     &__wines {
-      height: 40vh;
+      grid-column: span 12;
       width: 100%;
-      background-color: red;
     }
   }
 }

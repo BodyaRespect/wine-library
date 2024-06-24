@@ -2,7 +2,6 @@ import { NavBar } from '@/components/Navbar'
 import { NotFound as PageNotFound } from '@/pages/NotFound'
 import { Route, Routes } from 'react-router-dom'
 
-import { Footer } from './components/Footer'
 import { ProductDetails } from './pages/ProductDetails/ProductDetails'
 import { SelectionPage } from './pages/Selection/Selection'
 
@@ -24,8 +23,6 @@ function App() {
           </Route>
         </Routes>
       </main>
-
-      <Footer />
     </div>
   )
 }
