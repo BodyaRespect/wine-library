@@ -1,0 +1,61 @@
+.characterisctics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 138px;
+  align-items: flex-start;
+  row-gap: 32px;
+
+  &__characterisctic {
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: 8px;
+  }
+
+  &__title {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: left;
+    color: $color-text-main;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: $color-text-main;
+
+    &-flag {
+      background-image: url(/icons/icon_italy_flag.svg);
+      margin-right: 5px;
+      height: 16px;
+      width: 24px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &-food {
+      display: flex;
+      background-image: url(/icons/icon_italy_flag.svg);
+      margin-right: 5px;
+      height: 16px;
+      width: 24px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}

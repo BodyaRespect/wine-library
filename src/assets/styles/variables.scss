@@ -5,6 +5,7 @@
 
 $font-primary: 'Lora', serif;
 $font-secondary: 'Inter', sans-serif;
+$font-login: Baskerville Old Face;
 
 // colors
 
@@ -16,15 +17,26 @@ $bg-color: #FAFBFC;
 $white: #fff;
 $green: #27AE60;
 $red: #EB5757;
+$background: rgba(255, 247, 240, 255);
 
+$color-text-slider:#F2ECD4;
 $color-accent: #872031;
+$color-second-accent: #16AC7A;
 $color-accent-stroke: #731423;
+$color-text-main: #02402B;
 $color-text-1: #F2ECD4;
 $color-white: #FFFFFF;
 $color-stroke-1: #E1DBC5;
 $color-green-main: #02402B;
 $color-green-accent: #16AC7A;
 $color-gray: #7B7B75;
+$color-text-2: #7b7b75;
+$color-line: #E1DBC5;
+$color-total: #E7E7E7;
+$color-about-block: #0E91AD;
+$color-login-box: #faf6f1;
+$color-login-border: #e0dcd5;
+$color-login-error: #d32f2f;
 
 // container
 
@@ -41,5 +53,5 @@ $container-tablet: (720px + $grid-gutter-width) !default;
 $container-sm: $container-tablet !default;
 $container-desktop: (940px + $grid-gutter-width) !default;
 $container-md: $container-desktop !default;
-$container-large-desktop: (1140px + $grid-gutter-width) !default;
+$container-large-desktop: (1350px + $grid-gutter-width) !default;
 $container-lg: $container-large-desktop !default;

@@ -1,0 +1,18 @@
+.message-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message {
+  display: inline-block;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  padding: 8px 16px 8px 16px;
+  border-radius: 10px;
+  font-family: $font-secondary;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25.6px;
+  text-align: left;
+  color: $color-text-main;
+}

@@ -1,0 +1,187 @@
+.history {
+  margin-block: 172px;
+  @include page-grid;
+  
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    grid-column: 3 / 11;
+    padding: 32px 40px;
+    border-radius: 12px;
+    border: 1px solid #E1DBC5;
+    background-color: $color-white
+  }
+
+  &__title {
+    font-family: $font-secondary;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 39px;
+    text-align: left;
+    color: $color-text-main;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 32px;
+    border-radius: 8px;
+    border: 1px solid #E1DBC5;
+
+    &-info {
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &-customer {
+        font-family: $font-secondary;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 27px;
+        text-align: left;
+        color: $color-text-main;
+      }
+
+      &-address {
+        font-family: $font-secondary;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: left;
+        color: $color-text-main;
+      }
+
+      &-id {
+        font-family: $font-secondary;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;
+        text-align: left;
+        color: $color-gray;
+      }
+    }
+
+    &-order {
+      height: 104px;
+      width: 300px;
+      display: flex;
+      justify-content: space-between;
+
+      &-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 55px;
+        align-items: center;
+      }
+
+      &-date {
+        font-family: $font-secondary;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;
+        text-align: left;
+        color: $color-gray;
+      }
+
+      &-price {
+        font-family: $font-secondary;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 27px;
+        text-align: left;
+        color: $color-accent;
+      }
+    }
+
+    &-ship {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 55px;
+        justify-content: space-between;
+      }
+
+      &-more {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        background-image: url('/icons/icon_chevron_down.svg');
+      }
+
+      &-less {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        background-image: url('/icons/icon_chevron_up.svg');
+      }
+
+      &-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: $font-secondary;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 27px;
+        text-align: left;
+        text-wrap: nowrap;
+        color: $color-green-accent;
+
+        &-road {
+          width: 24px;
+          height: 24px;
+          background-image: url('/icons/icon_delivery.svg');
+        }
+
+        &-shipment {
+          width: 24px;
+          height: 24px;
+          background-image: url('/icons/icon_shipment.svg');
+        }
+
+        &-post {
+          width: 24px;
+          height: 24px;
+          background-image: url('/icons/icon_post.svg');
+        }
+
+        &-completed {
+          width: 24px;
+          height: 24px;
+          background-image: url('/icons/icon_completed.svg');
+        }
+      }
+    }
+
+    &-wines {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 16px;
+      column-gap: 24px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding-top 0.5s ease-out;
+
+      &.visible {
+        padding-top: 32px;
+        max-height: 648px;
+      }
+
+      img {
+        cursor: pointer;
+        width: 100px;
+        height: 150px;
+        object-fit: contain;
+        object-position: center;
+        justify-self: center;
+        align-self: center;
+      }
+    }
+  }
+}

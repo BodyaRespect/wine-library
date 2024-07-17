@@ -19,14 +19,14 @@ export const NavBar = () => {
       <div className="container">
         <nav className="nav-bar">
           <div className="nav-bar__left-group">
-            <Link className="nav-bar__logo" to="/" />
+            <Link className="nav-bar__logo" to="/home" />
 
             <ul className="nav-bar__links">
-              <NavLink className={getActiveLink} to="/about-us">
+              <NavLink className={getActiveLink} to="/about">
                 About us
               </NavLink>
-              <NavLink className={getActiveLink} to="/production">
-                Production
+              <NavLink className={getActiveLink} to="/history">
+                Order History
               </NavLink>
               <NavLink className={getActiveLink} to="/selection">
                 Selection

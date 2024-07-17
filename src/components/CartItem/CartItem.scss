@@ -1,0 +1,238 @@
+.card {
+  background-color: #fff;
+  min-height: 500px;
+  padding: 16px 24px;
+  border-radius: 16px;
+  border: 1.5px solid #E1DBC5;
+  transition: border-color 0.3s ease, border-radius 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+  opacity: 1;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: #731423;
+    border-radius: 5%;
+
+    transform: translateY(-1%);
+    box-shadow: 2px 2px 10px rgb(130, 6, 6);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+  }
+
+  &__picture {
+    height: 262px;
+
+    &-like {
+      border: none;
+      background-color: $color-white;
+      z-index: 10;
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      width: 24px;
+      height: 24px;
+      background-image: url(/icons/icon_card_like_empty.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &-liked {
+      border: none;
+      background-color: $color-white;
+      z-index: 10;
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      width: 24px;
+      height: 24px;
+      background-image: url(/icons/icon_card_like.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &__info {
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    max-height: 60px;
+    font-family: $font-secondary;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: $color-text-main;
+    min-height: 48px;
+    transition: font-weight 0.5s ease-in-out;
+
+    &:hover {
+      font-weight: 500;
+      color: rgb(110, 2, 2);
+    }
+  }
+
+  &__country {
+    display: flex;
+    align-items: center;
+
+    &-flag {
+      background-image: url(/icons/icon_italy_flag.svg);
+      margin-right: 5px;
+      height: 24px;
+      width: 24px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &-name {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 24px;
+      text-align: left;
+      text-wrap: nowrap;
+      color:#02402B;
+    }
+  }
+
+  &__estimates {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .stars {
+      display: flex;
+
+      &__rating {
+        margin: 0;
+        height: 24px;
+        font-family: $font-secondary;;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 21px;
+        text-align: center;
+        color: $color-text-2;
+      }
+    
+      &__star {
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+        background-image: url(/icons/icon_empty_glass.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &--half {
+          width: 24px;
+          height: 24px;
+          margin-right: 4px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: url(/icons/icon_half_glass.svg);
+        }
+      }
+    }
+    
+    .stars--1 .stars__star:nth-child(-n + 1),
+    .stars--2 .stars__star:nth-child(-n + 2),
+    .stars--3 .stars__star:nth-child(-n + 3),
+    .stars--4 .stars__star:nth-child(-n + 4),
+    .stars--5 .stars__star:nth-child(-n + 5) {
+      background-image: url(/icons/icon_full_glass.svg);
+    }
+  }
+
+  &__comments {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      background-image: url(/icons/icon_comment.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    &-count {
+      width: 20px;
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 24px;
+      text-align: center;
+      color: #7B7B75;
+    }
+  }
+
+  &__shipping {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-price {
+      margin: 0;
+      font-family: Inter;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 30px;
+      text-align: center;
+      color: #02402B;
+    }
+
+    &-button {
+      width: 48px;
+      height: 48px;
+      padding: 8px 0px 0px 0px;
+      border-radius: 8px;
+      background: $color-second-accent;
+      border: 1px solid  $color-white;
+    }
+
+    &-clicked {
+      width: 48px;
+      height: 48px;
+      padding: 8px 0px 0px 0px;
+      border-radius: 8px;
+      background: #872031;
+      border: none;
+    }
+
+    &-icon {
+      display: inline-block;
+      margin: 0 2px 2px 0;
+      width: 32px;
+      height: 32px;
+      background-image: url(/icons/icon_market.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}

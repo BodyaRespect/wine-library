@@ -1,0 +1,27 @@
+.btn-container {
+  width: 100%;
+  display: flex;
+}
+
+.btn-primary {
+  min-width: 770px;
+  justify-content: center;
+  background-color: $background;
+  color: $color-text-main;
+  padding: 10px 15px;
+  border: 1px solid $color-line;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0.4, 0.4, 0.4, 0.2);
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  background-color: $color-white;
+}

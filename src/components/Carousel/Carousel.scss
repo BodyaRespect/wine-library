@@ -1,0 +1,36 @@
+.wine-carousel {
+  background-color: $color-accent;
+  text-align: center;
+
+  .wine-carousel__slider {
+    overflow: hidden;
+    width: 100%;
+
+    .wine-carousel__slides {
+      display: flex;
+      animation: scroll 30s linear infinite;
+    }
+
+    .wine-carousel__slide {
+      flex: 0 0 20%;
+      padding-inline: 18px;
+      height: 150px;
+
+      img {
+        border-radius: 8px;
+        border: 1px solid $color-gray;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}

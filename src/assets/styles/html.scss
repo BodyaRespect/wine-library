@@ -7,11 +7,11 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background: $background;
 }
 
 body {
   font-family: $font-secondary;
-  background-color: $color-text-1;
 }
 
 button {
