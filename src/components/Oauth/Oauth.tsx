@@ -22,15 +22,17 @@ export default function Oauth() {
 
     if (isMatch) {
       const googleClientIdToken = isMatch[1]
+      console.log('Google Client ID Token:', googleClientIdToken)
 
-      axios.post('/api/url', { googleClientIdToken })
+      axios.post('https://api.winelibrary.wuaze.com/auth/oauth/sign-in', { googleClientIdToken })
         .then((response) => {
-          const { accessToken: newAccessToken } = response.data
+          const { token: newAccessToken } = response.data
           Cookies.set('accessToken', newAccessToken)
           setIsLoggedin(true)
         })
         .catch((error) => {
           console.error('Error during the API call:', error)
+          console.log('Error details:', error.toJSON())
         })
     }
   }, [])

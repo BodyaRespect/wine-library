@@ -52,7 +52,7 @@ export const History = () => {
   }
 
   useEffect(() => {
-    axios.get('http://api.winelibrary.wuaze.com/orders', {
+    axios.get('https://api.winelibrary.wuaze.com/orders', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

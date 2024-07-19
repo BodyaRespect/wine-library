@@ -1,25 +1,41 @@
 .selection-container {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: 24px;
-  width: 100%;
-  height: 100vh;
 
   .chat-container {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .chat__list {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .chat__entry {
+    max-width: 800px;
+
+    &--request {
+      align-self: flex-end;
+    }
+    &--response {
+      align-self: flex-start;
+    }
   }
 
   .selection {
-    width: 100%;
-    margin-bottom: 54px;
+    margin-bottom: 44px;
     position: relative;
 
     &-label {
       display: flex;
       justify-content: space-between;
-      max-width: 1140px;
       height: 60px;
       padding: 8px 16px;
       border-radius: 20px;
@@ -111,41 +127,6 @@
     font-weight: 400;
     line-height: 27px;
     color: $color-text-main;
-  }
-
-  .request {
-    &__list {
-      margin-bottom: 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: end;
-      width: 100%;
-      gap: 16px;
-      text-align: right;
-    }
-  }
-
-  .responses {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-
-    &__text {
-      margin-bottom: 32px;
-      display: flex;
-      max-width: 1000px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: end;
-      width: 100%;
-      gap: 16px;
-      text-align: left;
-    }
-    
-    &__wines {
-      grid-column: span 12;
-      width: 100%;
-    }
   }
 }
 

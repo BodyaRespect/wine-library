@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 
 import { AutoCompleteDropdown } from '../AutoDropdown'
+import { Footer } from '../Footer/Footer'
 import { ProductList } from '../ProductList/ProductList'
 import { RangeSlider } from '../RangeSlider'
 
@@ -182,86 +183,92 @@ export const Catalog = () => {
   console.log({ catalog })
 
   return (
-    <section className="catalog">
-      <div className="container">
-        <div className="catalog__grid">
-          <aside className="catalog__filters">
-            <div className="catalog__filter-block">
-              <div className="catalog__filter-head">
-                <h4 className="catalog__filter-title">Price</h4>
-                <button className="catalog__filter-toggle" type="button">
-                  <Icon icon="icon_chevron_up" />
-                </button>
-              </div>
-              <div className="catalog__filter-content">
-                <RangeSlider onChange={handlePriceChange} />
-              </div>
-            </div>
-
-            {filters.map(({ title, list }, blockIndex) => (
-              <div className="catalog__filter-block" key={title}>
+    <>
+      <section className="catalog">
+        <div className="container">
+          <div className="catalog__grid">
+            <aside className="catalog__filters">
+              <div className="catalog__filter-block">
                 <div className="catalog__filter-head">
-                  <h4 className="catalog__filter-title">{title}</h4>
+                  <h4 className="catalog__filter-title">Price</h4>
                   <button className="catalog__filter-toggle" type="button">
                     <Icon icon="icon_chevron_up" />
                   </button>
                 </div>
                 <div className="catalog__filter-content">
-                  <div className="catalog__filter-list">
-                    {list.map(({ title, count }, checkIndex) => (
-                      <div className="catalog__filter-check" key={title}>
-                        <input
-                          id={`filter-${blockIndex}-${checkIndex}`}
-                          onChange={() => handleFilterChange(blockIndex, checkIndex, title)}
-                          type="checkbox"
-                        />
-                        <label htmlFor={`filter-${blockIndex}-${checkIndex}`}>
-                          {title}
-                          <span>{count}</span>
-                        </label>
-                      </div>
-                    ))}
-                  </div>
+                  <RangeSlider onChange={handlePriceChange} />
                 </div>
               </div>
-            ))}
-          </aside>
 
-          <div className="catalog__content">
-            <div className="catalog__bar">
-              <div className="catalog__bar-search">
-                <div className="catalog__bar-search-logo" onClick={handleLogoClick}></div>
-                <input
-                  className="catalog__bar-search-input"
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Enter a search query"
-                  ref={inputRef}
-                  value={searchQuery}
-                />
+              {filters.map(({ title, list }, blockIndex) => (
+                <div className="catalog__filter-block" key={title}>
+                  <div className="catalog__filter-head">
+                    <h4 className="catalog__filter-title">{title}</h4>
+                    <button className="catalog__filter-toggle" type="button">
+                      <Icon icon="icon_chevron_up" />
+                    </button>
+                  </div>
+                  <div className="catalog__filter-content">
+                    <div className="catalog__filter-list">
+                      {list.map(({ title, count }, checkIndex) => (
+                        <div className="catalog__filter-check" key={title}>
+                          <input
+                            id={`filter-${blockIndex}-${checkIndex}`}
+                            onChange={() => handleFilterChange(blockIndex, checkIndex, title)}
+                            type="checkbox"
+                          />
+                          <label htmlFor={`filter-${blockIndex}-${checkIndex}`}>
+                            {title}
+                            <span>{count}</span>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </aside>
+
+            <div className="catalog__content">
+              <div className="catalog__bar">
+                <div className="catalog__bar-search">
+                  <div className="catalog__bar-search-logo" onClick={handleLogoClick}></div>
+                  <input
+                    className="catalog__bar-search-input"
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Enter a search query"
+                    ref={inputRef}
+                    value={searchQuery}
+                  />
+                </div>
+
+                <div className="catalog__bar-filter">
+                  <div className="catalog__bar-filter-logo"></div>
+                  <AutoCompleteDropdown
+                    options={[
+                      'Newest',
+                      'Oldest',
+                      'Lowest price',
+                      'Highest price',
+                    ]}
+                    logo={false}
+                    onSelectOption={setSelectedOption}
+                    placeholder="Sort by"
+                  />
+                </div>
               </div>
 
-              <div className="catalog__bar-filter">
-                <div className="catalog__bar-filter-logo"></div>
-                <AutoCompleteDropdown
-                  options={[
-                    'Newest',
-                    'Oldest',
-                    'Lowest price',
-                    'Highest price',
-                  ]}
-                  logo={false}
-                  onSelectOption={setSelectedOption}
-                  placeholder="Sort by"
-                />
+              <div className="catalog__list">
+                <ProductList column={3} wines={filteredCatalog.slice(0, 12)} />
               </div>
-            </div>
-
-            <div className="catalog__list">
-              <ProductList column={3} wines={filteredCatalog.slice(0, 12)} />
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section>
+        <Footer />
+      </section>
+    </>
   )
 }

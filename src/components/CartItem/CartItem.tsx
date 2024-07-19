@@ -3,7 +3,8 @@ import type { Wine } from '@/types/Wine'
 import { addToCartServer, addToFavorite, deleteFromFavorite, removeFromCartServer } from '@/api/axiosClient'
 import { useAppDispatch } from '@/store/hooks'
 import { addFavorite, addToCart, removeFavorite, removeFromCart } from '@/store/reducers/products'
-import { useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 import { renderStars } from '../Stars/Stars'
 
@@ -16,22 +17,21 @@ interface Props {
 
 export const CartItem: React.FC<Props> = ({ isCart, wine, isFavorite, onClick }) => {
   const [rate, setRate] = useState(0)
-
   const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   axios.get(`http://ec2-54-196-216-102.compute-1.amazonaws.com/wines/${wine.id}/ratings`)
-  //     .then((response) => {
-  //       const averageRate = response.data.average
-  //       if (typeof averageRate === 'number' && averageRate >= 0 && averageRate <= 5) {
-  //         setRate(averageRate)
-  //       }
-  //       else {
-  //         console.error('Invalid rate value:', averageRate)
-  //       }
-  //     })
-  //     .catch(error => console.error('Error fetching wine data:', error))
-  // }, [wine.id])
+  useEffect(() => {
+    axios.get(`https://ec2-54-196-216-102.compute-1.amazonaws.com/wines/${wine.id}/ratings`)
+      .then((response) => {
+        const averageRate = response.data.average
+        if (typeof averageRate === 'number' && averageRate >= 0 && averageRate <= 5) {
+          setRate(averageRate)
+        }
+        else {
+          console.error('Invalid rate value:', averageRate)
+        }
+      })
+      .catch(error => console.error('Error fetching wine data:', error))
+  }, [wine.id])
 
   const handleToggleCart = () => {
     if (isCart) {

@@ -19,7 +19,7 @@ export const login = createAsyncThunk<AuthResponse, LoginCredentials, { rejectVa
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('http://api.winelibrary.wuaze.com/auth/sign-in', credentials, {
+      const response = await axios.post('https://api.winelibrary.wuaze.com/auth/sign-in', credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -40,7 +40,7 @@ export const register = createAsyncThunk<AuthResponse, RegisterDetails, { reject
   'auth/register',
   async (userDetails, thunkAPI) => {
     try {
-      const response = await axios.post('http://api.winelibrary.wuaze.com/auth/register', userDetails, {
+      const response = await axios.post('https://api.winelibrary.wuaze.com/auth/register', userDetails, {
         headers: {
           'Content-Type': 'application/json',
         },

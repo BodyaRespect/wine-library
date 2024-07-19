@@ -2,11 +2,10 @@ import type { DeliveryType } from '@/types/DeliveryType'
 import type { OrderDetails } from '@/validations/orderDetails'
 import type { z } from 'zod'
 
-import { accessToken } from '@/api/axiosClient'
+import { createPayment, fetchCities, fetchPostOffices, placeOrder, sendVerification, verifyCode } from '@/api/axiosClient'
 import { AutoCompleteDropdown } from '@/components/AutoDropdown'
 import { Checkbox } from '@/components/Checkbox/Checkbox'
 import { useAppSelector } from '@/store/hooks'
-import { setCartItems } from '@/store/reducers/products'
 import { orderDetailsSchema } from '@/validations/orderDetails'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
@@ -34,18 +33,9 @@ export const CartPage: React.FC = () => {
   const [isCountingDown, setIsCountingDown] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const wineIds = useAppSelector(state => state.products.cart.cartItems.map(item => item.wineId))
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!wineIds) {
-      axios
-        .get('http://api.winelibrary.wuaze.com/cart')
-        .then(response => setCartItems(response.data))
-        .catch(error => console.error('Error fetching cart items:', error))
-    }
-  }, [errors])
-
+  const wineIds = useAppSelector(state => state.products.cart.cartItems.map(item => item.wineId))
   const carts = useAppSelector(state => state.products.products.filter(wine => wineIds.includes(wine.id)))
 
   const deliveryCost: Record<DeliveryType, number> = {
@@ -56,23 +46,6 @@ export const CartPage: React.FC = () => {
 
   const costOfDelivery: number = deliveryCost[selectedDelivery as DeliveryType] || 0
   const totalAmount: number = carts.reduce((accumulator, wine) => accumulator + wine.price, 0)
-
-  useEffect(() => {
-    axios
-      .get('http://api.winelibrary.wuaze.com/cities')
-      .then(response => setCities(response.data))
-      .catch(error => console.error('Error fetching cities:', error))
-
-    axios
-      .get(
-        `http://api.winelibrary.wuaze.com/cities/shipping-address?city=${city}`,
-      )
-      .then((response) => {
-        setUkrPostOffices(response.data.ukrPostOffices.map((item: { name: string }) => item.name))
-        setNovaPostOffices(response.data.novaPostOffices.map((item: { name: string }) => item.name))
-      })
-      .catch(error => console.error('Error fetching post offices:', error))
-  }, [city])
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target
@@ -136,19 +109,11 @@ export const CartPage: React.FC = () => {
 
     console.log(orderDetails)
 
-    axios.post('http://api.winelibrary.wuaze.com/orders', orderDetails, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    placeOrder(orderDetails)
       .then((response) => {
         setOrderId(response.data.id)
 
-        return axios.post('http://api.winelibrary.wuaze.com/verification/send', { phoneNumber }, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
+        return sendVerification(phoneNumber)
           .then(() => {
             console.log('Phone number sent successfully!')
           })
@@ -183,11 +148,25 @@ export const CartPage: React.FC = () => {
 
     console.log(code)
 
-    axios.post('http://api.winelibrary.wuaze.com/verification/verify', { orderId, phoneNumber, code })
+    verifyCode(orderId!, phoneNumber, code)
       .then((response) => {
         console.log('Verification successful:', response.data)
         setModal(false)
-        setSuccess(true)
+
+        return createPayment(orderId!)
+          .then(() => {
+            console.log('Payment created successfully!')
+            setSuccess(true)
+          })
+          .catch((error) => {
+            if (axios.isAxiosError(error)) {
+              console.error('Network error:', error.message)
+              console.error('Error details:', error.toJSON())
+            }
+            else {
+              console.error('Unexpected error:', error)
+            }
+          })
       })
       .catch((error) => {
         console.error('Verification failed:', error)
@@ -195,7 +174,7 @@ export const CartPage: React.FC = () => {
   }
 
   const handleResend = () => {
-    axios.post('http://api.winelibrary.wuaze.com/verification/send', { phoneNumber })
+    sendVerification(phoneNumber)
       .then((response) => {
         console.log('Code resent:', response.data)
         setTimer(60)
@@ -205,6 +184,21 @@ export const CartPage: React.FC = () => {
         console.error('Failed to resend code:', error)
       })
   }
+
+  useEffect(() => {
+    fetchCities()
+      .then(response => setCities(response.data))
+      .catch(error => console.error('Error fetching cities:', error))
+
+    if (city) {
+      fetchPostOffices(city)
+        .then((response) => {
+          setUkrPostOffices(response.data.ukrPostOffices.map((item: { name: string }) => item.name))
+          setNovaPostOffices(response.data.novaPostOffices.map((item: { name: string }) => item.name))
+        })
+        .catch(error => console.error('Error fetching post offices:', error))
+    }
+  }, [city])
 
   useEffect(() => {
     if (isCountingDown) {
@@ -632,7 +626,7 @@ export const CartPage: React.FC = () => {
               </div>
             </div>
 
-            <div className={success ? 'cart__modal cart__modal-active' : 'cart__modal'} onClick={() => setSuccess(false)}>
+            <div className={success ? 'cart__modal cart__modal-active' : 'cart__modal'} onClick={() => setSuccess(true)}>
               <div className={success ? 'cart__modal-success cart__modal-success-active' : 'cart__modal-success'} onClick={e => e.stopPropagation()}>
                 <div className="cart__modal-success-container">
                   <p className="cart__modal-dear">
@@ -653,7 +647,7 @@ export const CartPage: React.FC = () => {
                     </p>
                   </p>
 
-                  <div className="cart__modal-btn" onClick={() => navigate('/')}>
+                  <div className="cart__modal-btn" onClick={() => navigate('/home')}>
                     <button className="cart__modal-btn-text">
                       <p>
                         Go to the

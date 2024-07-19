@@ -5,7 +5,7 @@ interface Props {
 
 export const Characteristic: React.FC<Props> = ({ title, text }) => {
   return (
-    <div className="characterisctics__characterisctic">
+    <p className="characterisctics__characterisctic">
       <p className="characterisctics__title">
         {title}
       </p>
@@ -13,6 +13,6 @@ export const Characteristic: React.FC<Props> = ({ title, text }) => {
       <p className="characterisctics__text">
         {text}
       </p>
-    </div>
+    </p>
   )
 }

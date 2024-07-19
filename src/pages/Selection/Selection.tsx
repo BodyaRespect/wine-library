@@ -5,11 +5,14 @@ import { ProductList } from '@/components/ProductList/ProductList'
 import axios from 'axios'
 import { useState } from 'react'
 
+interface ChatEntry {
+  type: 'request' | 'response'
+  message: string | Wine[]
+}
+
 export const SelectionPage = () => {
   const [inputValue, setInputValue] = useState('')
-  const [requests, setRequests] = useState<string[]>([])
-  const [advice, setAdvice] = useState<string>('')
-  const [wines, setWines] = useState<Wine[]>([])
+  const [chatEntries, setChatEntries] = useState<ChatEntry[]>([])
   const [error, setError] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,15 +29,15 @@ export const SelectionPage = () => {
     if (!error && inputValue.trim() !== '') {
       const userQuery = inputValue
 
-      setRequests((prevRequests) => {
-        const newRequests = [...prevRequests, inputValue]
-        return newRequests.slice(-5)
-      })
+      setChatEntries(prevEntries => [
+        ...prevEntries,
+        { type: 'request', message: userQuery },
+      ])
 
       setInputValue('')
 
       try {
-        const response = await axios.post('http://api.winelibrary.wuaze.com/selection', {
+        const response = await axios.post('https://api.winelibrary.wuaze.com/selection', {
           userQuery: userQuery,
         })
 
@@ -42,8 +45,11 @@ export const SelectionPage = () => {
 
         console.log(wines)
 
-        setAdvice(advice)
-        setWines(wines.slice(0, 4))
+        setChatEntries(prevEntries => [
+          ...prevEntries,
+          { type: 'response', message: advice },
+          { type: 'response', message: wines.slice(0, 4) },
+        ])
       }
       catch (error) {
         console.log(error)
@@ -61,29 +67,23 @@ export const SelectionPage = () => {
   return (
     <div className="container">
       <div className="selection-container">
-        {requests.length > 0
+        {chatEntries.length > 0
           ? (
-            <>
-              <div className="chat-container">
-                <div className="request__list">
-                  {requests.map((message, index) => (
-                    <Message key={index} message={message} />
-                  ))}
-                </div>
-
-                {advice && (
-                  <div className="response">
-                    <div className="responses__text">
-                      <Message message={advice} />
-                    </div>
-
-                    <div className="responses__wines">
-                      <ProductList column={4} wines={wines} />
-                    </div>
+            <div className="chat-container">
+              <div className="chat__list">
+                {chatEntries.map((entry, index) => (
+                  <div className={`chat__entry chat__entry--${entry.type}`} key={index}>
+                    {typeof entry.message === 'string'
+                      ? (
+                        <Message message={entry.message} />
+                        )
+                      : (
+                        <ProductList column={4} wines={entry.message} />
+                        )}
                   </div>
-                )}
+                ))}
               </div>
-            </>
+            </div>
             )
           : (
             <>
@@ -99,7 +99,7 @@ export const SelectionPage = () => {
               </p>
               <div className="query-list">
                 As examples:
-                <Message message="I have a budget of 1000 $. Suggest something semi-sweet" />
+                <Message message="I have a budget of 1000$. Suggest something semi-sweet" />
                 <Message message="What are your most popular rosé wines?" />
                 <Message message="I want to make a gift for my husband, what would you recommend?" />
                 <Message message="My favourite wine is Italian, give me some advice" />

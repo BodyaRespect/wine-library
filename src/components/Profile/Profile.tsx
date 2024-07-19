@@ -2,6 +2,7 @@ import type { MouseEvent } from 'react'
 
 import { accessToken } from '@/api/axiosClient'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { Login } from '../../components/Login'
@@ -23,7 +24,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('http://api.winelibrary.wuaze.com/users/me', {
+        const response = await axios.get('https://api.winelibrary.wuaze.com/users/me', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -57,7 +58,7 @@ export const Profile = () => {
 
     if (!newErrors.currentPassword && !newErrors.newPassword && !newErrors.repeatPassword) {
       try {
-        const response = await axios.put('http://api.winelibrary.wuaze.com/users/update-password', {
+        const response = await axios.put('https://api.winelibrary.wuaze.com/users/update-password', {
           currentPassword,
           password: newPassword,
           repeatedPassword: repeatPassword,
@@ -83,7 +84,7 @@ export const Profile = () => {
 
   const handleFirstNameUpdate = async () => {
     try {
-      const response = await axios.patch('http://api.winelibrary.wuaze.com/users/me/update/first-name', {
+      const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/first-name', {
         firstName,
       }, {
         headers: {
@@ -110,7 +111,7 @@ export const Profile = () => {
 
   const handleLastNameUpdate = async () => {
     try {
-      const response = await axios.patch('http://api.winelibrary.wuaze.com/users/me/update/last-name', {
+      const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/last-name', {
         lastName,
       }, {
         headers: {
@@ -196,7 +197,13 @@ export const Profile = () => {
                     Update Password
                   </button>
 
-                  <button className="profile__button profile__buttons-logout" type="button">Log out</button>
+                  <button
+                    className="profile__button profile__buttons-logout"
+                    onClick={() => Cookies.remove('accessToken')}
+                    type="button"
+                  >
+                    Log out
+                  </button>
                 </div>
               </form>
 

@@ -10,6 +10,7 @@ export interface State {
   loading: boolean
   favorites: Favorite[]
   cart: Cart
+  recentlyViewed: Wine[]
 }
 
 const initialState: State = {
@@ -21,6 +22,7 @@ const initialState: State = {
     userId: 0,
     cartItems: [],
   },
+  recentlyViewed: [],
 }
 
 const productsSlice = createSlice({
@@ -60,8 +62,35 @@ const productsSlice = createSlice({
     removeFromCart: (state, action: PayloadAction<CartWine['wineId']>) => {
       state.cart.cartItems = state.cart.cartItems.filter(item => item.wineId !== action.payload)
     },
+
+    setRecentlyViewed: (state, action: PayloadAction<Wine[]>) => {
+      state.recentlyViewed = action.payload
+    },
+
+    addRecentlyViewed: (state, action: PayloadAction<Wine>) => {
+      const existingIndex = state.recentlyViewed.findIndex(wine => wine.id === action.payload.id)
+      if (existingIndex === -1) {
+        state.recentlyViewed.push(action.payload)
+      }
+      else {
+        state.recentlyViewed.splice(existingIndex, 1)
+        state.recentlyViewed.push(action.payload)
+      }
+    },
   },
 })
 
 export default productsSlice.reducer
-export const { setProducts, setLoading, setFavorites, addFavorite, removeFavorite, setCartItems, addToCart, removeFromCart } = productsSlice.actions
+
+export const {
+  setProducts,
+  setLoading,
+  setFavorites,
+  addFavorite,
+  removeFavorite,
+  setCartItems,
+  addToCart,
+  removeFromCart,
+  setRecentlyViewed,
+  addRecentlyViewed,
+} = productsSlice.actions

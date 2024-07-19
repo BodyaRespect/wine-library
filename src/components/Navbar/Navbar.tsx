@@ -1,4 +1,6 @@
+import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 const getActiveLink = ({ isActive }: { isActive: boolean }) => {
@@ -14,6 +16,17 @@ const getActiveTab = ({ isActive }: { isActive: boolean }) => {
 }
 
 export const NavBar = () => {
+  const [isFavoriteCounterVisible, setIsFavoriteCounterVisible] = useState(false)
+  const [isCartCounterVisible, setIsCartCounterVisible] = useState(false)
+
+  const favoritesCounter = useAppSelector(state => state.products.favorites.length)
+  const cartCounter = useAppSelector(state => state.products.cart.cartItems.length)
+
+  useEffect(() => {
+    favoritesCounter > 0 ? setIsFavoriteCounterVisible(true) : setIsFavoriteCounterVisible(false)
+    cartCounter > 0 ? setIsCartCounterVisible(true) : setIsCartCounterVisible(false)
+  }, [favoritesCounter, cartCounter])
+
   return (
     <header className="header">
       <div className="container">
@@ -40,13 +53,13 @@ export const NavBar = () => {
 
               <NavLink className={getActiveTab} to="/favorites">
                 <div className="nav-bar__favorite icon">
-                  <div className="nav-bar__icon-text">1</div>
+                  {isFavoriteCounterVisible && (<div className="nav-bar__icon-text">{favoritesCounter}</div>)}
                 </div>
               </NavLink>
 
               <NavLink className={getActiveTab} to="/cart">
                 <div className="nav-bar__cart icon">
-                  <div className="nav-bar__icon-text">2</div>
+                  {isCartCounterVisible && (<div className="nav-bar__icon-text">{cartCounter}</div>)}
                 </div>
               </NavLink>
             </ul>

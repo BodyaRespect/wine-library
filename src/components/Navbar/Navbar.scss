@@ -142,15 +142,15 @@
 
     @include flex-center;
 
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
 
     background-color: #872031;
 
     border: 1px solid $white;
     border-radius: 50%;
 
-    @include text-type-full(9px, 11.5px, "Mont-semi-bold", $white);
+    @include text-type-full(10px, 12px, "Mont-semi-bold", $white);
   }
 
   &__menu, &__close {

@@ -1,5 +1,5 @@
 .history {
-  margin-block: 172px;
+  margin-block: 122px;
   @include page-grid;
   
   &__container {
@@ -30,6 +30,7 @@
     border: 1px solid #E1DBC5;
 
     &-info {
+      grid-column: span 1;
       height: 100px;
       display: flex;
       flex-direction: column;
@@ -45,6 +46,7 @@
       }
 
       &-address {
+        height: 40px;
         font-family: $font-secondary;
         font-size: 16px;
         font-weight: 400;
@@ -65,8 +67,9 @@
     }
 
     &-order {
+      grid-column: span 1;
       height: 104px;
-      width: 300px;
+      width: 100%;
       display: flex;
       justify-content: space-between;
 

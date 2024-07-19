@@ -1,6 +1,7 @@
 .liked {
+  margin-top: 132px;
+
   &__title {
-    margin-top: 172px;
     font-family: $font-primary;
     font-size: 35px;
     font-weight: 500;
@@ -12,7 +13,7 @@
   &__button {
     border: none;
     margin-top: 24px;
-    width: 312px;
+    width: 320px;
     height: 48px;
     padding: 8px 16px;
     gap: 10px;
@@ -30,7 +31,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 312px;
+      width: 320px;
       height: 70px;
       padding: 8px 24px;
       gap: 0px;

@@ -1,11 +1,12 @@
 import type { Wine } from '@/types/Wine'
 
+import { accessToken, fetchWineData, fetchWineRatings } from '@/api/axiosClient'
 import { Characteristic } from '@/components/Characteristic'
 import { Comment } from '@/components/Comment/Comment'
+import { Footer } from '@/components/Footer'
 import { ProductList } from '@/components/ProductList/ProductList'
 import { renderStars } from '@/components/Stars/Stars'
 import { useAppSelector } from '@/store/hooks'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -13,8 +14,7 @@ import delivery from '/images/delivery_boy.png'
 
 export const ProductDetails: React.FC = () => {
   const { id = '0' } = useParams<{ id: string }>()
-
-  const [wineData, setWineData] = useState<Wine | null>(null)
+  const [wineData, setWineData] = useState<Wine>()
   const [rate, setRate] = useState(0)
   const [activeSection, setActiveSection] = useState('Description')
   const [showFullDescription, setShowFullDescription] = useState(false)
@@ -30,13 +30,13 @@ export const ProductDetails: React.FC = () => {
     : [...wines.slice(start), ...wines.slice(0, end)]
 
   useEffect(() => {
-    axios.get(`http://api.winelibrary.wuaze.com/wines/${id}`)
+    fetchWineData(+id)
       .then(response => setWineData(response.data))
       .catch(error => console.error('Error fetching wine data:', error))
-  }, [id])
+  }, [])
 
   useEffect(() => {
-    axios.get(`http://api.winelibrary.wuaze.com/wines/${id}/ratings`)
+    fetchWineRatings(+id)
       .then((response) => {
         const averageRate = response.data.average
         if (typeof averageRate === 'number' && averageRate >= 0 && averageRate <= 5) {
@@ -47,7 +47,7 @@ export const ProductDetails: React.FC = () => {
         }
       })
       .catch(error => console.error('Error fetching wine data:', error))
-  }, [id])
+  }, [])
 
   if (!wineData) {
     return
@@ -60,8 +60,6 @@ export const ProductDetails: React.FC = () => {
   const handleReadMoreClick = () => {
     setShowFullDescription(!showFullDescription)
   }
-
-  console.log(+id % wines.length + 4)
 
   return (
     <>
@@ -173,38 +171,42 @@ export const ProductDetails: React.FC = () => {
           </div>
         </div>
 
-        <div className="container">
-          <div className="delivery">
-            <div className="delivery__offer">
-              <div className="delivery__offer-container">
-                <div className="delivery__offer-container-info">
-                  <div className="delivery__offer-container-icon"></div>
+        {!accessToken && (
+          <div className="container">
+            <div className="delivery">
+              <div className="delivery__offer">
+                <div className="delivery__offer-container">
+                  <div className="delivery__offer-container-info">
+                    <div className="delivery__offer-container-icon"></div>
 
-                  <div className="delivery__offer-container-text">
-                    When you register, you get
-                    <br />
-                    free delivery on your first order!
+                    <div className="delivery__offer-container-text">
+                      When you register, you get
+                      <br />
+                      free delivery on your first order!
+                    </div>
+
+                    <button className="delivery__offer-container-button">Register</button>
                   </div>
 
-                  <button className="delivery__offer-container-button">Register</button>
+                  <img
+                    alt="deliveryImage"
+                    className="delivery__offer-container-image"
+                    src={delivery}
+                  />
+
+                  <button className="delivery__offer-container-image-button"></button>
                 </div>
-
-                <img
-                  alt="deliveryImage"
-                  className="delivery__offer-container-image"
-                  src={delivery}
-                />
-
-                <button className="delivery__offer-container-image-button"></button>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="container">
           <ProductList column={4} wines={slicedWines} />
         </div>
       </div>
+
+      <Footer />
     </>
   )
 }

@@ -57,3 +57,43 @@ export const deleteFromFavorite = (wineId: number) => {
     },
   })
 }
+
+export const fetchCities = () => {
+  return axios.get('https://api.winelibrary.wuaze.com/cities')
+}
+
+export const fetchPostOffices = (city: string) => {
+  return axios.get(`https://api.winelibrary.wuaze.com/cities/shipping-address?city=${city}`)
+}
+
+export const placeOrder = (orderDetails: any) => {
+  return axios.post('https://api.winelibrary.wuaze.com/orders', orderDetails, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+}
+
+export const sendVerification = (phoneNumber: string) => {
+  return axios.post('https://api.winelibrary.wuaze.com/verification/send', { phoneNumber }, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+}
+
+export const verifyCode = (orderId: number, phoneNumber: string, code: string) => {
+  return axios.post('https://api.winelibrary.wuaze.com/verification/verify', { orderId, phoneNumber, code })
+}
+
+export const createPayment = (orderId: number) => {
+  return axios.post(`https://api.winelibrary.wuaze.com/payments/create/${orderId}`)
+}
+
+export const fetchWineData = (id: number) => {
+  return axios.get(`https://api.winelibrary.wuaze.com/wines/${id}`)
+}
+
+export const fetchWineRatings = (id: number) => {
+  return axios.get(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`)
+}

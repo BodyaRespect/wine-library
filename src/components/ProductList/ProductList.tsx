@@ -1,6 +1,7 @@
 import type { Wine } from '@/types/Wine'
 
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { addRecentlyViewed } from '@/store/reducers/products'
 import { useNavigate } from 'react-router-dom'
 
 import { CartItem } from '../CartItem'
@@ -14,15 +15,21 @@ export const ProductList: React.FC<Props> = ({ wines, column }) => {
   const favoriteIds = useAppSelector(state => state.products.favorites.map(item => item.wineId))
   const carts = useAppSelector(state => state.products.cart.cartItems.map(item => item.wineId))
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const handleProductClick = (wine: Wine) => {
+    dispatch(addRecentlyViewed(wine))
+    navigate(`/productdetails/${wine.id}`)
+  }
 
   return (
-    <div className="product__list" style={{ gridTemplateColumns: `repeat(${column}, minmax(314px, 1fr))` }}>
+    <div className="product__list" style={{ gridTemplateColumns: `repeat(${column}, minmax(320px, 1fr))` }}>
       {wines.map(wine => (
         <div className="product__list-item" key={wine.id}>
           <CartItem
             isCart={carts.includes(wine.id)}
             isFavorite={favoriteIds.includes(wine.id)}
-            onClick={() => navigate(`/productdetails/${wine.id}`)}
+            onClick={() => handleProductClick(wine)}
             wine={wine}
           />
         </div>
