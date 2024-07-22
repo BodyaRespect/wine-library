@@ -33,6 +33,7 @@ function App() {
       .then(response => dispatch(setFavorites(response.data)))
       .catch(error => console.error('Error fetching favorite data:', error))
   }, [dispatch])
+
   useEffect(() => {
     fetchCartItems()
       .then(response => dispatch(setCartItems(response.data)))
