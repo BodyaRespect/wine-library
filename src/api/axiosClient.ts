@@ -97,3 +97,9 @@ export const fetchWineData = (id: number) => {
 export const fetchWineRatings = (id: number) => {
   return axios.get(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`)
 }
+
+export const sendUserQuery = (userQuery: string) => {
+  return axios.post('https://api.winelibrary.wuaze.com/selection', {
+    userQuery: userQuery,
+  })
+}

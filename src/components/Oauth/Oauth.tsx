@@ -8,7 +8,7 @@ export default function Oauth() {
   const [isLoggedin, setIsLoggedin] = useState(false)
 
   const handleClick = () => {
-    const callbackUrl = `${window.location.origin}`
+    const callbackUrl = `${window.location.origin}/home`
     const googleClientId = '30955688954-763i160f4utduu08tfg3mlivtlbd977m.apps.googleusercontent.com'
     const targetUrl = `https://accounts.google.com/o/oauth2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl,

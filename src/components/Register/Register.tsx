@@ -7,6 +7,9 @@ export const Register = () => {
   const dispatch = useAppDispatch()
   const { loading } = useAppSelector(state => state.auth)
 
+  const [showPasswordFields, setShowPasswordFields] = useState(false)
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -22,9 +25,6 @@ export const Register = () => {
     password: '',
     repeatedPassword: '',
   })
-
-  const [showPasswordFields, setShowPasswordFields] = useState(false)
-  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
 
   const handleChange = (e: { target: { name: string, value: string } }) => {
     const { name, value } = e.target

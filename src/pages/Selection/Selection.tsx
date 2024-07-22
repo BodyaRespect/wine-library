@@ -1,8 +1,8 @@
 import type { Wine } from '@/types/Wine'
 
+import { sendUserQuery } from '@/api/axiosClient'
 import { Message } from '@/components/Message'
 import { ProductList } from '@/components/ProductList/ProductList'
-import axios from 'axios'
 import { useState } from 'react'
 
 interface ChatEntry {
@@ -37,9 +37,7 @@ export const SelectionPage = () => {
       setInputValue('')
 
       try {
-        const response = await axios.post('https://api.winelibrary.wuaze.com/selection', {
-          userQuery: userQuery,
-        })
+        const response = await sendUserQuery(userQuery)
 
         const { advice, wines } = response.data
 
