@@ -1,9 +1,10 @@
-import type { Cart, CartWine } from '@/types/Cart'
-import type { Favorite } from '@/types/Favorite'
-import type { Wine } from '@/types/Wine'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
+
+import type { Cart, CartWine } from '../../types/Cart'
+import type { Favorite } from '../../types/Favorite'
+import type { Wine } from '../../types/Wine'
 
 export interface State {
   products: Wine[]

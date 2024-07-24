@@ -1,9 +1,9 @@
-import type { Wine } from '@/types/Wine'
-
-import { Icon } from '@/components/Icon'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 
+import type { Wine } from '../../types/Wine'
+
+import { Icon } from '../../components/Icon'
 import { AutoCompleteDropdown } from '../AutoDropdown'
 import { Footer } from '../Footer/Footer'
 import { ProductList } from '../ProductList/ProductList'

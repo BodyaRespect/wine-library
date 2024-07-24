@@ -1,11 +1,11 @@
-import type { Wine } from '@/types/Wine'
-
-import { addToCartServer, addToFavorite, deleteFromFavorite, removeFromCartServer } from '@/api/axiosClient'
-import { useAppDispatch } from '@/store/hooks'
-import { addFavorite, addToCart, removeFavorite, removeFromCart } from '@/store/reducers/products'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
+import type { Wine } from '../../types/Wine'
+
+import { addToCartServer, addToFavorite, deleteFromFavorite, removeFromCartServer } from '../../api/axiosClient'
+import { useAppDispatch } from '../../store/hooks'
+import { addFavorite, addToCart, removeFavorite, removeFromCart } from '../../store/reducers/products'
 import { renderStars } from '../Stars/Stars'
 
 interface Props {

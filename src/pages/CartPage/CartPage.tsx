@@ -1,15 +1,17 @@
-import type { DeliveryType } from '@/types/DeliveryType'
-import type { OrderDetails } from '@/validations/orderDetails'
 import type { z } from 'zod'
 
-import { createPayment, fetchCities, fetchPostOffices, placeOrder, sendVerification, verifyCode } from '@/api/axiosClient'
-import { AutoCompleteDropdown } from '@/components/AutoDropdown'
-import { Checkbox } from '@/components/Checkbox/Checkbox'
-import { useAppSelector } from '@/store/hooks'
-import { orderDetailsSchema } from '@/validations/orderDetails'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import type { DeliveryType } from '../../types/DeliveryType'
+import type { OrderDetails } from '../../validations/orderDetails'
+
+import { createPayment, fetchCities, fetchPostOffices, placeOrder, sendVerification, verifyCode } from '../../api/axiosClient'
+import { AutoCompleteDropdown } from '../../components/AutoDropdown'
+import { Checkbox } from '../../components/Checkbox/Checkbox'
+import { useAppSelector } from '../../store/hooks'
+import { orderDetailsSchema } from '../../validations/orderDetails'
 
 export const CartPage: React.FC = () => {
   const [email, setEmail] = useState<string>('')

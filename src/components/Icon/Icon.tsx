@@ -1,4 +1,4 @@
-import type { SvgIcons } from '@/assets/images/svg/svg-icons'
+import type { SvgIcons } from '../../assets/images/svg/svg-icons'
 
 import sprite from '/images/sprite.svg'
 

@@ -1,10 +1,10 @@
-import type { DeliveryStatus } from '@/types/DeliveryStatus'
-
-import { accessToken } from '@/api/axiosClient'
-import { useAppSelector } from '@/store/hooks'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
+import type { DeliveryStatus } from '../../types/DeliveryStatus'
+
+import { accessToken } from '../../api/axiosClient'
+import { useAppSelector } from '../../store/hooks'
 import { HistoryItem } from '../HistoryItem'
 
 interface Order {

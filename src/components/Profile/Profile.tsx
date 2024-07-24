@@ -1,10 +1,10 @@
 import type { MouseEvent } from 'react'
 
-import { accessToken } from '@/api/axiosClient'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { accessToken } from '../../api/axiosClient'
 import { Login } from '../../components/Login'
 
 export const Profile = () => {

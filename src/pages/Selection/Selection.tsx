@@ -1,9 +1,10 @@
-import type { Wine } from '@/types/Wine'
-
-import { sendUserQuery } from '@/api/axiosClient'
-import { Message } from '@/components/Message'
-import { ProductList } from '@/components/ProductList/ProductList'
 import { useState } from 'react'
+
+import type { Wine } from '../../types/Wine'
+
+import { sendUserQuery } from '../../api/axiosClient'
+import { Message } from '../../components/Message'
+import { ProductList } from '../../components/ProductList/ProductList'
 
 interface ChatEntry {
   type: 'request' | 'response'

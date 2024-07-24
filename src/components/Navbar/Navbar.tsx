@@ -1,7 +1,8 @@
-import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+
+import { useAppSelector } from '../../store/hooks'
 
 const getActiveLink = ({ isActive }: { isActive: boolean }) => {
   return cn('nav-bar__link', {

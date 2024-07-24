@@ -1,6 +1,7 @@
-import WineCarousel from '@/components/Carousel/Carousel'
-import { Footer } from '@/components/Footer'
 import { useNavigate } from 'react-router-dom'
+
+import WineCarousel from '../../components/Carousel/Carousel'
+import { Footer } from '../../components/Footer'
 
 import firstImg from '/backgrounds/about-us-first.jpg'
 import firstScroller from '/images/about_scroller_first.png'

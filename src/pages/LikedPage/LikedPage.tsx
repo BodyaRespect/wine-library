@@ -1,9 +1,10 @@
-import type { Wine } from '@/types/Wine'
-
-import { ProductList } from '@/components/ProductList/ProductList'
-import { useAppSelector } from '@/store/hooks'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import type { Wine } from '../../types/Wine'
+
+import { ProductList } from '../../components/ProductList/ProductList'
+import { useAppSelector } from '../../store/hooks'
 
 export const LikedPage = () => {
   const [favoriteWines, setFavoriteWines] = useState<Wine[]>([])

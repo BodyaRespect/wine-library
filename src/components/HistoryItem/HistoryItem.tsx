@@ -1,7 +1,7 @@
-import type { DeliveryStatus } from '@/types/DeliveryStatus'
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import type { DeliveryStatus } from '../../types/DeliveryStatus'
 
 interface Props {
   customer: string

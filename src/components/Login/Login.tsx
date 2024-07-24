@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { login } from '@/store/reducers/authentification'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { login } from '../../store/reducers/authentification'
 import Ouath from '../Oauth/Oauth'
 
 export const Login = () => {

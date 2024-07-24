@@ -1,14 +1,15 @@
-import type { Wine } from '@/types/Wine'
-
-import { accessToken, fetchWineData, fetchWineRatings } from '@/api/axiosClient'
-import { Characteristic } from '@/components/Characteristic'
-import { Comment } from '@/components/Comment/Comment'
-import { Footer } from '@/components/Footer'
-import { ProductList } from '@/components/ProductList/ProductList'
-import { renderStars } from '@/components/Stars/Stars'
-import { useAppSelector } from '@/store/hooks'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
+import type { Wine } from '../../types/Wine'
+
+import { accessToken, fetchWineData, fetchWineRatings } from '../../api/axiosClient'
+import { Characteristic } from '../../components/Characteristic'
+import { Comment } from '../../components/Comment/Comment'
+import { Footer } from '../../components/Footer'
+import { ProductList } from '../../components/ProductList/ProductList'
+import { renderStars } from '../../components/Stars/Stars'
+import { useAppSelector } from '../../store/hooks'
 
 import delivery from '/images/delivery_boy.png'
 

@@ -1,7 +1,7 @@
-import type { CommentData } from '@/types/Comment'
-
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+
+import type { CommentData } from '../../types/Comment'
 
 interface Props {
   id: string | undefined

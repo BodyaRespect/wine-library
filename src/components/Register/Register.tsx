@@ -1,7 +1,8 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { login, register } from '@/store/reducers/authentification'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { login, register } from '../../store/reducers/authentification'
 
 export const Register = () => {
   const dispatch = useAppDispatch()

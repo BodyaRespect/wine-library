@@ -1,7 +1,7 @@
-import type { Slide } from '@/components/HeroSlider'
+import type { Slide } from '../../components/HeroSlider'
 
-import { Catalog } from '@/components/Catalog'
-import { HeroSlider } from '@/components/HeroSlider'
+import { Catalog } from '../../components/Catalog'
+import { HeroSlider } from '../../components/HeroSlider'
 
 const slides: Slide[] = [
   {

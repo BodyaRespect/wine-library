@@ -1,9 +1,9 @@
-import type { Wine } from '@/types/Wine'
-
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { addRecentlyViewed } from '@/store/reducers/products'
 import { useNavigate } from 'react-router-dom'
 
+import type { Wine } from '../../types/Wine'
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { addRecentlyViewed } from '../../store/reducers/products'
 import { CartItem } from '../CartItem'
 
 interface Props {
