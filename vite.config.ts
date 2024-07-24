@@ -15,6 +15,7 @@ export default defineConfig(() => ({
 
     // ...(mode === 'development' ? [mkcert()] : []),
   ],
+  base: '/wine-library',
 
   resolve: {
     alias: {
