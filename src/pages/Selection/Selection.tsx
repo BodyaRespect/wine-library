@@ -86,7 +86,7 @@ export const SelectionPage = () => {
           : (
             <>
               <h1>
-                Make a request to help Bobik
+                Make a request to help Yarik
                 <br />
                 find the perfect bottle of wine for you
               </h1>
