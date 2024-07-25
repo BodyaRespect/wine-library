@@ -1,5 +1,6 @@
 .profile {
   @include page-grid;
+  margin: 1% auto 0;
 
   &-container {
     grid-column: 3 / 11;

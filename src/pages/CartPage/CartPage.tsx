@@ -23,7 +23,7 @@ export const CartPage: React.FC = () => {
   const [ukrPostOffices, setUkrPostOffices] = useState<string[]>([])
   const [novaPostOffices, setNovaPostOffices] = useState<string[]>([])
   const [selectedDelivery, setSelectedDelivery] = useState<string | null>('')
-  const [selectedPayment, setSelectedPayment] = useState<string | null>(null)
+  const [selectedPayment, setSelectedPayment] = useState<string>('')
   const [shippingAddress, setShippingAddress] = useState<string>('')
   const [errors, setErrors]
     = useState<z.ZodFormattedError<OrderDetails, string>>()
@@ -76,7 +76,7 @@ export const CartPage: React.FC = () => {
   const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target
 
-    setSelectedPayment(prevState => (prevState === id ? null : id))
+    setSelectedPayment(prevState => (prevState === id ? '' : id))
   }
 
   const removeError = (property: keyof OrderDetails) => {
@@ -551,8 +551,12 @@ export const CartPage: React.FC = () => {
               the Law of Ukraine dated 06.12.2019 №361-IX
             </div>
 
+            {(errors?.city || errors?.email || errors?.firstName || errors?.lastName || errors?.phoneNumber) && (
+              <span className="cart__error">Filling in Customer Data is required</span>
+            )}
+
             {carts.length === 0 && (
-              <span className="cart__error">Nothing to deliver</span>
+              <span className="cart__error">There is nothing to deliver!</span>
             )}
             {errors?.shippingAddress?._errors.at(0) && (
               <span className="cart__error">

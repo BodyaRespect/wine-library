@@ -61,7 +61,7 @@ export const ProductDetails: React.FC = () => {
     fetchWineData(+id)
       .then(response => setWineData(response.data))
       .catch(error => console.error('Error fetching wine data:', error))
-  }, [])
+  }, [id])
 
   useEffect(() => {
     fetchWineRatings(+id)
@@ -75,7 +75,7 @@ export const ProductDetails: React.FC = () => {
         }
       })
       .catch(error => console.error('Error fetching wine data:', error))
-  }, [])
+  }, [id])
 
   if (!wineData) {
     return

@@ -27,13 +27,10 @@ export const History = () => {
     switch (status) {
       case 'PENDING':
         return 'On the road'
-
       case 'DELIVERED':
         return 'In the post office'
-
       case 'COMPLETED':
         return 'Completed'
-
       default:
         return 'On the road'
     }
@@ -43,29 +40,25 @@ export const History = () => {
     switch (status) {
       case 'PENDING':
         return 'road'
-
       case 'DELIVERED':
         return 'post'
-
       case 'COMPLETED':
         return 'completed'
-
       default:
         return 'unknown'
     }
   }
 
   useEffect(() => {
-    const handleTokenChange = () => {
-      setAccessToken(Cookies.get('accessToken'))
-    }
+    const interval = setInterval(() => {
+      const newToken = Cookies.get('accessToken')
+      if (newToken !== accessToken) {
+        setAccessToken(newToken)
+      }
+    }, 1000)
 
-    window.addEventListener('cookiechange', handleTokenChange)
-
-    return () => {
-      window.removeEventListener('cookiechange', handleTokenChange)
-    }
-  }, [])
+    return () => clearInterval(interval)
+  }, [accessToken])
 
   useEffect(() => {
     if (!accessToken) {
@@ -89,6 +82,19 @@ export const History = () => {
       })
       .catch(error => console.error('Error fetching orders:', error))
   }, [accessToken])
+
+  if (!accessToken) {
+    return (
+      <div className="container">
+        <div className="history">
+          <div className="history__container">
+            <div className="history__title">Order history</div>
+            <p>Please log in to view your order history.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container">

@@ -4,11 +4,17 @@
   position: relative;
 
   &__error {
+    background-color: $color-white;
+    padding: 6px;
+    border-radius: 12px;
+    max-width: max-content;
     grid-column: span 4;
-    color: $color-accent;
-    font-size: 1rem;
+    color: $color-login-error;
+    font-size: 14px;
     margin: 0 0 0 3px;
     animation: fadeIn 0.3s ease-out forwards;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
 
     @keyframes fadeIn {
       from {

@@ -27,7 +27,7 @@ export const About = () => {
             about the art of wine and open up new horizons of taste.
           </p>
 
-          <button className="about-first-info-button" onClick={() => navigate('wine-library/home')}>
+          <button className="about-first-info-button" onClick={() => navigate('/wine-library/home')}>
             <div className="about-first-info-button-text">
               Click here
               <br />
@@ -87,7 +87,7 @@ export const About = () => {
               Join our community of wine connoisseurs and enjoy impeccable service.
             </p>
 
-            <button className="about-first-info-button" onClick={() => navigate('/register')}>
+            <button className="about-first-info-button" onClick={() => navigate('/wine-library/register')}>
               <div className="about-first-info-button-text">
                 Click here
                 <br />

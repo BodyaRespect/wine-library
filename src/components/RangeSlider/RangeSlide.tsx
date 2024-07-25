@@ -57,7 +57,7 @@ export const RangeSlider: React.FC<Props> = ({ onChange }) => {
         ariaLabel={['Lower thumb', 'Upper thumb']}
         ariaValuetext={state => `Thumb value ${state.valueNow}`}
         className="horizontal-slider"
-        max={1000}
+        max={100000}
         min={1}
         minDistance={100}
         onChange={handleSliderChange}

@@ -53,7 +53,7 @@ export const LikedPage = () => {
         <div className="liked__wines">
           <ProductList column={4} wines={moreWines} />
         </div>
-        <button className="liked__button-showmore" onClick={() => navigate('/home')}>
+        <button className="liked__button-showmore" onClick={() => navigate('/wine-library/home')}>
           Show
           <br />
           more drinks

@@ -1,6 +1,5 @@
 .catalog {
   padding: 100px 0;
-  height: max-content;
 
   &__grid {
     @include page-grid;
@@ -43,7 +42,6 @@
     &-list {
       display: grid;
       grid-row-gap: 10px;
-      min-height: max-content;
     }
 
     &-check {
@@ -91,10 +89,9 @@
     grid-column: 4 / -1;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
+    grid-template-rows: min-content;
     column-gap: 20px;
     row-gap: 32px;
-    min-height: max-content;
   }
 
   &__bar {
@@ -187,7 +184,6 @@
     grid-template-columns: repeat(12, 1fr);
     gap: 20px;
     margin-bottom: 32px;
-    min-height: max-content;
   }
 }
 
