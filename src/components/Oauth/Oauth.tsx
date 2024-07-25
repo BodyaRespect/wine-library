@@ -39,7 +39,7 @@ export default function Oauth() {
 
   useEffect(() => {
     if (isLoggedin) {
-      navigate('/home')
+      navigate('wine-library/home')
     }
   }, [isLoggedin, navigate])
 

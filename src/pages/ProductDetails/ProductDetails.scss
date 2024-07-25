@@ -161,6 +161,14 @@
     background-color: $background;
   }
 
+  &__liked {
+    border: none;
+    height: 53px;
+    width: 53px;
+    background-image: url(/icons/icon_add_to_like.svg);
+    background-color: $background;
+  }
+
   &__buy {
     display: flex;
     align-items: center;
@@ -178,6 +186,33 @@
     text-align: left;
     text-wrap: nowrap;
     color: #fff;
+
+    &__icon {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      background-image: url(/icons/icon_details.svg);
+      background-position: center;
+    }
+  }
+
+  &__bought {
+    display: flex;
+    align-items: center;
+    width: 204px;
+    height: 52px;
+    padding: 10px 24px;
+    gap: 24px;
+    border-radius: 8px;
+    border: 1px solid $color-accent-stroke;
+    background-color: $color-white;
+    font-family: $font-secondary;;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    text-wrap: nowrap;
+    color: $color-accent;
 
     &__icon {
       display: flex;

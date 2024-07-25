@@ -3,17 +3,19 @@ import { useParams } from 'react-router-dom'
 
 import type { Wine } from '../../types/Wine'
 
-import { accessToken, fetchWineData, fetchWineRatings } from '../../api/axiosClient'
+import { accessToken, addToCartServer, addToFavorite, deleteFromFavorite, fetchWineData, fetchWineRatings, removeFromCartServer } from '../../api/axiosClient'
 import { Characteristic } from '../../components/Characteristic'
 import { Comment } from '../../components/Comment/Comment'
 import { Footer } from '../../components/Footer'
 import { ProductList } from '../../components/ProductList/ProductList'
 import { renderStars } from '../../components/Stars/Stars'
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { addFavorite, addToCart, removeFavorite, removeFromCart } from '../../store/reducers/products'
 
 import delivery from '/images/delivery_boy.png'
 
 export const ProductDetails: React.FC = () => {
+  const dispatch = useAppDispatch()
   const { id = '0' } = useParams<{ id: string }>()
   const [wineData, setWineData] = useState<Wine>()
   const [rate, setRate] = useState(0)
@@ -23,12 +25,37 @@ export const ProductDetails: React.FC = () => {
   const sections = ['Description', 'Characteristics', 'Comments']
 
   const wines = useAppSelector(state => state.products.products)
+  const isFavorite = useAppSelector(state => state.products.favorites.map(item => item.wineId)).includes(+id)
+  const isCart = useAppSelector(state => state.products.cart.cartItems.map(item => item.wineId)).includes(+id)
   const start = parseInt(id)
   const end = (parseInt(id) + 4) % wines.length
 
   const slicedWines = start < end
     ? wines.slice(start, end)
     : [...wines.slice(start), ...wines.slice(0, end)]
+
+  const handleToggleCart = () => {
+    if (isCart) {
+      dispatch(removeFromCart(+id))
+      removeFromCartServer(+id)
+    }
+    else {
+      dispatch(addToCart({ wineId: +id }))
+      addToCartServer(+id)
+    }
+  }
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite(+id))
+      deleteFromFavorite(+id)
+    }
+    else {
+      dispatch(addFavorite({ wineId: +id }))
+      addToFavorite(+id)
+      setRate(5)
+    }
+  }
 
   useEffect(() => {
     fetchWineData(+id)
@@ -161,10 +188,17 @@ export const ProductDetails: React.FC = () => {
               </div>
 
               <div className="details__buttons">
-                <button className="details__like"></button>
+                <button
+                  className={`details__${isFavorite ? 'liked' : 'like'}`}
+                  onClick={handleToggleFavorite}
+                >
+                </button>
 
-                <button className="details__buy">
-                  Add to cart
+                <button
+                  className={`details__${isCart ? 'bought' : 'buy'}`}
+                  onClick={handleToggleCart}
+                >
+                  {`${isCart ? 'In the Cart' : 'Add to Cart'}`}
                   <div className="details__buy__icon"></div>
                 </button>
               </div>

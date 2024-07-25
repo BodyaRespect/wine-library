@@ -19,6 +19,13 @@ interface Props {
 export const HeroSlider = ({ slides }: Props) => {
   const swiperElRef = useRef(null)
 
+  const scrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: 'smooth',
+    })
+  }
+
   useEffect(() => {
     if (!swiperElRef.current) {
       return
@@ -51,7 +58,7 @@ export const HeroSlider = ({ slides }: Props) => {
             <div className="container hero-slider__content">
               <h1 className="hero-slider__title">{title}</h1>
               {description && <p className="hero-slider__description">{description}</p>}
-              <button className="btn btn-arrow hero-slider__action">
+              <button className="btn btn-arrow hero-slider__action" onClick={scrollDown}>
                 <b>Scroll down</b>
                 {' to choose your drink'}
               </button>

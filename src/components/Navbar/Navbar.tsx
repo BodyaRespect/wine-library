@@ -33,32 +33,32 @@ export const NavBar = () => {
       <div className="container">
         <nav className="nav-bar">
           <div className="nav-bar__left-group">
-            <Link className="nav-bar__logo" to="/home" />
+            <Link className="nav-bar__logo" to="wine-library/home" />
 
             <ul className="nav-bar__links">
-              <NavLink className={getActiveLink} to="/about">
+              <NavLink className={getActiveLink} to="wine-library/about">
                 About us
               </NavLink>
-              <NavLink className={getActiveLink} to="/history">
+              <NavLink className={getActiveLink} to="wine-library/history">
                 Order History
               </NavLink>
-              <NavLink className={getActiveLink} to="/selection">
+              <NavLink className={getActiveLink} to="wine-library/selection">
                 Selection
               </NavLink>
             </ul>
 
             <ul className="nav-bar__right-group">
-              <NavLink className={getActiveTab} to="/profile">
+              <NavLink className={getActiveTab} to="wine-library/profile">
                 <div className="nav-bar__profile icon"></div>
               </NavLink>
 
-              <NavLink className={getActiveTab} to="/favorites">
+              <NavLink className={getActiveTab} to="wine-library/favorites">
                 <div className="nav-bar__favorite icon">
                   {isFavoriteCounterVisible && (<div className="nav-bar__icon-text">{favoritesCounter}</div>)}
                 </div>
               </NavLink>
 
-              <NavLink className={getActiveTab} to="/cart">
+              <NavLink className={getActiveTab} to="wine-library/cart">
                 <div className="nav-bar__cart icon">
                   {isCartCounterVisible && (<div className="nav-bar__icon-text">{cartCounter}</div>)}
                 </div>

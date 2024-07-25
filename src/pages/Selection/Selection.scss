@@ -1,9 +1,11 @@
 .selection-container {
-  margin-top: 100px;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: 24px;
+  height: auto;
+  overflow-x: hidden;
 
   .chat-container {
     display: flex;

@@ -1,9 +1,9 @@
-import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import type { DeliveryStatus } from '../../types/DeliveryStatus'
 
-import { accessToken } from '../../api/axiosClient'
+import { fetchOrders } from '../../api/axiosClient'
 import { useAppSelector } from '../../store/hooks'
 import { HistoryItem } from '../HistoryItem'
 
@@ -20,6 +20,7 @@ interface Order {
 
 export const History = () => {
   const [orders, setOrders] = useState<Order[]>([])
+  const [accessToken, setAccessToken] = useState(Cookies.get('accessToken'))
   const wines = useAppSelector(state => state.products.products)
 
   const mapStatus = (status: string): DeliveryStatus => {
@@ -42,21 +43,36 @@ export const History = () => {
     switch (status) {
       case 'PENDING':
         return 'road'
+
       case 'DELIVERED':
         return 'post'
+
       case 'COMPLETED':
         return 'completed'
+
       default:
         return 'unknown'
     }
   }
 
   useEffect(() => {
-    axios.get('https://api.winelibrary.wuaze.com/orders', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    const handleTokenChange = () => {
+      setAccessToken(Cookies.get('accessToken'))
+    }
+
+    window.addEventListener('cookiechange', handleTokenChange)
+
+    return () => {
+      window.removeEventListener('cookiechange', handleTokenChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!accessToken) {
+      return
+    }
+
+    fetchOrders()
       .then((response) => {
         const fetchedOrders = response.data.map((order: any) => ({
           customer: `${order.firstName} ${order.lastName}`,
@@ -72,7 +88,7 @@ export const History = () => {
         setOrders(fetchedOrders)
       })
       .catch(error => console.error('Error fetching orders:', error))
-  }, [])
+  }, [accessToken])
 
   return (
     <div className="container">
@@ -85,7 +101,7 @@ export const History = () => {
               .filter(image => image) as string[]
             const wineIds = order.orderedItems
               .map(item => wines.find(wine => wine.id === item.wineId)?.id)
-              .filter(image => image) as number[]
+              .filter(id => id) as number[]
 
             return (
               <HistoryItem

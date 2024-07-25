@@ -74,6 +74,14 @@ export const placeOrder = (orderDetails: any) => {
   })
 }
 
+export const fetchOrders = () => {
+  return axios.get('https://api.winelibrary.wuaze.com/orders', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+}
+
 export const sendVerification = (phoneNumber: string) => {
   return axios.post('https://api.winelibrary.wuaze.com/verification/send', { phoneNumber }, {
     headers: {
@@ -101,5 +109,13 @@ export const fetchWineRatings = (id: number) => {
 export const sendUserQuery = (userQuery: string) => {
   return axios.post('https://api.winelibrary.wuaze.com/selection', {
     userQuery: userQuery,
+  })
+}
+
+export const addFavoritesToCart = () => {
+  return axios.post('https://api.winelibrary.wuaze.com/cart/add-favorites', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   })
 }

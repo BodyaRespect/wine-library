@@ -6,6 +6,7 @@ import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper'
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
+  base: '/wine-library/',
   plugins: [
     react(),
     ViteSvgSpriteWrapper({
@@ -15,7 +16,6 @@ export default defineConfig(() => ({
 
     // ...(mode === 'development' ? [mkcert()] : []),
   ],
-  base: '/wine-library',
 
   resolve: {
     alias: {

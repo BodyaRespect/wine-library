@@ -52,7 +52,7 @@ export const CartItem: React.FC<Props> = ({ isCart, wine, isFavorite, onClick })
     else {
       dispatch(addFavorite({ wineId: wine.id }))
       addToFavorite(wine.id)
-      setRate(0)
+      setRate(5)
     }
   }
 

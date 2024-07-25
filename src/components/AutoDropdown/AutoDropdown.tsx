@@ -47,6 +47,11 @@ export const AutoCompleteDropdown: React.FC<Props> = ({ options, onSelectOption,
     }
   }
 
+  const handleInputClick = () => {
+    setFilteredOptions(options)
+    setShowOptions(prevShowOptions => !prevShowOptions)
+  }
+
   useEffect(() => {
     setIsLogo(logo)
     document.addEventListener('mousedown', handleClickOutside)
@@ -65,7 +70,7 @@ export const AutoCompleteDropdown: React.FC<Props> = ({ options, onSelectOption,
         <input
           className="autocomplete-input"
           onChange={handleInputChange}
-          onClick={() => setShowOptions(true)}
+          onClick={handleInputClick}
           placeholder={placeholder}
           type="text"
           value={inputValue}

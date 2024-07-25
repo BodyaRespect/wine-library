@@ -3,11 +3,13 @@ import type { MouseEvent } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { accessToken } from '../../api/axiosClient'
 import { Login } from '../../components/Login'
 
 export const Profile = () => {
+  const navigate = useNavigate()
+  const [token, setToken] = useState(Cookies.get('accessToken') || '')
   const [active, setActive] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -26,7 +28,7 @@ export const Profile = () => {
       try {
         const response = await axios.get('https://api.winelibrary.wuaze.com/users/me', {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         const { firstName, lastName, email } = response.data
@@ -40,8 +42,29 @@ export const Profile = () => {
       }
     }
 
-    fetchUserProfile()
+    if (token) {
+      fetchUserProfile()
+    }
+  }, [token])
+
+  useEffect(() => {
+    const handleTokenChange = () => {
+      const newToken = Cookies.get('accessToken') || ''
+      setToken(newToken)
+    }
+
+    handleTokenChange()
+
+    const interval = setInterval(handleTokenChange, 1000)
+
+    return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (token) {
+      navigate('/wine-library/profile') // Перенаправлення на сторінку профілю
+    }
+  }, [token, navigate])
 
   const handlePasswordUpdate = async () => {
     const newErrors = { currentPassword: '', newPassword: '', repeatPassword: '' }
@@ -64,7 +87,7 @@ export const Profile = () => {
           repeatedPassword: repeatPassword,
         }, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`,
           },
         })
 
@@ -88,7 +111,7 @@ export const Profile = () => {
         firstName,
       }, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       console.log('First name updated successfully:', response.data)
@@ -115,7 +138,7 @@ export const Profile = () => {
         lastName,
       }, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       console.log('Last name updated successfully:', response.data)
@@ -138,7 +161,7 @@ export const Profile = () => {
 
   return (
     <div className="container">
-      {accessToken
+      {token
         ? (
           <div className="profile">
             <div className="profile-container">
@@ -198,8 +221,11 @@ export const Profile = () => {
                   </button>
 
                   <button
+                    onClick={() => {
+                      Cookies.remove('accessToken')
+                      setToken('')
+                    }}
                     className="profile__button profile__buttons-logout"
-                    onClick={() => Cookies.remove('accessToken')}
                     type="button"
                   >
                     Log out

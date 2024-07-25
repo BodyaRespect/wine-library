@@ -5,7 +5,6 @@ import type { Wine } from '../../types/Wine'
 
 import { Icon } from '../../components/Icon'
 import { AutoCompleteDropdown } from '../AutoDropdown'
-import { Footer } from '../Footer/Footer'
 import { ProductList } from '../ProductList/ProductList'
 import { RangeSlider } from '../RangeSlider'
 
@@ -259,15 +258,11 @@ export const Catalog = () => {
               </div>
 
               <div className="catalog__list">
-                <ProductList column={3} wines={filteredCatalog.slice(0, 12)} />
+                <ProductList column={3} wines={filteredCatalog} />
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      <section>
-        <Footer />
       </section>
     </>
   )

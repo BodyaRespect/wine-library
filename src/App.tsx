@@ -46,16 +46,16 @@ function App() {
 
       <main className="main">
         <Routes>
-          <Route element={<Home />} path="/home" index />
-          <Route element={<About />} path="/about" index />
-          <Route element={<History />} path="/history" index />
-          <Route element={<SelectionPage />} path="/selection" index />
-          <Route element={<Profile />} path="/profile" index />
-          <Route element={<LikedPage />} path="/favorites" index />
-          <Route element={<CartPage />} path="/cart" index />
-          <Route element={<ProductDetails />} path="/productdetails/:id" />
-          <Route element={<Register />} path="/register" index />
-          <Route element={<Login />} path="/" />
+          <Route element={<Home />} path="wine-library/home" index />
+          <Route element={<About />} path="wine-library/about" index />
+          <Route element={<History />} path="wine-library/history" index />
+          <Route element={<SelectionPage />} path="wine-library/selection" index />
+          <Route element={<Profile />} path="wine-library/profile" index />
+          <Route element={<LikedPage />} path="wine-library/favorites" index />
+          <Route element={<CartPage />} path="wine-library/cart" index />
+          <Route element={<ProductDetails />} path="wine-library/productdetails/:id" />
+          <Route element={<Register />} path="wine-library/register" index />
+          <Route element={<Login />} path="wine-library/login" />
           <Route element={<PageNotFound />} path="*" />
         </Routes>
       </main>

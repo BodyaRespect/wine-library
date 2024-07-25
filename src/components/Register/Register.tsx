@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { login, register } from '../../store/reducers/authentification'
@@ -7,6 +8,7 @@ import { login, register } from '../../store/reducers/authentification'
 export const Register = () => {
   const dispatch = useAppDispatch()
   const { loading } = useAppSelector(state => state.auth)
+  const navigate = useNavigate()
 
   const [showPasswordFields, setShowPasswordFields] = useState(false)
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
@@ -129,6 +131,9 @@ export const Register = () => {
 
         const { token } = loginResult
         Cookies.set('accessToken', token)
+
+        // Redirect to /profile after successful login
+        navigate('/wine-library/profile')
       }
       catch (err) {
         console.error('Failed to login:', err)
