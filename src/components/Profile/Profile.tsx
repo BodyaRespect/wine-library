@@ -17,6 +17,10 @@ export const Profile = () => {
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+  const [editState, setEditState] = useState({
+    firstName: false,
+    lastName: false,
+  })
   const [errors, setErrors] = useState({
     currentPassword: '',
     newPassword: '',
@@ -66,7 +70,8 @@ export const Profile = () => {
     }
   }, [token, navigate])
 
-  const handlePasswordUpdate = async () => {
+  const handlePasswordUpdate = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     const newErrors = { currentPassword: '', newPassword: '', repeatPassword: '' }
 
     if (newPassword === currentPassword) {
@@ -105,7 +110,8 @@ export const Profile = () => {
     }
   }
 
-  const handleFirstNameUpdate = async () => {
+  const handleFirstNameUpdate = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     try {
       const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/first-name', {
         firstName,
@@ -115,6 +121,7 @@ export const Profile = () => {
         },
       })
       console.log('First name updated successfully:', response.data)
+      setEditState(prevState => ({ ...prevState, firstName: false })) // Disable editing
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
@@ -127,12 +134,8 @@ export const Profile = () => {
     }
   }
 
-  const handleFirstNameUpdateClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleLastNameUpdate = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    handleFirstNameUpdate()
-  }
-
-  const handleLastNameUpdate = async () => {
     try {
       const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/last-name', {
         lastName,
@@ -142,6 +145,7 @@ export const Profile = () => {
         },
       })
       console.log('Last name updated successfully:', response.data)
+      setEditState(prevState => ({ ...prevState, lastName: false })) // Disable editing
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
@@ -154,9 +158,14 @@ export const Profile = () => {
     }
   }
 
-  const handleLastNameUpdateClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleFirstNameEditClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    handleLastNameUpdate()
+    setEditState(prevState => ({ ...prevState, firstName: true }))
+  }
+
+  const handleLastNameEditClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    setEditState(prevState => ({ ...prevState, lastName: true }))
   }
 
   return (
@@ -171,6 +180,7 @@ export const Profile = () => {
                 <label htmlFor="firstname">First name</label>
                 <div className="profile__field">
                   <input
+                    disabled={!editState.firstName}
                     id="firstname"
                     name="firstname"
                     onChange={event => setFirstName(event.target.value)}
@@ -180,12 +190,23 @@ export const Profile = () => {
                     required
                   />
 
-                  <button className="profile__field-icon" onClick={handleFirstNameUpdateClick}></button>
+                  {editState.firstName
+                    ? (
+                      <button className="profile__field-approve" onClick={handleFirstNameUpdate}>
+                        {/* Icon for confirmation */}
+                      </button>
+                      )
+                    : (
+                      <button className="profile__field-icon" onClick={handleFirstNameEditClick}>
+                        {/* Icon for editing */}
+                      </button>
+                      )}
                 </div>
 
-                <label htmlFor="password">Last name</label>
+                <label htmlFor="lastname">Last name</label>
                 <div className="profile__field">
                   <input
+                    disabled={!editState.lastName}
                     id="lastname"
                     name="lastname"
                     onChange={event => setLastName(event.target.value)}
@@ -195,12 +216,23 @@ export const Profile = () => {
                     required
                   />
 
-                  <button className="profile__field-icon" onClick={handleLastNameUpdateClick}></button>
+                  {editState.lastName
+                    ? (
+                      <button className="profile__field-approve" onClick={handleLastNameUpdate}>
+                        {/* Icon for confirmation */}
+                      </button>
+                      )
+                    : (
+                      <button className="profile__field-icon" onClick={handleLastNameEditClick}>
+                        {/* Icon for editing */}
+                      </button>
+                      )}
                 </div>
 
                 <label htmlFor="email">Email address</label>
                 <div className="profile__field">
                   <input
+                    disabled={true}
                     id="email"
                     name="email"
                     onChange={event => setEmail(event.target.value)}

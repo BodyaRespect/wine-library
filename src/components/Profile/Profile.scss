@@ -26,6 +26,13 @@
       height: 24px;
       background-image: url('/icons/icon_edit.svg');
     }
+
+    &-approve {
+      border: none;
+      width: 24px;
+      height: 24px;
+      background-image: url('/icons/icon_approve.svg');
+    }
   }
 
   &__buttons {
