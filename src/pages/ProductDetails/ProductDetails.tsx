@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import type { Wine } from '../../types/Wine'
 
@@ -16,9 +16,11 @@ import delivery from '/images/delivery_boy.png'
 
 export const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { id = '0' } = useParams<{ id: string }>()
   const [wineData, setWineData] = useState<Wine>()
   const [rate, setRate] = useState(0)
+  const [isOpen, setIsOpen] = useState(true)
   const [activeSection, setActiveSection] = useState('Description')
   const [showFullDescription, setShowFullDescription] = useState(false)
 
@@ -206,37 +208,44 @@ export const ProductDetails: React.FC = () => {
           </div>
         </div>
 
-        {!accessToken && (
-          <div className="container">
-            <div className="delivery">
-              <div className="delivery__offer">
-                <div className="delivery__offer-container">
-                  <div className="delivery__offer-container-info">
-                    <div className="delivery__offer-container-icon"></div>
+        {!accessToken() && isOpen
+          ? (
+            <div className="container">
+              <div className="delivery">
+                <div className="delivery__offer">
+                  <div className="delivery__offer-container">
+                    <div className="delivery__offer-container-info">
+                      <div className="delivery__offer-container-icon"></div>
 
-                    <div className="delivery__offer-container-text">
-                      When you register, you get
-                      <br />
-                      free delivery on your first order!
+                      <div className="delivery__offer-container-text">
+                        When you register, you get
+                        <br />
+                        free delivery on your first order!
+                      </div>
+
+                      <button className="delivery__offer-container-button" onClick={() => navigate('/wine-library/register')}>Register</button>
                     </div>
 
-                    <button className="delivery__offer-container-button">Register</button>
+                    <img
+                      alt="deliveryImage"
+                      className="delivery__offer-container-image"
+                      src={delivery}
+                    />
+
+                    <button className="delivery__offer-container-image-button" onClick={() => setIsOpen(false)}></button>
                   </div>
-
-                  <img
-                    alt="deliveryImage"
-                    className="delivery__offer-container-image"
-                    src={delivery}
-                  />
-
-                  <button className="delivery__offer-container-image-button"></button>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+            )
+          : (
+            <div className="container">
+              <div className="delivery__image"></div>
+            </div>
+            )}
 
         <div className="container">
+          <h3 className="alsolike">You might also like</h3>
           <ProductList column={4} wines={slicedWines} />
         </div>
       </div>

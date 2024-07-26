@@ -20,7 +20,7 @@ interface Order {
 
 export const History = () => {
   const [orders, setOrders] = useState<Order[]>([])
-  const [accessToken, setAccessToken] = useState(Cookies.get('accessToken'))
+  const [token, setToken] = useState(Cookies.get('accessToken') || '')
   const wines = useAppSelector(state => state.products.products)
 
   const mapStatus = (status: string): DeliveryStatus => {
@@ -49,41 +49,45 @@ export const History = () => {
     }
   }
 
+  const handleTokenChange = () => {
+    const newToken = Cookies.get('accessToken') || ''
+    setToken(newToken)
+  }
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newToken = Cookies.get('accessToken')
-      if (newToken !== accessToken) {
-        setAccessToken(newToken)
-      }
-    }, 1000)
+    handleTokenChange()
+
+    const interval = setInterval(handleTokenChange, 1000)
 
     return () => clearInterval(interval)
-  }, [accessToken])
+  }, [])
 
   useEffect(() => {
-    if (!accessToken) {
-      return
+    handleTokenChange()
+  }, [window.location.pathname])
+
+  useEffect(() => {
+    if (token) {
+      fetchOrders()
+        .then((response) => {
+          const fetchedOrders = response.data.map((order: any) => ({
+            customer: `${order.firstName} ${order.lastName}`,
+            address: `${order.shippingAddress}, ${order.city}`,
+            id: order.id,
+            date: new Date(order.orderDate).toLocaleDateString(),
+            price: order.total,
+            status: mapStatus(order.status),
+            icon: mapIcon(order.status),
+            orderedItems: order.orderItems,
+          }))
+
+          setOrders(fetchedOrders)
+        })
+        .catch(error => console.error('Error fetching orders:', error))
     }
+  }, [token, window.location.pathname])
 
-    fetchOrders()
-      .then((response) => {
-        const fetchedOrders = response.data.map((order: any) => ({
-          customer: `${order.firstName} ${order.lastName}`,
-          address: `${order.shippingAddress}, ${order.city}`,
-          id: order.id,
-          date: new Date(order.orderDate).toLocaleDateString(),
-          price: order.total,
-          status: mapStatus(order.status),
-          icon: mapIcon(order.status),
-          orderedItems: order.orderItems,
-        }))
-
-        setOrders(fetchedOrders)
-      })
-      .catch(error => console.error('Error fetching orders:', error))
-  }, [accessToken])
-
-  if (!accessToken) {
+  if (!token) {
     return (
       <div className="container">
         <div className="history">

@@ -78,6 +78,17 @@ const productsSlice = createSlice({
         state.recentlyViewed.push(action.payload)
       }
     },
+
+    addAllFavorites: (state) => {
+      const favoriteIds = state.favorites.map(favorite => favorite.wineId)
+      favoriteIds.forEach((favoriteId) => {
+        if (!state.cart.cartItems.some(item => item.wineId === favoriteId)) {
+          state.cart.cartItems.push({
+            wineId: favoriteId,
+          })
+        }
+      })
+    },
   },
 })
 
@@ -94,4 +105,5 @@ export const {
   removeFromCart,
   setRecentlyViewed,
   addRecentlyViewed,
+  addAllFavorites,
 } = productsSlice.actions

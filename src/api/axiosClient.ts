@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const accessToken = Cookies.get('accessToken')
+export const accessToken = () => Cookies.get('accessToken') || ''
 
 export const fetchWines = () => {
   return axios.get('https://api.winelibrary.wuaze.com/wines?size=50')
@@ -10,7 +10,7 @@ export const fetchWines = () => {
 export const fetchFavorites = () => {
   return axios.get('https://api.winelibrary.wuaze.com/favorite', {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -18,7 +18,7 @@ export const fetchFavorites = () => {
 export const fetchCartItems = () => {
   return axios.get('https://api.winelibrary.wuaze.com/cart', {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -29,7 +29,7 @@ export const addToCartServer = (wineId: number) => {
     quantity: 1,
   }, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -37,7 +37,7 @@ export const addToCartServer = (wineId: number) => {
 export const removeFromCartServer = (wineId: number) => {
   return axios.delete(`https://api.winelibrary.wuaze.com/cart/items/${wineId}`, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -45,7 +45,7 @@ export const removeFromCartServer = (wineId: number) => {
 export const addToFavorite = (wineId: number) => {
   return axios.post(`https://api.winelibrary.wuaze.com/favorite/${wineId}`, {}, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -53,7 +53,7 @@ export const addToFavorite = (wineId: number) => {
 export const deleteFromFavorite = (wineId: number) => {
   return axios.delete(`https://api.winelibrary.wuaze.com/favorite/${wineId}`, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -69,7 +69,7 @@ export const fetchPostOffices = (city: string) => {
 export const placeOrder = (orderDetails: any) => {
   return axios.post('https://api.winelibrary.wuaze.com/orders', orderDetails, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -77,7 +77,7 @@ export const placeOrder = (orderDetails: any) => {
 export const fetchOrders = () => {
   return axios.get('https://api.winelibrary.wuaze.com/orders', {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -85,7 +85,7 @@ export const fetchOrders = () => {
 export const sendVerification = (phoneNumber: string) => {
   return axios.post('https://api.winelibrary.wuaze.com/verification/send', { phoneNumber }, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }
@@ -113,9 +113,9 @@ export const sendUserQuery = (userQuery: string) => {
 }
 
 export const addFavoritesToCart = () => {
-  return axios.post('https://api.winelibrary.wuaze.com/cart/add-favorites', {
+  return axios.post('https://api.winelibrary.wuaze.com/cart/add-favorites', {}, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   })
 }

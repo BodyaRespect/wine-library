@@ -285,6 +285,18 @@
   column-gap: 24px;
   justify-content: center;
 
+  &__image {
+    background-image: url(../../../public/backgrounds/delivery-image.png);
+    background-position: center;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 400px;
+    gap: 0px;
+    border-radius: 24px;
+    border: 0.5px solid $color-gray;
+    box-shadow: 0px 4px 15px 0px $color-black;
+  }
+
   &__offer {
     grid-column: 4 / 10;
     display: flex;
@@ -360,4 +372,14 @@
       }
     }
   }
+}
+
+.alsolike {
+  margin-bottom: 16px;
+  font-family: $font-secondary;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  text-align: left;
+  color: $color-text-main;
 }

@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom'
 
 import type { Wine } from '../../types/Wine'
 
+import { accessToken, addFavoritesToCart } from '../../api/axiosClient'
 import { ProductList } from '../../components/ProductList/ProductList'
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { addAllFavorites } from '../../store/reducers/products'
 
 export const LikedPage = () => {
   const [favoriteWines, setFavoriteWines] = useState<Wine[]>([])
   const [moreWines, setMoreWines] = useState<Wine[]>([])
   const [viewed, setViewed] = useState<Wine[]>([])
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const favorites = useAppSelector(state => state.products.favorites)
@@ -30,6 +33,16 @@ export const LikedPage = () => {
     setViewed(recentlyViewed)
   }, [favorites, wines, recentlyViewed])
 
+  const handleOrderFavorites = () => {
+    addFavoritesToCart()
+      .then(() => {
+        dispatch(addAllFavorites())
+      })
+      .catch((error) => {
+        console.error('Error adding favorites to cart:', error)
+      })
+  }
+
   return (
     <div className="container">
       <div className="liked">
@@ -39,9 +52,11 @@ export const LikedPage = () => {
               Liked list
             </h2>
 
-            <button className="liked__button">
-              Order the whole list
-            </button>
+            {accessToken() && (
+              <button className="liked__button" onClick={handleOrderFavorites}>
+                Order the whole list
+              </button>
+            )}
 
             <div className="liked__wines">
               <ProductList column={4} wines={favoriteWines} />

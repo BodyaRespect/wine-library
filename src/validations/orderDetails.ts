@@ -8,8 +8,8 @@ export const orderDetailsSchema = z.object({
   lastName: z.string().min(1, 'Input your last name'),
   phoneNumber: z.string().regex(phoneRegex, 'Input your phone number'),
   city: z.string().min(4, 'Select your city'),
-  shippingAddress: z.string().min(3, 'Filling in Delivery is required'),
-  deliveryType: z.string().min(5, 'Also, select the delivery type'),
+  shippingAddress: z.string().min(3, 'Enter the delivery address'),
+  deliveryType: z.string().min(5, 'Select the delivery type'),
   paymentType: z.string().min(5, 'Filling in Payment is required'),
 })
 

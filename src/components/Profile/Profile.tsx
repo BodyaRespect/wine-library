@@ -62,7 +62,7 @@ export const Profile = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/wine-library/profile') // Перенаправлення на сторінку профілю
+      navigate('/wine-library/profile')
     }
   }, [token, navigate])
 

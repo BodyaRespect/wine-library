@@ -91,6 +91,7 @@ export const Catalog = () => {
   const [selectedOption, setSelectedOption] = useState<string>('')
   const [minPrice, setMinPrice] = useState<number | undefined>()
   const [maxPrice, setMaxPrice] = useState<number | undefined>()
+  const [filterVisibility, setFilterVisibility] = useState<boolean[]>(new Array(filters.length + 1).fill(true))
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -112,6 +113,14 @@ export const Catalog = () => {
       inputRef.current.focus()
     }
     setSearchQuery('')
+  }
+
+  const toggleFilterVisibility = (index: number) => {
+    setFilterVisibility((prevVisibility) => {
+      const newVisibility = [...prevVisibility]
+      newVisibility[index] = !newVisibility[index]
+      return newVisibility
+    })
   }
 
   useEffect(() => {
@@ -179,7 +188,15 @@ export const Catalog = () => {
     setMaxPrice(max)
   }
 
-  console.log({ catalog })
+  const getStyle = (index: number) => ({
+    maxHeight: filterVisibility[index] ? '1000px' : '0',
+    opacity: filterVisibility[index] ? 1 : 0,
+    transition: 'max-height 0.5s ease, opacity 0.5s ease',
+    overflow: 'hidden',
+    display: 'grid',
+    gridRowGap: '10px',
+    paddingBottom: '32px',
+  })
 
   return (
     <>
@@ -190,11 +207,11 @@ export const Catalog = () => {
               <div className="catalog__filter-block">
                 <div className="catalog__filter-head">
                   <h4 className="catalog__filter-title">Price</h4>
-                  <button className="catalog__filter-toggle" type="button">
-                    <Icon icon="icon_chevron_up" />
+                  <button className="catalog__filter-toggle" onClick={() => toggleFilterVisibility(0)} type="button">
+                    <Icon icon={filterVisibility[0] ? 'icon_chevron_up' : 'icon_chevron_down'} size={32} />
                   </button>
                 </div>
-                <div className="catalog__filter-content">
+                <div className="catalog__filter-content" style={getStyle(0)}>
                   <RangeSlider onChange={handlePriceChange} />
                 </div>
               </div>
@@ -203,11 +220,11 @@ export const Catalog = () => {
                 <div className="catalog__filter-block" key={title}>
                   <div className="catalog__filter-head">
                     <h4 className="catalog__filter-title">{title}</h4>
-                    <button className="catalog__filter-toggle" type="button">
-                      <Icon icon="icon_chevron_up" />
+                    <button className="catalog__filter-toggle" onClick={() => toggleFilterVisibility(blockIndex + 1)} type="button">
+                      <Icon icon={filterVisibility[blockIndex + 1] ? 'icon_chevron_up' : 'icon_chevron_down'} />
                     </button>
                   </div>
-                  <div className="catalog__filter-content">
+                  <div className="catalog__filter-content" style={getStyle(blockIndex + 1)}>
                     <div className="catalog__filter-list">
                       {list.map(({ title, count }, checkIndex) => (
                         <div className="catalog__filter-check" key={title}>
