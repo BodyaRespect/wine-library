@@ -1,31 +1,36 @@
-import type { MouseEvent } from 'react'
+import type { KeyboardEvent, MouseEvent } from 'react'
 
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Login } from '../../components/Login'
+import { useAppSelector } from '../../store/hooks'
+import { setEmail, setFirstName, setLastName } from '../../store/reducers/profile'
 
 export const Profile = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [token, setToken] = useState(Cookies.get('accessToken') || '')
   const [active, setActive] = useState(false)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
-  const [editState, setEditState] = useState({
-    firstName: false,
-    lastName: false,
-  })
   const [errors, setErrors] = useState({
     currentPassword: '',
     newPassword: '',
     repeatPassword: '',
   })
+  const [editState, setEditState] = useState({
+    firstName: false,
+    lastName: false,
+  })
+
+  const firstName = useAppSelector(state => state.profile.firstName)
+  const lastName = useAppSelector(state => state.profile.lastName)
+  const email = useAppSelector(state => state.profile.email)
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -37,9 +42,9 @@ export const Profile = () => {
         })
         const { firstName, lastName, email } = response.data
 
-        setFirstName(firstName)
-        setLastName(lastName)
-        setEmail(email)
+        dispatch(setFirstName(firstName))
+        dispatch(setLastName(lastName))
+        dispatch(setEmail(email))
       }
       catch (error) {
         console.error('Error fetching user profile:', error)
@@ -49,7 +54,7 @@ export const Profile = () => {
     if (token) {
       fetchUserProfile()
     }
-  }, [token])
+  }, [token, dispatch])
 
   useEffect(() => {
     const handleTokenChange = () => {
@@ -168,6 +173,18 @@ export const Profile = () => {
     setEditState(prevState => ({ ...prevState, lastName: true }))
   }
 
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>, fieldName: string) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      if (fieldName === 'firstName') {
+        handleFirstNameUpdate(event as unknown as MouseEvent<HTMLButtonElement>)
+      }
+      else if (fieldName === 'lastName') {
+        handleLastNameUpdate(event as unknown as MouseEvent<HTMLButtonElement>)
+      }
+    }
+  }
+
   return (
     <div className="container">
       {token
@@ -183,7 +200,8 @@ export const Profile = () => {
                     disabled={!editState.firstName}
                     id="firstname"
                     name="firstname"
-                    onChange={event => setFirstName(event.target.value)}
+                    onChange={event => dispatch(setFirstName(event.target.value))}
+                    onKeyDown={event => handleKeyPress(event, 'firstName')}
                     placeholder="Enter your first name"
                     type="text"
                     value={firstName}
@@ -209,7 +227,8 @@ export const Profile = () => {
                     disabled={!editState.lastName}
                     id="lastname"
                     name="lastname"
-                    onChange={event => setLastName(event.target.value)}
+                    onChange={event => dispatch(setLastName(event.target.value))}
+                    onKeyDown={event => handleKeyPress(event, 'lastName')}
                     placeholder="Enter your last name"
                     type="text"
                     value={lastName}
@@ -235,7 +254,7 @@ export const Profile = () => {
                     disabled={true}
                     id="email"
                     name="email"
-                    onChange={event => setEmail(event.target.value)}
+                    onChange={event => dispatch(setEmail(event.target.value))}
                     placeholder="Enter your email"
                     type="email"
                     value={email}
@@ -267,58 +286,51 @@ export const Profile = () => {
 
               <div className={active ? 'profile__modal profile__modal-active' : 'profile__modal'} onClick={() => setActive(false)}>
                 <div className={active ? 'profile__modal-content profile__modal-content-active' : 'profile__modal-content'} onClick={e => e.stopPropagation()}>
-                  <div className="profile__modal-field">
-                    <label htmlFor="password">Enter your current password</label>
+                  <form>
+                    <label htmlFor="current-password">Current password</label>
                     <input
-                      id="password"
-                      name="password"
-                      onChange={e => setCurrentPassword(e.target.value)}
-                      placeholder="Enter your password"
+                      id="current-password"
+                      name="current-password"
+                      onChange={event => setCurrentPassword(event.target.value)}
+                      placeholder="Enter your current password"
                       type="password"
                       value={currentPassword}
                       required
                     />
+                    {errors.currentPassword && <p className="error">{errors.currentPassword}</p>}
 
-                    {errors.currentPassword && <span className="error">{errors.currentPassword}</span>}
-                  </div>
-
-                  <div className="profile__modal-field">
-                    <label htmlFor="create_password">Create new password</label>
+                    <label htmlFor="new-password">New password</label>
                     <input
-                      id="create_password"
-                      name="create_password"
-                      onChange={e => setNewPassword(e.target.value)}
+                      id="new-password"
+                      name="new-password"
+                      onChange={event => setNewPassword(event.target.value)}
                       placeholder="Enter your new password"
                       type="password"
                       value={newPassword}
                       required
                     />
+                    {errors.newPassword && <p className="error">{errors.newPassword}</p>}
 
-                    {errors.newPassword && <span className="error">{errors.newPassword}</span>}
-                  </div>
-
-                  <div className="profile__modal-field">
-                    <label htmlFor="repeat_password">Repeat new password</label>
+                    <label htmlFor="repeat-password">Repeat new password</label>
                     <input
-                      id="repeat_password"
-                      name="repeat_password"
-                      onChange={e => setRepeatPassword(e.target.value)}
-                      placeholder="Repeat your password"
+                      id="repeat-password"
+                      name="repeat-password"
+                      onChange={event => setRepeatPassword(event.target.value)}
+                      placeholder="Repeat your new password"
                       type="password"
                       value={repeatPassword}
                       required
                     />
+                    {errors.repeatPassword && <p className="error">{errors.repeatPassword}</p>}
 
-                    {errors.repeatPassword && <span className="error">{errors.repeatPassword}</span>}
-                  </div>
-
-                  <button
-                    className="profile__button profile__buttons-update"
-                    onClick={handlePasswordUpdate}
-                    type="button"
-                  >
-                    Save Password
-                  </button>
+                    <button
+                      className="profile__modal-button"
+                      onClick={handlePasswordUpdate}
+                      type="submit"
+                    >
+                      Update Password
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>

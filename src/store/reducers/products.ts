@@ -64,6 +64,10 @@ const productsSlice = createSlice({
       state.cart.cartItems = state.cart.cartItems.filter(item => item.wineId !== action.payload)
     },
 
+    removeAllFromCart: (state) => {
+      state.cart.cartItems = []
+    },
+
     setRecentlyViewed: (state, action: PayloadAction<Wine[]>) => {
       state.recentlyViewed = action.payload
     },
@@ -103,6 +107,7 @@ export const {
   setCartItems,
   addToCart,
   removeFromCart,
+  removeAllFromCart,
   setRecentlyViewed,
   addRecentlyViewed,
   addAllFavorites,

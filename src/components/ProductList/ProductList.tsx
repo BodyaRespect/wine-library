@@ -23,7 +23,7 @@ export const ProductList: React.FC<Props> = ({ wines, column }) => {
   }
 
   return (
-    <div className="product__list" style={{ gridTemplateColumns: `repeat(${column}, minmax(320px, 1fr))` }}>
+    <div className="product__list" style={{ gridTemplateColumns: `repeat(${column}, minmax(319px, 1fr))` }}>
       {wines.map(wine => (
         <div className="product__list-item" key={wine.id}>
           <CartItem

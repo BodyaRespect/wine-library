@@ -21,6 +21,7 @@
     justify-content: center;
 
     &-icon {
+      outline: none;
       border: none;
       width: 24px;
       height: 24px;
@@ -28,10 +29,15 @@
     }
 
     &-approve {
+      outline: none;
       border: none;
       width: 24px;
       height: 24px;
       background-image: url('/icons/icon_approve.svg');
+
+      &:active {
+        border: none;
+      }
     }
   }
 
@@ -189,7 +195,7 @@
       height: 42px;
       border: 2px solid #E1DBC5;
       border-radius: 8px;
-      font-family: Inter;
+      font-family: $font-secondary;
       font-size: 18px;
       font-weight: 500;
       line-height: 27px;

@@ -5,12 +5,17 @@
   position: relative;
 
   &-block {
+    background-color: $color-white;
     width: 100vw;
     height: 100vh;
     padding-inline: 60px;
   }
 
   &-first {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    background-color: $color-white;
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -79,6 +84,7 @@
   }
 
   &-second {
+    z-index: 1;
     padding-top: 40px;
     background-color: $color-text-main;
     display: flex;
@@ -126,10 +132,14 @@
   }
 
   &-third {
+    position: sticky;
+    top: 0;
+    background-color: $color-white;
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    z-index: 2;
 
     &-top {
       max-width: 650px;
@@ -144,8 +154,9 @@
   &-fourth {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
+    z-index: 3;
 
     &-top {
       max-width: 650px;
@@ -155,6 +166,16 @@
       justify-content: flex-end;
       align-items: flex-start;
     }
+
+    &-image {
+      width: 430px;
+      height: 430px;
+      background-image: url('/backgrounds/selection_bkg.png');
+      background-position: -90%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-clip: border-box;
+    }
   }
 
   &-fifth {
@@ -162,6 +183,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 4;
 
     &-info {
       margin-bottom: 64px;
@@ -250,6 +272,7 @@
     justify-content: space-evenly;
     align-items: center;
     gap: 26px;
+    z-index: 5;
 
     &-filters {
       display: flex;
@@ -342,16 +365,21 @@
   }
 
   &-seventh {
+    z-index: 7;
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url('/backgrounds/about-us-garden.png');
   }
 
   &-eighth {
+    position: sticky;
+    top: 0;
+    background-color: $color-white;
     display: flex;
     flex-direction: column;
     justify-content: baseline;
     gap: 64px;
+    z-index: 7;
 
     &-info {
       max-width: 650px;
@@ -411,5 +439,10 @@
         }
       }
     }
+  }
+
+  &-nineth {
+    z-index: 9;
+    padding-inline: 0px;
   }
 }

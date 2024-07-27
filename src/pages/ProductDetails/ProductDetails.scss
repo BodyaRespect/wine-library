@@ -165,7 +165,7 @@
     border: none;
     height: 53px;
     width: 53px;
-    background-image: url(/icons/icon_add_to_like.svg);
+    background-image: url(/icons/icon_liked.svg);
     background-color: $background;
   }
 
@@ -189,7 +189,7 @@
 
     &__icon {
       display: flex;
-      width: 24px;
+      min-width: 24px;
       height: 24px;
       background-image: url(/icons/icon_details.svg);
       background-position: center;
@@ -207,7 +207,7 @@
     border: 1px solid $color-accent-stroke;
     background-color: $color-white;
     font-family: $font-secondary;;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
     line-height: 32px;
     text-align: left;
@@ -216,9 +216,9 @@
 
     &__icon {
       display: flex;
-      width: 24px;
+      min-width: 24px;
       height: 24px;
-      background-image: url(/icons/icon_details.svg);
+      background-image: url(../../../public/icons/icon_details_red.svg);
       background-position: center;
     }
   }

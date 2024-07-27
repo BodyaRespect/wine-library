@@ -6,6 +6,7 @@ import { Footer } from '../../components/Footer'
 import firstImg from '/backgrounds/about-us-first.jpg'
 import firstScroller from '/images/about_scroller_first.png'
 import secondScroller from '/images/about_scroller_second.png'
+import yarik from '/images/yarik.svg'
 
 export const About = () => {
   const navigate = useNavigate()
@@ -128,6 +129,8 @@ export const About = () => {
             </button>
           </div>
         </div>
+
+        <img className="about-fourth-image" src={yarik} />
       </div>
 
       <div className="about-fifth about-block">
@@ -252,7 +255,9 @@ export const About = () => {
         </div>
       </div>
 
-      <Footer />
+      <div className="about-nineth about-block">
+        <Footer />
+      </div>
     </div>
   )
 }

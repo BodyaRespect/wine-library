@@ -79,7 +79,7 @@ export const AutoCompleteDropdown: React.FC<Props> = ({ options, onSelectOption,
 
       {showOptions && filteredOptions.length > 0 && (
         <div className="autocomplete-dropdown-body">
-          {filteredOptions.map((item, index) => (
+          {filteredOptions.slice(0, 6).map((item, index) => (
             <div
               className="autocomplete-dropdown-item"
               key={index}

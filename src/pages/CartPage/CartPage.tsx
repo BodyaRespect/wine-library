@@ -10,13 +10,20 @@ import type { OrderDetails } from '../../validations/orderDetails'
 import { createPayment, fetchCities, fetchPostOffices, placeOrder, sendVerification, verifyCode } from '../../api/axiosClient'
 import { AutoCompleteDropdown } from '../../components/AutoDropdown'
 import { Checkbox } from '../../components/Checkbox/Checkbox'
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { removeAllFromCart } from '../../store/reducers/products'
 import { orderDetailsSchema } from '../../validations/orderDetails'
 
 export const CartPage: React.FC = () => {
-  const [email, setEmail] = useState<string>('')
-  const [firstName, setFirstName] = useState<string>('')
-  const [lastName, setLastName] = useState<string>('')
+  const dispatch = useAppDispatch()
+
+  const defaultName = useAppSelector(state => state.profile.firstName)
+  const defaultSurname = useAppSelector(state => state.profile.lastName)
+  const defaultEmail = useAppSelector(state => state.profile.email)
+
+  const [email, setEmail] = useState<string>(defaultEmail)
+  const [firstName, setFirstName] = useState<string>(defaultName)
+  const [lastName, setLastName] = useState<string>(defaultSurname)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [city, setCity] = useState<string>('')
   const [cities, setCities] = useState<string[]>([])
@@ -114,6 +121,7 @@ export const CartPage: React.FC = () => {
     placeOrder(orderDetails)
       .then((response) => {
         setOrderId(response.data.id)
+        dispatch(removeAllFromCart())
 
         return sendVerification(phoneNumber)
           .then(() => {
@@ -156,8 +164,13 @@ export const CartPage: React.FC = () => {
         setModal(false)
 
         return createPayment(orderId!)
-          .then(() => {
-            console.log('Payment created successfully!')
+          .then((response) => {
+            console.log('Payment created successfully!', response.data)
+
+            if (selectedPayment === 'CARD') {
+              window.location.href = response.data.sessionUrl
+            }
+
             setSuccess(true)
           })
           .catch((error) => {
@@ -225,7 +238,7 @@ export const CartPage: React.FC = () => {
         <div className="cart__content">
           <div className="cart__content-container">
             <div className="cart__title">
-              <div className="cart__title--icon"></div>
+              <div className="cart__title-icon cart__title-icon--customer"></div>
               Customer Data
             </div>
 
@@ -235,11 +248,13 @@ export const CartPage: React.FC = () => {
 
                 <input
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setEmail(event.target.value)}
+                    setEmail(event.target.value || defaultEmail)}
+                  defaultValue={defaultEmail}
                   id="email"
                   name="email"
                   onClick={() => removeError('email')}
                   type="email"
+                  value={email || defaultEmail}
                   required
                 />
 
@@ -255,10 +270,11 @@ export const CartPage: React.FC = () => {
 
                 <input
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setPhoneNumber(event.target.value)}
+                    setPhoneNumber(event.target.value.split(' ').join(''))}
                   id="phone"
                   name="phone"
                   onClick={() => removeError('phoneNumber')}
+                  placeholder="+38 (XXX) XXXX XXX"
                   type="tel"
                   required
                 />
@@ -275,11 +291,13 @@ export const CartPage: React.FC = () => {
 
                 <input
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setFirstName(event.target.value)}
+                    setFirstName(event.target.value || defaultName)}
+                  defaultValue={defaultName}
                   id="firstname"
                   name="firstname"
                   onClick={() => removeError('firstName')}
                   type="text"
+                  value={firstName || defaultName}
                   required
                 />
 
@@ -314,11 +332,13 @@ export const CartPage: React.FC = () => {
 
                 <input
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setLastName(event.target.value)}
+                    setLastName(event.target.value || defaultSurname)}
+                  defaultValue={defaultSurname}
                   id="lastname"
                   name="lastname"
                   onClick={() => removeError('lastName')}
                   type="text"
+                  value={lastName || defaultSurname}
                   required
                 />
 
@@ -332,7 +352,10 @@ export const CartPage: React.FC = () => {
           </div>
 
           <div className="cart__content-container">
-            <div className="cart__title">Order</div>
+            <div className="cart__title">
+              <div className="cart__title-icon cart__title-icon--order"></div>
+              Order
+            </div>
 
             {carts.map(wine => (
               <div className="cart__order">
@@ -360,7 +383,10 @@ export const CartPage: React.FC = () => {
           </div>
 
           <div className="cart__content-container">
-            <div className="cart__title">Delivery</div>
+            <div className="cart__title">
+              <div className="cart__title-icon cart__title-icon--deliver"></div>
+              Delivery
+            </div>
 
             <div className="cart__delivery">
               <div className="cart__delivery-item">
@@ -469,7 +495,10 @@ export const CartPage: React.FC = () => {
           </div>
 
           <div className="cart__content-container">
-            <div className="cart__title">Payment</div>
+            <div className="cart__title">
+              <div className="cart__title-icon cart__title-icon--payment"></div>
+              Payment
+            </div>
 
             <div className="cart__pay" onClick={() => removeError('paymentType')}>
               <div className="cart__pay-item">

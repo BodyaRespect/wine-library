@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import authReducer from './reducers/authentification'
 import productsSlice from './reducers/products'
+import profileSlice from './reducers/profile'
 import viewportSlice from './reducers/viewport'
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     products: productsSlice,
     viewport: viewportSlice,
+    profile: profileSlice,
   },
 })
 

@@ -9,8 +9,8 @@ export const orderDetailsSchema = z.object({
   phoneNumber: z.string().regex(phoneRegex, 'Input your phone number'),
   city: z.string().min(4, 'Select your city'),
   shippingAddress: z.string().min(3, 'Enter the delivery address'),
-  deliveryType: z.string().min(5, 'Select the delivery type'),
-  paymentType: z.string().min(5, 'Filling in Payment is required'),
+  deliveryType: z.string().min(1, 'Select the delivery type'),
+  paymentType: z.string().min(1, 'Filling in Payment is required'),
 })
 
 export type OrderDetails = z.infer<typeof orderDetailsSchema>

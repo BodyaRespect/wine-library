@@ -201,7 +201,7 @@ export const ProductDetails: React.FC = () => {
                   onClick={handleToggleCart}
                 >
                   {`${isCart ? 'In the Cart' : 'Add to Cart'}`}
-                  <div className="details__buy__icon"></div>
+                  <div className={`details__${isCart ? 'bought' : 'buy'}__icon`}></div>
                 </button>
               </div>
             </div>

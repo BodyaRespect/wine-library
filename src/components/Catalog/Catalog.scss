@@ -183,6 +183,7 @@
     grid-column: span 12;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: min-content;
     gap: 20px;
     margin-bottom: 32px;
   }

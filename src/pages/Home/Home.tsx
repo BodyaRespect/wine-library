@@ -8,7 +8,7 @@ import firstImg from '/backgrounds/hero-slider-1.jpg'
 import secondImg from '/backgrounds/hero-slider-2.jpg'
 import thirdImg from '/backgrounds/hero-slider-3.jpg'
 
-const slides: Slide[] = [
+export const slides: Slide[] = [
   {
     id: 1,
     image: firstImg,

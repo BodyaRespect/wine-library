@@ -40,6 +40,11 @@
     height: 40.5px;
     width: 100px;
     margin: 10px 0 10px 16px;
+
+    &:hover {
+      background-image: url(/icons/logo_hover.svg);
+      transform: scale(1.05)
+    }
   }
 
   &__links {
