@@ -133,7 +133,7 @@ export const Register = () => {
         Cookies.set('accessToken', token)
 
         // Redirect to /profile after successful login
-        navigate('/wine-library/profile')
+        navigate('/profile')
       }
       catch (err) {
         console.error('Failed to login:', err)

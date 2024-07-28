@@ -223,7 +223,7 @@ export const ProductDetails: React.FC = () => {
                         free delivery on your first order!
                       </div>
 
-                      <button className="delivery__offer-container-button" onClick={() => navigate('/wine-library/register')}>Register</button>
+                      <button className="delivery__offer-container-button" onClick={() => navigate('/register')}>Register</button>
                     </div>
 
                     <img

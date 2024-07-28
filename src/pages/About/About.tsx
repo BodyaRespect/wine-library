@@ -28,7 +28,7 @@ export const About = () => {
             about the art of wine and open up new horizons of taste.
           </p>
 
-          <button className="about-first-info-button" onClick={() => navigate('/wine-library/home')}>
+          <button className="about-first-info-button" onClick={() => navigate('/')}>
             <div className="about-first-info-button-text">
               Click here
               <br />
@@ -88,7 +88,7 @@ export const About = () => {
               Join our community of wine connoisseurs and enjoy impeccable service.
             </p>
 
-            <button className="about-first-info-button" onClick={() => navigate('/wine-library/register')}>
+            <button className="about-first-info-button" onClick={() => navigate('/register')}>
               <div className="about-first-info-button-text">
                 Click here
                 <br />
@@ -117,7 +117,7 @@ export const About = () => {
               Thanks to his recommendations, you will always be one step ahead in the world of wine innovations.
             </p>
 
-            <button className="about-first-info-button" onClick={() => navigate('/wine-library/selection')}>
+            <button className="about-first-info-button" onClick={() => navigate('/selection')}>
               <div className="about-first-info-button-text">
                 Click here
                 <br />
@@ -157,7 +157,7 @@ export const About = () => {
               And discover a world of wines that goes beyond your expectations.
             </p>
 
-            <button className="about-fifth-bottom-button" onClick={() => navigate('/wine-library/register')}>
+            <button className="about-fifth-bottom-button" onClick={() => navigate('/register')}>
               <div className="about-fifth-bottom-button-text">
                 Click here
                 <br />
@@ -197,7 +197,7 @@ export const About = () => {
               region, price and more.
             </p>
 
-            <button className="about-sixth-bottom-button" onClick={() => navigate('/wine-library/home')}>
+            <button className="about-sixth-bottom-button" onClick={() => navigate('/')}>
               <div className="about-sixth-bottom-button-text">
                 Click here
                 <br />

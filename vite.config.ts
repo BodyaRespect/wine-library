@@ -1,11 +1,11 @@
 import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
-import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper'
 // import mkcert from 'vite-plugin-mkcert'
+import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper'
 
 // https://vitejs.dev/config/
-export default defineConfig(() => ({
+export default defineConfig(({ mode }) => ({
   base: '/wine-library/',
   plugins: [
     react(),
@@ -14,7 +14,7 @@ export default defineConfig(() => ({
       generateType: true,
     }),
 
-    // ...(mode === 'development' ? [mkcert()] : []),
+    ...(mode === 'development' ? [] : []),
   ],
 
   resolve: {

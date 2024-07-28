@@ -83,7 +83,7 @@ export const Login = () => {
           <button
             className="login-container-register"
             disabled={loading}
-            onClick={() => navigate('/wine-library/register')}
+            onClick={() => navigate('/register')}
             type="button"
           >
             I don`t have an account

@@ -63,7 +63,7 @@ export const HistoryItem: React.FC<Props> = ({ customer, address, id, date, pric
           <img
             alt="Wine"
             key={index}
-            onClick={() => navigate(`/wine-library/productdetails/${wineIds[index]}`)}
+            onClick={() => navigate(`/productdetails/${wineIds[index]}`)}
             src={wineImage}
           />
         ))}

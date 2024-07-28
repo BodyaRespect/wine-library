@@ -682,7 +682,7 @@ export const CartPage: React.FC = () => {
                     </p>
                   </p>
 
-                  <div className="cart__modal-btn" onClick={() => navigate('/home')}>
+                  <div className="cart__modal-btn" onClick={() => navigate('/')}>
                     <button className="cart__modal-btn-text">
                       <p>
                         Go to the

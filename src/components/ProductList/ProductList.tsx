@@ -19,7 +19,7 @@ export const ProductList: React.FC<Props> = ({ wines, column }) => {
 
   const handleProductClick = (wine: Wine) => {
     dispatch(addRecentlyViewed(wine))
-    navigate(`/wine-library/productdetails/${wine.id}`)
+    navigate(`/productdetails/${wine.id}`)
   }
 
   return (

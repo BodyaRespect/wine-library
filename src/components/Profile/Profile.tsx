@@ -71,7 +71,7 @@ export const Profile = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/wine-library/profile')
+      navigate('/profile')
     }
   }, [token, navigate])
 

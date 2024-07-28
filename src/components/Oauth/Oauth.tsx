@@ -1,47 +1,12 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
 export default function Oauth() {
-  const navigate = useNavigate()
-  const [isLoggedin, setIsLoggedin] = useState(false)
-
   const handleClick = () => {
-    const callbackUrl = `${window.location.origin}/home`
+    const callbackUrl = `${window.location.origin}/wine-library/`
     const googleClientId = '30955688954-763i160f4utduu08tfg3mlivtlbd977m.apps.googleusercontent.com'
     const targetUrl = `https://accounts.google.com/o/oauth2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl,
     )}&response_type=token&client_id=${googleClientId}&scope=openid%20email%20profile`
     window.location.href = targetUrl
   }
-
-  useEffect(() => {
-    const accessTokenRegex = /access_token=([^&]+)/
-    const isMatch = window.location.href.match(accessTokenRegex)
-
-    if (isMatch) {
-      const googleClientIdToken = isMatch[1]
-      console.log('Google Client ID Token:', googleClientIdToken)
-
-      axios.post('https://api.winelibrary.wuaze.com/auth/oauth/sign-in', { googleClientIdToken })
-        .then((response) => {
-          const { token: newAccessToken } = response.data
-          Cookies.set('accessToken', newAccessToken)
-          setIsLoggedin(true)
-        })
-        .catch((error) => {
-          console.error('Error during the API call:', error)
-          console.log('Error details:', error.toJSON())
-        })
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isLoggedin) {
-      navigate('wine-library/home')
-    }
-  }, [isLoggedin, navigate])
 
   return (
     <div className="root">

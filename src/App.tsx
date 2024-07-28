@@ -1,5 +1,7 @@
+import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import { fetchCartItems, fetchFavorites, fetchWines } from './api/axiosClient'
 import { History } from './components/History'
@@ -21,6 +23,7 @@ import './App.scss'
 
 function App() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchWines()
@@ -40,22 +43,41 @@ function App() {
       .catch(error => console.error('Error fetching cart data:', error))
   }, [dispatch])
 
+  useEffect(() => {
+    const hash = window.location.hash
+    const token = new URLSearchParams(hash.substring(1)).get('access_token')
+    console.log(token)
+
+    if (token) {
+      axios.post('https://api.winelibrary.wuaze.com/auth/oauth/sign-in', { googleClientIdToken: token })
+        .then((response) => {
+          const { token: newAccessToken } = response.data
+          Cookies.set('accessToken', newAccessToken)
+          navigate('/')
+        })
+        .catch((error) => {
+          console.error('Error during the API call:', error)
+          console.log('Error details:', error.toJSON())
+        })
+    }
+  }, [])
+
   return (
     <div className="App">
       <NavBar />
 
       <main className="main">
         <Routes>
-          <Route element={<Home />} path="wine-library/home" index />
-          <Route element={<About />} path="wine-library/about" index />
-          <Route element={<History />} path="wine-library/history" index />
-          <Route element={<SelectionPage />} path="wine-library/selection" index />
-          <Route element={<Profile />} path="wine-library/profile" index />
-          <Route element={<LikedPage />} path="wine-library/favorites" index />
-          <Route element={<CartPage />} path="wine-library/cart" index />
-          <Route element={<ProductDetails />} path="wine-library/productdetails/:id" />
-          <Route element={<Register />} path="wine-library/register" index />
-          <Route element={<Login />} path="wine-library/login" />
+          <Route element={<Home />} path="/" index />
+          <Route element={<About />} path="/about" index />
+          <Route element={<History />} path="/history" index />
+          <Route element={<SelectionPage />} path="/selection" index />
+          <Route element={<Profile />} path="/profile" index />
+          <Route element={<LikedPage />} path="/favorites" index />
+          <Route element={<CartPage />} path="/cart" index />
+          <Route element={<ProductDetails />} path="/productdetails/:id" />
+          <Route element={<Register />} path="/register" index />
+          <Route element={<Login />} path="/login" />
           <Route element={<PageNotFound />} path="*" />
         </Routes>
       </main>

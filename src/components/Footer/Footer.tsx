@@ -20,10 +20,10 @@ export const Footer = () => {
             </div>
 
             <div className="footer__links-group">
-              <Link className="footer__link" to="/wine-library/home">Home</Link>
-              <Link className="footer__link" to="/wine-library/about">About us</Link>
-              <Link className="footer__link" to="/wine-library/selection">Selection</Link>
-              <Link className="footer__link" to="/wine-library/profile">Profile</Link>
+              <Link className="footer__link" to="/">Home</Link>
+              <Link className="footer__link" to="/about">About us</Link>
+              <Link className="footer__link" to="/selection">Selection</Link>
+              <Link className="footer__link" to="/profile">Profile</Link>
             </div>
           </div>
         </div>
