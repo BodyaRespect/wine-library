@@ -1,6 +1,8 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import type { CommentData } from '../../types/Comment'
 import type { Wine } from '../../types/Wine'
 
 import { accessToken, addToCartServer, addToFavorite, deleteFromFavorite, fetchWineData, fetchWineRatings, removeFromCartServer } from '../../api/axiosClient'
@@ -17,12 +19,14 @@ import delivery from '/images/delivery_boy.png'
 export const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
   const { id = '0' } = useParams<{ id: string }>()
   const [wineData, setWineData] = useState<Wine>()
   const [rate, setRate] = useState(0)
   const [isOpen, setIsOpen] = useState(true)
   const [activeSection, setActiveSection] = useState('Description')
   const [showFullDescription, setShowFullDescription] = useState(false)
+  const [comments, setComments] = useState<CommentData[]>([])
 
   const sections = ['Description', 'Characteristics', 'Comments']
 
@@ -77,6 +81,14 @@ export const ProductDetails: React.FC = () => {
         }
       })
       .catch(error => console.error('Error fetching wine data:', error))
+
+    axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
+      .then((response) => {
+        setComments(response.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching comments:', error)
+      })
   }, [id])
 
   if (!wineData) {
@@ -121,7 +133,7 @@ export const ProductDetails: React.FC = () => {
                     onClick={() => setActiveSection(section)}
                   >
                     {section}
-                    {section === 'Comments' && <p className="details__info-sections-comments-count">12</p>}
+                    {section === 'Comments' && <p className="details__info-sections-comments-count">{comments.length}</p>}
                   </button>
                 ))}
               </div>
@@ -178,7 +190,7 @@ export const ProductDetails: React.FC = () => {
 
               {activeSection === 'Comments' && (
                 <div className="comments">
-                  <Comment id={id} />
+                  <Comment comments={comments} id={id} />
                 </div>
               )}
             </div>

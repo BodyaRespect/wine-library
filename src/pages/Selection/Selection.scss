@@ -133,10 +133,10 @@
   }
 }
 
-// .spline-container {
-//   position: absolute; /* або absolute */
-//   bottom: -35%;
-//   left: -5%;
-//   width: 200vw; /* Ширина контейнера */
-//   height: 200vh; /* Висота контейнера */
-// }
+.spline-container {
+  position: absolute;
+  max-width: 630px;
+  max-height: 700px;
+  top: 34%;
+  left:60%;
+}

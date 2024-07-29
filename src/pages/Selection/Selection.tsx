@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import Spline from '@splinetool/react-spline'
+import { useRef, useState } from 'react'
 
 import type { Wine } from '../../types/Wine'
 
@@ -15,6 +16,8 @@ export const SelectionPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [chatEntries, setChatEntries] = useState<ChatEntry[]>([])
   const [error, setError] = useState('')
+
+  const splineRef = useRef(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -63,8 +66,22 @@ export const SelectionPage = () => {
     }
   }
 
+  const handleSplineLoad = (splineApp: { setZoom: (arg0: number) => void }) => {
+    splineApp.setZoom(0.71)
+  }
+
   return (
     <div className="container">
+      {!chatEntries.length && (
+        <Spline
+          className="spline-container"
+          onLoad={handleSplineLoad}
+          onScroll={() => handleSplineLoad}
+          ref={splineRef}
+          scene="https://prod.spline.design/LPeeM5BP8bD2hONQ/scene.splinecode"
+        />
+      )}
+
       <div className="selection-container">
         {chatEntries.length > 0
           ? (

@@ -111,7 +111,7 @@
   &__bottom {
     margin-top: 24px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
 
@@ -185,6 +185,18 @@
       flex-direction: column;
       gap: 28px;
 
+      &-rate {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        &-stars {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+        }
+      }
+
       &-field {
         display: flex;
         flex-direction: column;
@@ -236,6 +248,29 @@
           background-color: $color-accent;
         }
       }
+    }
+  }
+
+  &__leave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px auto;
+    max-width: 650px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid $color-line;
+    background-color: $color-white;
+
+    button {
+      border: none;
+      background: none;
+      font-family: $font-secondary;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      color: $color-gray;
     }
   }
 }
