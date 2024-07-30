@@ -132,7 +132,6 @@ export const Register = () => {
         const { token } = loginResult
         Cookies.set('accessToken', token)
 
-        // Redirect to /profile after successful login
         navigate('/profile')
       }
       catch (err) {

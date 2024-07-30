@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { getProfileInfo, updateLastNameServer, updateNameServer, updatePasswordServer } from '../../api/axiosClient'
 import { Login } from '../../components/Login'
 import { useAppSelector } from '../../store/hooks'
 import { setEmail, setFirstName, setLastName } from '../../store/reducers/profile'
@@ -35,11 +36,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('https://api.winelibrary.wuaze.com/users/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const response = await getProfileInfo(token)
         const { firstName, lastName, email } = response.data
 
         dispatch(setFirstName(firstName))
@@ -91,15 +88,7 @@ export const Profile = () => {
 
     if (!newErrors.currentPassword && !newErrors.newPassword && !newErrors.repeatPassword) {
       try {
-        const response = await axios.put('https://api.winelibrary.wuaze.com/users/update-password', {
-          currentPassword,
-          password: newPassword,
-          repeatedPassword: repeatPassword,
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const response = await updatePasswordServer(currentPassword, newPassword, repeatPassword)
 
         console.log('Password updated successfully', response.data)
         setActive(false)
@@ -118,15 +107,9 @@ export const Profile = () => {
   const handleFirstNameUpdate = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     try {
-      const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/first-name', {
-        firstName,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      console.log('First name updated successfully:', response.data)
-      setEditState(prevState => ({ ...prevState, firstName: false })) // Disable editing
+      const response = await updateNameServer(firstName)
+      console.log('First name updated successfully:', response.data.firstName)
+      setEditState(prevState => ({ ...prevState, firstName: false }))
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
@@ -142,15 +125,9 @@ export const Profile = () => {
   const handleLastNameUpdate = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     try {
-      const response = await axios.patch('https://api.winelibrary.wuaze.com/users/me/update/last-name', {
-        lastName,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await updateLastNameServer(lastName)
       console.log('Last name updated successfully:', response.data)
-      setEditState(prevState => ({ ...prevState, lastName: false })) // Disable editing
+      setEditState(prevState => ({ ...prevState, lastName: false }))
     }
     catch (error) {
       if (axios.isAxiosError(error)) {

@@ -121,7 +121,7 @@
 
   &__estimates {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 16px;
 
     .stars {
@@ -153,6 +153,15 @@
           background-position: center;
           background-repeat: no-repeat;
           background-image: url(/icons/icon_half_glass.svg);
+        }
+
+        &--full {
+          width: 24px;
+          height: 24px;
+          margin-right: 4px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: url(/icons/icon_full_glass.svg);
         }
       }
     }

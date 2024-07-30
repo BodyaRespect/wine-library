@@ -1,6 +1,11 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
+import type { CommentData } from '../types/Comment'
+import type { CommentForm } from '../types/CommentForm'
+import type { ProfileData } from '../types/ProfileData'
+import type { WineRating } from '../types/WineRating'
+
 export const accessToken = () => Cookies.get('accessToken') || ''
 
 export const fetchWines = () => {
@@ -103,7 +108,7 @@ export const fetchWineData = (id: number) => {
 }
 
 export const fetchWineRatings = (id: number) => {
-  return axios.get(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`)
+  return axios.get<WineRating>(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`)
 }
 
 export const sendUserQuery = (userQuery: string) => {
@@ -120,17 +125,38 @@ export const addFavoritesToCart = () => {
   })
 }
 
+export const fetchComments = (id: string | null) => {
+  return axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
+}
+
+export const postComment = (id: string | null, formState: CommentForm) => {
+  return axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/comments`, {
+    text: formState.commentText,
+    advantages: formState.mainBenefits,
+    disadvantages: formState.drawbacks,
+  }, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+}
+
+export const postRating = (id: string | null, rating: number) => {
+  return axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`, {
+    rating: rating,
+  }, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+}
+
 export const likeComment = (commentId: number) => {
   return axios.post(`https://api.winelibrary.wuaze.com/wines/comments/${commentId}/like`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
   })
-    .then(() => console.log('like'))
-    .catch((error) => {
-      console.error('Error liking the comment:', error)
-      throw error
-    })
 }
 
 export const dislikeComment = (commentId: number) => {
@@ -139,9 +165,44 @@ export const dislikeComment = (commentId: number) => {
       Authorization: `Bearer ${accessToken()}`,
     },
   })
-    .then(() => console.log('dislike'))
-    .catch((error) => {
-      console.error('Error disliking the comment:', error)
-      throw error
-    })
+}
+
+export const getProfileInfo = (token: string) => {
+  return axios.get<ProfileData>('https://api.winelibrary.wuaze.com/users/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export const updatePasswordServer = (currentPassword: string, password: string, repeatedPassword: string) => {
+  return axios.put('https://api.winelibrary.wuaze.com/users/update-password', {
+    currentPassword,
+    password,
+    repeatedPassword,
+  }, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+}
+
+export const updateNameServer = (firstName: string) => {
+  return axios.patch('https://api.winelibrary.wuaze.com/users/me/update/first-name', {
+    firstName,
+  }, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+}
+
+export const updateLastNameServer = (lastName: string) => {
+  return axios.patch('https://api.winelibrary.wuaze.com/users/me/update/last-name', {
+    lastName,
+  }, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
 }

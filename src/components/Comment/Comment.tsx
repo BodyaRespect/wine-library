@@ -1,10 +1,9 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 import type { CommentData } from '../../types/Comment'
 import type { CommentForm } from '../../types/CommentForm'
 
-import { accessToken, dislikeComment, likeComment } from '../../api/axiosClient'
+import { accessToken, dislikeComment, fetchComments, likeComment, postComment, postRating } from '../../api/axiosClient'
 import StarRating from '../Rating/Rating'
 
 interface Props {
@@ -24,25 +23,17 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
     drawbacks: '',
   })
 
-  const fetchComments = async () => {
-    try {
-      const response = await axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
-      setCommentsList(response.data)
-    }
-    catch (error) {
-      console.error('Error fetching comments:', error)
+  const handleFetchComments = async () => {
+    if (id) {
+      try {
+        const response = await fetchComments(id)
+        setCommentsList(response.data)
+      }
+      catch (error) {
+        console.error('Error fetching comments:', error)
+      }
     }
   }
-
-  useEffect(() => {
-    if (id) fetchComments()
-  }, [id])
-
-  useEffect(() => {
-    setCommentsList(comments)
-    // Ensure visibleCount is not more than the number of comments
-    setVisibleCount(Math.min(comments.length, 2))
-  }, [comments])
 
   const handleRatingChange = (newRating: number) => {
     setRating(newRating)
@@ -56,55 +47,10 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
     }))
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    // Handle comment submission
-    axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/comments`, {
-      text: formState.commentText,
-      advantages: formState.mainBenefits,
-      disadvantages: formState.drawbacks,
-    }, {
-      headers: {
-        Authorization: `Bearer ${accessToken()}`,
-      },
-    })
-      .then(() => {
-        console.log('Comment success!!')
-        setFormState({
-          commentText: '',
-          mainBenefits: '',
-          drawbacks: '',
-        })
-        fetchComments()
-      })
-      .catch((error) => {
-        console.error('Error adding comment:', error)
-      })
-
-    // Handle rating submission
-    axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`, {
-      rating: rating,
-    }, {
-      headers: {
-        Authorization: `Bearer ${accessToken()}`,
-      },
-    })
-      .then(() => {
-        console.log('Rating success!!')
-        setRating(0)
-      })
-      .catch((error) => {
-        console.error('Error adding rating:', error)
-      })
-
-    setLeaveComment(false)
-  }
-
   const handleShowMore = () => {
     if (visibleCount >= commentsList.length) {
       setVisibleCount(2)
-      setIsExpanded(false)
+      setIsExpanded(true)
       scrollTo(0, 0)
     }
     else {
@@ -112,6 +58,42 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
       setIsExpanded(true)
     }
   }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    postComment(id, formState)
+      .then(() => {
+        console.log('Comment success!!')
+        handleFetchComments()
+
+        setFormState({
+          commentText: '',
+          mainBenefits: '',
+          drawbacks: '',
+        })
+      })
+      .catch((error: any) => {
+        console.error('Error adding comment:', error)
+      })
+
+    postRating(id, rating)
+      .then(() => {
+        console.log('Rating success!!')
+        setRating(0)
+      })
+      .catch((error: any) => {
+        console.error('Error adding rating:', error)
+      })
+
+    setLeaveComment(false)
+  }
+
+  useEffect(() => {
+    handleFetchComments()
+    setCommentsList(comments)
+    setVisibleCount(Math.min(comments.length, 2))
+  }, [comments, id])
 
   return (
     <>

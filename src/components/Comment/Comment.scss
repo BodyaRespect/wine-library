@@ -280,11 +280,13 @@
     margin: 16px auto;
     max-width: 650px;
     padding: 10px;
+    text-wrap: nowrap;
     border-radius: 10px;
     border: 1px solid $color-line;
     background-color: $color-white;
 
     button {
+      padding-inline: 270px;
       border: none;
       background: none;
       font-family: $font-secondary;
