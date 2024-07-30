@@ -8,27 +8,35 @@
   height: auto;
   overflow-x: hidden;
 
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-
-  .chat__list {
-    min-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .chat__entry {
-    max-width: 800px;
-
-    &--request {
-      align-self: flex-end;
+  .chat {
+    &__loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    &--response {
-      align-self: flex-start;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    &__list {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &__entry {
+      max-width: 800px;
+  
+      &--request {
+        align-self: flex-end;
+      }
+      &--response {
+        align-self: flex-start;
+      }
     }
   }
 
@@ -61,6 +69,10 @@
       &:focus {
         outline: none;
       }
+
+      &.loading {
+        cursor: not-allowed;
+      }
     }
 
     &-button {
@@ -75,6 +87,10 @@
         width: 32px;
         height: 32px;
         background-image: url('/icons/icon_selection_input.svg');
+      }
+
+      &.loading {
+        cursor: not-allowed;
       }
     }
 
@@ -137,6 +153,6 @@
   position: absolute;
   max-width: 630px;
   max-height: 700px;
-  top: 34%;
-  left:60%;
+  top: 20%;
+  left: 60%;
 }

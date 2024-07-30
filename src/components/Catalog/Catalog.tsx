@@ -286,7 +286,7 @@ export const Catalog = () => {
               </div>
 
               <div className="catalog__list">
-                <ProductList column={3} wines={filteredCatalog} />
+                <ProductList column={3} nextPage={false} wines={filteredCatalog} />
               </div>
             </div>
           </div>

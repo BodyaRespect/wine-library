@@ -9,9 +9,10 @@ import { CartItem } from '../CartItem'
 interface Props {
   wines: Wine[]
   column: number
+  nextPage: boolean
 }
 
-export const ProductList: React.FC<Props> = ({ wines, column }) => {
+export const ProductList: React.FC<Props> = ({ wines, column, nextPage = false }) => {
   const favoriteIds = useAppSelector(state => state.products.favorites.map(item => item.wineId))
   const carts = useAppSelector(state => state.products.cart.cartItems.map(item => item.wineId))
   const navigate = useNavigate()
@@ -19,7 +20,15 @@ export const ProductList: React.FC<Props> = ({ wines, column }) => {
 
   const handleProductClick = (wine: Wine) => {
     dispatch(addRecentlyViewed(wine))
-    navigate(`/productdetails/${wine.id}`)
+
+    const productUrl = `/productdetails/${wine.id}`
+
+    if (nextPage) {
+      window.open(`/wine-library/#${productUrl}`, '_blank')
+    }
+    else {
+      navigate(productUrl)
+    }
   }
 
   return (

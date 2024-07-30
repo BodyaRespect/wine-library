@@ -258,7 +258,7 @@ export const ProductDetails: React.FC = () => {
 
         <div className="container">
           <h3 className="alsolike">You might also like</h3>
-          <ProductList column={4} wines={slicedWines} />
+          <ProductList column={4} nextPage={false} wines={slicedWines} />
         </div>
       </div>
 

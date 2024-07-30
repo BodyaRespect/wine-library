@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { CommentData } from '../../types/Comment'
 import type { CommentForm } from '../../types/CommentForm'
 
-import { accessToken } from '../../api/axiosClient'
+import { accessToken, dislikeComment, likeComment } from '../../api/axiosClient'
 import StarRating from '../Rating/Rating'
 
 interface Props {
@@ -13,14 +13,36 @@ interface Props {
 }
 
 export const Comment: React.FC<Props> = ({ id, comments }) => {
-  console.log(id)
   const [rating, setRating] = useState<number>(0)
   const [leaveComment, setLeaveComment] = useState(false)
+  const [commentsList, setCommentsList] = useState<CommentData[]>(comments)
+  const [visibleCount, setVisibleCount] = useState<number>(0)
+  const [isExpanded, setIsExpanded] = useState(true)
   const [formState, setFormState] = useState<CommentForm>({
     commentText: '',
     mainBenefits: '',
     drawbacks: '',
   })
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
+      setCommentsList(response.data)
+    }
+    catch (error) {
+      console.error('Error fetching comments:', error)
+    }
+  }
+
+  useEffect(() => {
+    if (id) fetchComments()
+  }, [id])
+
+  useEffect(() => {
+    setCommentsList(comments)
+    // Ensure visibleCount is not more than the number of comments
+    setVisibleCount(Math.min(comments.length, 2))
+  }, [comments])
 
   const handleRatingChange = (newRating: number) => {
     setRating(newRating)
@@ -28,7 +50,6 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target
-
     setFormState(prevState => ({
       ...prevState,
       [name]: value,
@@ -37,8 +58,8 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log('Form submitted with state:', formState, rating)
 
+    // Handle comment submission
     axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/comments`, {
       text: formState.commentText,
       advantages: formState.mainBenefits,
@@ -55,11 +76,13 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
           mainBenefits: '',
           drawbacks: '',
         })
+        fetchComments()
       })
       .catch((error) => {
         console.error('Error adding comment:', error)
       })
 
+    // Handle rating submission
     axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`, {
       rating: rating,
     }, {
@@ -78,46 +101,77 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
     setLeaveComment(false)
   }
 
+  const handleShowMore = () => {
+    if (visibleCount >= commentsList.length) {
+      setVisibleCount(2)
+      setIsExpanded(false)
+      scrollTo(0, 0)
+    }
+    else {
+      setVisibleCount(prevCount => Math.min(prevCount + 2, commentsList.length))
+      setIsExpanded(true)
+    }
+  }
+
   return (
     <>
-      {comments.map(comment => (
-        <div key={comment.id}>
-          <div className="comment">
-            <div className="comment__header">
-              <div className="comment__head">
-                <div className="comment__name">{comment.userName}</div>
-                <div className="stars stars--4">
+      <div className={`comment-container ${isExpanded ? 'visible' : 'hidden'}`}>
+        {commentsList.slice(0, visibleCount).map(comment => (
+          <div key={comment.id}>
+            <div className="comment">
+              <div className="comment__header">
+                <div className="comment__head">
+                  <div className="comment__name">{comment.userName}</div>
+                  <div className="stars stars--4"></div>
                 </div>
+
+                <div className="comment__date">{new Date(comment.createdAt).toLocaleDateString()}</div>
               </div>
 
-              <div className="comment__date">{new Date(comment.createdAt).toLocaleDateString()}</div>
-            </div>
+              <p className="comment__content">
+                {comment.text}
+              </p>
 
-            <p className="comment__content">
-              {comment.text}
-            </p>
+              {comment.advantages.length > 0 && (
+                <>
+                  <div className="comment__pros"></div>
+                  <ul>
+                    <li>{comment.advantages}</li>
+                  </ul>
+                </>
+              )}
 
-            <div className="comment__pros"></div>
-            <ul>
-              <li>{comment.advantages}</li>
-            </ul>
+              {comment.disadvantages.length > 0 && (
+                <>
+                  <div className="comment__cons"></div>
+                  <ul>
+                    <li>{comment.disadvantages}</li>
+                  </ul>
+                </>
+              )}
 
-            <div className="comment__cons"></div>
-            <ul>
-              <li>{comment.disadvantages}</li>
-            </ul>
-
-            <div className="comment__bottom">
-              <div className="comment__estimation">
-                <button className="comment__like"></button>
-                <button className="comment__dislike"></button>
-              </div>
+              {accessToken() && (
+                <div className="comment__bottom">
+                  <div className="comment__estimation">
+                    <button className="comment__like" onClick={() => likeComment(comment.id)}></button>
+                    <button className="comment__dislike" onClick={() => dislikeComment(comment.id)}></button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      {!leaveComment
+      {commentsList.length > 2 && (
+        <div className="comment__leave">
+          <button onClick={handleShowMore}>
+            {visibleCount >= commentsList.length ? 'Show less' : 'Show more'}
+          </button>
+        </div>
+      )}
+
+      {accessToken() && !leaveComment
         ? (
           <div className="comment__leave">
             <button onClick={() => setLeaveComment(!leaveComment)}>
@@ -129,7 +183,7 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
           <div className={`comment-add ${leaveComment ? 'visible' : ''}`}>
             <form className="comment-add-form" onSubmit={handleSubmit}>
               <div className="comment-add-form-rate">
-                <h3>
+                <h3 className="comment-add-form-rate-title">
                   Rate this wine
                   <div className="not-required">(required)</div>
                 </h3>
@@ -137,9 +191,7 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
                 <div className="comment-add-form-rate-stars">
                   <StarRating onRatingChange={handleRatingChange} rating={rating} />
 
-                  <p>
-                    {`Your rate: ${rating}`}
-                  </p>
+                  <p>{`Your rate: ${rating}`}</p>
                 </div>
               </div>
 
@@ -161,7 +213,6 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
               <div className="comment-add-form-field">
                 <label className="comment-add-form-field-label" htmlFor="main-benefits">
                   Please, additionally indicate the main benefits of this wine&#128523;
-
                   <div className="not-required">(not required)</div>
                 </label>
 

@@ -1,5 +1,6 @@
 import Spline from '@splinetool/react-spline'
 import { useRef, useState } from 'react'
+import { Vortex } from 'react-loader-spinner'
 
 import type { Wine } from '../../types/Wine'
 
@@ -16,6 +17,7 @@ export const SelectionPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [chatEntries, setChatEntries] = useState<ChatEntry[]>([])
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const splineRef = useRef(null)
 
@@ -28,35 +30,35 @@ export const SelectionPage = () => {
 
     if (inputValue.length < 10) {
       setError('Please, provide more information!')
+      return
     }
 
-    if (!error && inputValue.trim() !== '') {
-      const userQuery = inputValue
+    const userQuery = inputValue
+
+    setChatEntries(prevEntries => [
+      ...prevEntries,
+      { type: 'request', message: userQuery },
+    ])
+
+    setInputValue('')
+    setLoading(true)
+
+    try {
+      const response = await sendUserQuery(userQuery)
+      const { advice, wines } = response.data
 
       setChatEntries(prevEntries => [
         ...prevEntries,
-        { type: 'request', message: userQuery },
+        { type: 'response', message: advice },
+        { type: 'response', message: wines.slice(0, 4) },
       ])
-
-      setInputValue('')
-
-      try {
-        const response = await sendUserQuery(userQuery)
-
-        const { advice, wines } = response.data
-
-        console.log(wines)
-
-        setChatEntries(prevEntries => [
-          ...prevEntries,
-          { type: 'response', message: advice },
-          { type: 'response', message: wines.slice(0, 4) },
-        ])
-      }
-      catch (error) {
-        console.log(error)
-        setError(`${error}`)
-      }
+    }
+    catch (error) {
+      console.log(error)
+      setError(`${error}`)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -83,25 +85,8 @@ export const SelectionPage = () => {
       )}
 
       <div className="selection-container">
-        {chatEntries.length > 0
+        {!chatEntries.length
           ? (
-            <div className="chat-container">
-              <div className="chat__list">
-                {chatEntries.map((entry, index) => (
-                  <div className={`chat__entry chat__entry--${entry.type}`} key={index}>
-                    {typeof entry.message === 'string'
-                      ? (
-                        <Message message={entry.message} />
-                        )
-                      : (
-                        <ProductList column={4} wines={entry.message} />
-                        )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            )
-          : (
             <>
               <h1>
                 Make a request to help Yarik
@@ -122,18 +107,55 @@ export const SelectionPage = () => {
                 <Message message="I have a headache after wine, what do you recommend?" />
               </div>
             </>
+            )
+          : (
+            <div className="chat-container">
+              <div className="chat__list">
+                {chatEntries.map((entry, index) => (
+                  <div className={`chat__entry chat__entry--${entry.type}`} key={index}>
+                    {typeof entry.message === 'string'
+                      ? (
+                        <Message message={entry.message} />
+                        )
+                      : (
+                        <ProductList column={4} nextPage={true} wines={entry.message} />
+                        )}
+                  </div>
+                ))}
+
+                {/* Show loader if there's an ongoing request and no response yet */}
+                {loading && chatEntries.length && chatEntries[chatEntries.length - 1].type === 'request' && (
+                  <div className="chat__loader">
+                    <Vortex
+                      ariaLabel="vortex-loading"
+                      colors={['#872031', '#872031', '#872031', '#872031', '#872031', '#872031']}
+                      height="80"
+                      visible={true}
+                      width="80"
+                      wrapperClass="vortex-wrapper"
+                      wrapperStyle={{}}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             )}
 
         <div className="selection">
           <label className="selection-label">
             <input
-              className="selection-input"
+              className={`selection-input ${loading ? 'loading' : ''}`}
+              disabled={loading}
               onChange={handleInputChange}
               onKeyUp={handleKeyPress}
               value={inputValue}
             />
 
-            <button className="selection-button" onClick={handleButtonClick}>
+            <button
+              className={`selection-button ${loading ? 'loading' : ''}`}
+              disabled={loading}
+              onClick={handleButtonClick}
+            >
               <div className="selection-button-icon"></div>
             </button>
           </label>

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 export const accessToken = () => Cookies.get('accessToken') || ''
 
 export const fetchWines = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/wines?size=50')
+  return axios.get('https://api.winelibrary.wuaze.com/wines?size=55')
 }
 
 export const fetchFavorites = () => {
@@ -118,4 +118,30 @@ export const addFavoritesToCart = () => {
       Authorization: `Bearer ${accessToken()}`,
     },
   })
+}
+
+export const likeComment = (commentId: number) => {
+  return axios.post(`https://api.winelibrary.wuaze.com/wines/comments/${commentId}/like`, {}, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+    .then(() => console.log('like'))
+    .catch((error) => {
+      console.error('Error liking the comment:', error)
+      throw error
+    })
+}
+
+export const dislikeComment = (commentId: number) => {
+  return axios.post(`https://api.winelibrary.wuaze.com/wines/comments/${commentId}/dislike`, {}, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+    },
+  })
+    .then(() => console.log('dislike'))
+    .catch((error) => {
+      console.error('Error disliking the comment:', error)
+      throw error
+    })
 }

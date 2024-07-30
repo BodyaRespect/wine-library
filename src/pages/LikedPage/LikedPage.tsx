@@ -59,14 +59,14 @@ export const LikedPage = () => {
             )}
 
             <div className="liked__wines">
-              <ProductList column={4} wines={favoriteWines} />
+              <ProductList column={4} nextPage={false} wines={favoriteWines} />
             </div>
           </>
         )}
 
         <h3 className="liked__also">You might also like</h3>
         <div className="liked__wines">
-          <ProductList column={4} wines={moreWines} />
+          <ProductList column={4} nextPage={false} wines={moreWines} />
         </div>
         <button className="liked__button-showmore" onClick={() => navigate('/')}>
           Show
@@ -82,7 +82,7 @@ export const LikedPage = () => {
             </h3>
 
             <div className="liked__wines">
-              <ProductList column={4} wines={viewed} />
+              <ProductList column={4} nextPage={false} wines={viewed} />
             </div>
           </>
         )}
