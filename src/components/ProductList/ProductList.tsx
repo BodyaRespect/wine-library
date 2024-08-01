@@ -36,9 +36,11 @@ export const ProductList: React.FC<Props> = ({ wines, column, nextPage = false }
       {wines.map(wine => (
         <div className="product__list-item" key={wine.id}>
           <CartItem
+            commentsLength={wine.commentsCount}
             isCart={carts.includes(wine.id)}
             isFavorite={favoriteIds.includes(wine.id)}
             onClick={() => handleProductClick(wine)}
+            rate={wine.averageRating}
             wine={wine}
           />
         </div>

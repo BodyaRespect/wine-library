@@ -15,7 +15,7 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
   const [rating, setRating] = useState<number>(0)
   const [leaveComment, setLeaveComment] = useState(false)
   const [commentsList, setCommentsList] = useState<CommentData[]>(comments)
-  const [visibleCount, setVisibleCount] = useState<number>(0)
+  const [visibleCount, setVisibleCount] = useState<number>(Math.min(comments.length, 2))
   const [isExpanded, setIsExpanded] = useState(true)
   const [formState, setFormState] = useState<CommentForm>({
     commentText: '',
@@ -59,41 +59,43 @@ export const Comment: React.FC<Props> = ({ id, comments }) => {
     }
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    postComment(id, formState)
-      .then(() => {
-        console.log('Comment success!!')
-        handleFetchComments()
+    try {
+      const newComment = await postComment(id, formState)
+      console.log('Comment success!!')
 
-        setFormState({
-          commentText: '',
-          mainBenefits: '',
-          drawbacks: '',
-        })
-      })
-      .catch((error: any) => {
-        console.error('Error adding comment:', error)
-      })
+      // Add the new comment to the list
+      setCommentsList(prevComments => [newComment.data, ...prevComments])
 
-    postRating(id, rating)
-      .then(() => {
-        console.log('Rating success!!')
-        setRating(0)
+      // Reset form state
+      setFormState({
+        commentText: '',
+        mainBenefits: '',
+        drawbacks: '',
       })
-      .catch((error: any) => {
-        console.error('Error adding rating:', error)
-      })
+    }
+    catch (error) {
+      console.error('Error adding comment:', error)
+    }
+
+    try {
+      await postRating(id, rating)
+      console.log('Rating success!!')
+      setRating(0)
+    }
+    catch (error) {
+      console.error('Error adding rating:', error)
+    }
 
     setLeaveComment(false)
   }
 
   useEffect(() => {
     handleFetchComments()
-    setCommentsList(comments)
-    setVisibleCount(Math.min(comments.length, 2))
-  }, [comments, id])
+    setVisibleCount(Math.min(commentsList.length, 2))
+  }, [commentsList.length, id])
 
   return (
     <>

@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
-
 import type { Wine } from '../../types/Wine'
 
-import { addToCartServer, addToFavorite, deleteFromFavorite, fetchComments, fetchWineRatings, removeFromCartServer } from '../../api/axiosClient'
+import { addToCartServer, addToFavorite, deleteFromFavorite, removeFromCartServer } from '../../api/axiosClient'
 import { useAppDispatch } from '../../store/hooks'
 import { addFavorite, addToCart, removeFavorite, removeFromCart } from '../../store/reducers/products'
 import { renderStars } from '../Stars/Stars'
 
 interface Props {
   wine: Wine
+  rate: number
   isCart: boolean
   isFavorite: boolean
+  commentsLength: number
   onClick: () => void
 }
 
-export const CartItem: React.FC<Props> = ({ isCart, wine, isFavorite, onClick }) => {
+export const CartItem: React.FC<Props> = ({ isCart, wine, isFavorite, onClick, commentsLength, rate }) => {
   const dispatch = useAppDispatch()
-  const [rate, setRate] = useState(0)
-  const [commentsLength, setCommentsLength] = useState(0)
 
   const handleToggleCart = () => {
     if (isCart) {
@@ -38,23 +36,8 @@ export const CartItem: React.FC<Props> = ({ isCart, wine, isFavorite, onClick })
     else {
       dispatch(addFavorite({ wineId: wine.id }))
       addToFavorite(wine.id)
-      setRate(5)
     }
   }
-
-  useEffect(() => {
-    fetchWineRatings(wine.id)
-      .then((response) => {
-        setRate(response.data.average)
-      })
-      .catch(error => console.error('Error fetching wine ratings:', error))
-
-    fetchComments(wine.id.toString())
-      .then((response) => {
-        setCommentsLength(response.data.length)
-      })
-      .catch(error => console.error('Error fetching wine ratings:', error))
-  }, [wine.id])
 
   return (
     <div className="card">

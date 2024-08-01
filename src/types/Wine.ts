@@ -22,4 +22,6 @@ export interface Wine {
   inventory: number
   price: number
   imageUrl: string
+  averageRating: number
+  commentsCount: number
 }

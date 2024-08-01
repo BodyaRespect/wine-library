@@ -27,7 +27,9 @@ function App() {
 
   useEffect(() => {
     fetchWines()
-      .then(response => dispatch(setProducts(response.data)))
+      .then((response) => {
+        dispatch(setProducts(response.data))
+      })
       .catch(error => console.error('Error fetching wine data for catalog:', error))
   }, [dispatch])
 
