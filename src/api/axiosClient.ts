@@ -9,11 +9,11 @@ import type { WineRating } from '../types/WineRating'
 export const accessToken = () => Cookies.get('accessToken') || ''
 
 export const fetchWines = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/wines?size=55')
+  return axios.get('http://165.227.169.19:5173/wines?size=55')
 }
 
 export const fetchFavorites = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/favorite', {
+  return axios.get('http://165.227.169.19:5173/favorite', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -21,7 +21,7 @@ export const fetchFavorites = () => {
 }
 
 export const fetchCartItems = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/cart', {
+  return axios.get('http://165.227.169.19:5173/cart', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -29,7 +29,7 @@ export const fetchCartItems = () => {
 }
 
 export const addToCartServer = (wineId: number) => {
-  return axios.post('https://api.winelibrary.wuaze.com/cart', {
+  return axios.post('http://165.227.169.19:5173/cart', {
     wineId: wineId,
     quantity: 1,
   }, {
@@ -40,7 +40,7 @@ export const addToCartServer = (wineId: number) => {
 }
 
 export const removeFromCartServer = (wineId: number) => {
-  return axios.delete(`https://api.winelibrary.wuaze.com/cart/items/${wineId}`, {
+  return axios.delete(`http://165.227.169.19:5173/cart/items/${wineId}`, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -48,7 +48,7 @@ export const removeFromCartServer = (wineId: number) => {
 }
 
 export const addToFavorite = (wineId: number) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/favorite/${wineId}`, {}, {
+  return axios.post(`http://165.227.169.19:5173/favorite/${wineId}`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -56,7 +56,7 @@ export const addToFavorite = (wineId: number) => {
 }
 
 export const deleteFromFavorite = (wineId: number) => {
-  return axios.delete(`https://api.winelibrary.wuaze.com/favorite/${wineId}`, {
+  return axios.delete(`http://165.227.169.19:5173/favorite/${wineId}`, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -64,15 +64,15 @@ export const deleteFromFavorite = (wineId: number) => {
 }
 
 export const fetchCities = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/cities')
+  return axios.get('http://165.227.169.19:5173/cities')
 }
 
 export const fetchPostOffices = (city: string) => {
-  return axios.get(`https://api.winelibrary.wuaze.com/cities/shipping-address?city=${city}`)
+  return axios.get(`http://165.227.169.19:5173/cities/shipping-address?city=${city}`)
 }
 
 export const placeOrder = (orderDetails: any) => {
-  return axios.post('https://api.winelibrary.wuaze.com/orders', orderDetails, {
+  return axios.post('http://165.227.169.19:5173/orders', orderDetails, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -80,7 +80,7 @@ export const placeOrder = (orderDetails: any) => {
 }
 
 export const fetchOrders = () => {
-  return axios.get('https://api.winelibrary.wuaze.com/orders', {
+  return axios.get('http://165.227.169.19:5173/orders', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -88,7 +88,7 @@ export const fetchOrders = () => {
 }
 
 export const sendVerification = (phoneNumber: string) => {
-  return axios.post('https://api.winelibrary.wuaze.com/verification/send', { phoneNumber }, {
+  return axios.post('http://165.227.169.19:5173/verification/send', { phoneNumber }, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -96,29 +96,29 @@ export const sendVerification = (phoneNumber: string) => {
 }
 
 export const verifyCode = (orderId: number, phoneNumber: string, code: string) => {
-  return axios.post('https://api.winelibrary.wuaze.com/verification/verify', { orderId, phoneNumber, code })
+  return axios.post('http://165.227.169.19:5173/verification/verify', { orderId, phoneNumber, code })
 }
 
 export const createPayment = (orderId: number) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/payments/create/${orderId}`)
+  return axios.post(`http://165.227.169.19:5173/payments/create/${orderId}`)
 }
 
 export const fetchWineData = (id: number) => {
-  return axios.get(`https://api.winelibrary.wuaze.com/wines/${id}`)
+  return axios.get(`http://165.227.169.19:5173/wines/${id}`)
 }
 
 export const fetchWineRatings = (id: number) => {
-  return axios.get<WineRating>(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`)
+  return axios.get<WineRating>(`http://165.227.169.19:5173/wines/${id}/ratings`)
 }
 
 export const sendUserQuery = (userQuery: string) => {
-  return axios.post('https://api.winelibrary.wuaze.com/selection', {
+  return axios.post('http://165.227.169.19:5173/selection', {
     userQuery: userQuery,
   })
 }
 
 export const addFavoritesToCart = () => {
-  return axios.post('https://api.winelibrary.wuaze.com/cart/add-favorites', {}, {
+  return axios.post('http://165.227.169.19:5173/cart/add-favorites', {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -126,11 +126,11 @@ export const addFavoritesToCart = () => {
 }
 
 export const fetchComments = (id: string | null) => {
-  return axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
+  return axios.get<CommentData[]>(`http://165.227.169.19:5173/wines/${id}/comments`)
 }
 
 export const postComment = (id: string | null, formState: CommentForm) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/comments`, {
+  return axios.post(`http://165.227.169.19:5173/wines/${id}/comments`, {
     text: formState.commentText,
     advantages: formState.mainBenefits,
     disadvantages: formState.drawbacks,
@@ -142,7 +142,7 @@ export const postComment = (id: string | null, formState: CommentForm) => {
 }
 
 export const postRating = (id: string | null, rating: number) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/wines/${id}/ratings`, {
+  return axios.post(`http://165.227.169.19:5173/wines/${id}/ratings`, {
     rating: rating,
   }, {
     headers: {
@@ -152,7 +152,7 @@ export const postRating = (id: string | null, rating: number) => {
 }
 
 export const likeComment = (commentId: number) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/wines/comments/${commentId}/like`, {}, {
+  return axios.post(`http://165.227.169.19:5173/wines/comments/${commentId}/like`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -160,7 +160,7 @@ export const likeComment = (commentId: number) => {
 }
 
 export const dislikeComment = (commentId: number) => {
-  return axios.post(`https://api.winelibrary.wuaze.com/wines/comments/${commentId}/dislike`, {}, {
+  return axios.post(`http://165.227.169.19:5173/wines/comments/${commentId}/dislike`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -168,7 +168,7 @@ export const dislikeComment = (commentId: number) => {
 }
 
 export const getProfileInfo = (token: string) => {
-  return axios.get<ProfileData>('https://api.winelibrary.wuaze.com/users/me', {
+  return axios.get<ProfileData>('http://165.227.169.19:5173/users/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -176,7 +176,7 @@ export const getProfileInfo = (token: string) => {
 }
 
 export const updatePasswordServer = (currentPassword: string, password: string, repeatedPassword: string) => {
-  return axios.put('https://api.winelibrary.wuaze.com/users/update-password', {
+  return axios.put('http://165.227.169.19:5173/users/update-password', {
     currentPassword,
     password,
     repeatedPassword,
@@ -188,7 +188,7 @@ export const updatePasswordServer = (currentPassword: string, password: string, 
 }
 
 export const updateNameServer = (firstName: string) => {
-  return axios.patch('https://api.winelibrary.wuaze.com/users/me/update/first-name', {
+  return axios.patch('http://165.227.169.19:5173/users/me/update/first-name', {
     firstName,
   }, {
     headers: {
@@ -198,7 +198,7 @@ export const updateNameServer = (firstName: string) => {
 }
 
 export const updateLastNameServer = (lastName: string) => {
-  return axios.patch('https://api.winelibrary.wuaze.com/users/me/update/last-name', {
+  return axios.patch('http://165.227.169.19:5173/users/me/update/last-name', {
     lastName,
   }, {
     headers: {

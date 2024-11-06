@@ -138,7 +138,7 @@ export const Catalog = () => {
     const queryString = createQueryString(selectedFilters, minPrice, maxPrice)
 
     axios
-      .get(`https://api.winelibrary.wuaze.com/wines/search?${queryString}`)
+      .get(`http://165.227.169.19:5173/wines/search?${queryString}`)
       .then(response => setCatalog(response.data))
       .catch(error => console.error('Error fetching filtered wine data:', error))
   }, [selectedFilters, minPrice, maxPrice])

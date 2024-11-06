@@ -82,7 +82,7 @@ export const ProductDetails: React.FC = () => {
       })
       .catch(error => console.error('Error fetching wine data:', error))
 
-    axios.get<CommentData[]>(`https://api.winelibrary.wuaze.com/wines/${id}/comments`)
+    axios.get<CommentData[]>(`http://165.227.169.19:5173/wines/${id}/comments`)
       .then((response) => {
         setComments(response.data)
       })
