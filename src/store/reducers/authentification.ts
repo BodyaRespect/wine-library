@@ -19,7 +19,7 @@ export const login = createAsyncThunk<AuthResponse, LoginCredentials, { rejectVa
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('http://165.227.169.19:5173/auth/sign-in', credentials, {
+      const response = await axios.post('https://cuber.me/auth/sign-in', credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -40,7 +40,7 @@ export const register = createAsyncThunk<AuthResponse, RegisterDetails, { reject
   'auth/register',
   async (userDetails, thunkAPI) => {
     try {
-      const response = await axios.post('http://165.227.169.19:5173/auth/register', userDetails, {
+      const response = await axios.post('https://cuber.me/auth/register', userDetails, {
         headers: {
           'Content-Type': 'application/json',
         },

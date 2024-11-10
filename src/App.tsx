@@ -51,7 +51,7 @@ function App() {
     console.log(token)
 
     if (token) {
-      axios.post('http://165.227.169.19:5173/auth/oauth/sign-in', { googleClientIdToken: token })
+      axios.post('https://cuber.me/auth/oauth/sign-in', { googleClientIdToken: token })
         .then((response) => {
           const { token: newAccessToken } = response.data
           Cookies.set('accessToken', newAccessToken)

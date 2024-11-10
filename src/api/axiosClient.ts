@@ -9,11 +9,11 @@ import type { WineRating } from '../types/WineRating'
 export const accessToken = () => Cookies.get('accessToken') || ''
 
 export const fetchWines = () => {
-  return axios.get('http://165.227.169.19:5173/wines?size=55')
+  return axios.get('https://cuber.me/wines?size=55')
 }
 
 export const fetchFavorites = () => {
-  return axios.get('http://165.227.169.19:5173/favorite', {
+  return axios.get('https://cuber.me/favorite', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -21,7 +21,7 @@ export const fetchFavorites = () => {
 }
 
 export const fetchCartItems = () => {
-  return axios.get('http://165.227.169.19:5173/cart', {
+  return axios.get('https://cuber.me/cart', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -29,7 +29,7 @@ export const fetchCartItems = () => {
 }
 
 export const addToCartServer = (wineId: number) => {
-  return axios.post('http://165.227.169.19:5173/cart', {
+  return axios.post('https://cuber.me/cart', {
     wineId: wineId,
     quantity: 1,
   }, {
@@ -40,7 +40,7 @@ export const addToCartServer = (wineId: number) => {
 }
 
 export const removeFromCartServer = (wineId: number) => {
-  return axios.delete(`http://165.227.169.19:5173/cart/items/${wineId}`, {
+  return axios.delete(`https://cuber.me/cart/items/${wineId}`, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -48,7 +48,7 @@ export const removeFromCartServer = (wineId: number) => {
 }
 
 export const addToFavorite = (wineId: number) => {
-  return axios.post(`http://165.227.169.19:5173/favorite/${wineId}`, {}, {
+  return axios.post(`https://cuber.me/favorite/${wineId}`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -56,7 +56,7 @@ export const addToFavorite = (wineId: number) => {
 }
 
 export const deleteFromFavorite = (wineId: number) => {
-  return axios.delete(`http://165.227.169.19:5173/favorite/${wineId}`, {
+  return axios.delete(`https://cuber.me/favorite/${wineId}`, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -64,15 +64,15 @@ export const deleteFromFavorite = (wineId: number) => {
 }
 
 export const fetchCities = () => {
-  return axios.get('http://165.227.169.19:5173/cities')
+  return axios.get('https://cuber.me/cities')
 }
 
 export const fetchPostOffices = (city: string) => {
-  return axios.get(`http://165.227.169.19:5173/cities/shipping-address?city=${city}`)
+  return axios.get(`https://cuber.me/cities/shipping-address?city=${city}`)
 }
 
 export const placeOrder = (orderDetails: any) => {
-  return axios.post('http://165.227.169.19:5173/orders', orderDetails, {
+  return axios.post('https://cuber.me/orders', orderDetails, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -80,7 +80,7 @@ export const placeOrder = (orderDetails: any) => {
 }
 
 export const fetchOrders = () => {
-  return axios.get('http://165.227.169.19:5173/orders', {
+  return axios.get('https://cuber.me/orders', {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -88,7 +88,7 @@ export const fetchOrders = () => {
 }
 
 export const sendVerification = (phoneNumber: string) => {
-  return axios.post('http://165.227.169.19:5173/verification/send', { phoneNumber }, {
+  return axios.post('https://cuber.me/verification/send', { phoneNumber }, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -96,29 +96,29 @@ export const sendVerification = (phoneNumber: string) => {
 }
 
 export const verifyCode = (orderId: number, phoneNumber: string, code: string) => {
-  return axios.post('http://165.227.169.19:5173/verification/verify', { orderId, phoneNumber, code })
+  return axios.post('https://cuber.me/verification/verify', { orderId, phoneNumber, code })
 }
 
 export const createPayment = (orderId: number) => {
-  return axios.post(`http://165.227.169.19:5173/payments/create/${orderId}`)
+  return axios.post(`https://cuber.me/payments/create/${orderId}`)
 }
 
 export const fetchWineData = (id: number) => {
-  return axios.get(`http://165.227.169.19:5173/wines/${id}`)
+  return axios.get(`https://cuber.me/wines/${id}`)
 }
 
 export const fetchWineRatings = (id: number) => {
-  return axios.get<WineRating>(`http://165.227.169.19:5173/wines/${id}/ratings`)
+  return axios.get<WineRating>(`https://cuber.me/wines/${id}/ratings`)
 }
 
 export const sendUserQuery = (userQuery: string) => {
-  return axios.post('http://165.227.169.19:5173/selection', {
+  return axios.post('https://cuber.me/selection', {
     userQuery: userQuery,
   })
 }
 
 export const addFavoritesToCart = () => {
-  return axios.post('http://165.227.169.19:5173/cart/add-favorites', {}, {
+  return axios.post('https://cuber.me/cart/add-favorites', {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -126,11 +126,11 @@ export const addFavoritesToCart = () => {
 }
 
 export const fetchComments = (id: string | null) => {
-  return axios.get<CommentData[]>(`http://165.227.169.19:5173/wines/${id}/comments`)
+  return axios.get<CommentData[]>(`https://cuber.me/wines/${id}/comments`)
 }
 
 export const postComment = (id: string | null, formState: CommentForm) => {
-  return axios.post(`http://165.227.169.19:5173/wines/${id}/comments`, {
+  return axios.post(`https://cuber.me/wines/${id}/comments`, {
     text: formState.commentText,
     advantages: formState.mainBenefits,
     disadvantages: formState.drawbacks,
@@ -142,7 +142,7 @@ export const postComment = (id: string | null, formState: CommentForm) => {
 }
 
 export const postRating = (id: string | null, rating: number) => {
-  return axios.post(`http://165.227.169.19:5173/wines/${id}/ratings`, {
+  return axios.post(`https://cuber.me/wines/${id}/ratings`, {
     rating: rating,
   }, {
     headers: {
@@ -152,7 +152,7 @@ export const postRating = (id: string | null, rating: number) => {
 }
 
 export const likeComment = (commentId: number) => {
-  return axios.post(`http://165.227.169.19:5173/wines/comments/${commentId}/like`, {}, {
+  return axios.post(`https://cuber.me/wines/comments/${commentId}/like`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -160,7 +160,7 @@ export const likeComment = (commentId: number) => {
 }
 
 export const dislikeComment = (commentId: number) => {
-  return axios.post(`http://165.227.169.19:5173/wines/comments/${commentId}/dislike`, {}, {
+  return axios.post(`https://cuber.me/wines/comments/${commentId}/dislike`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken()}`,
     },
@@ -168,7 +168,7 @@ export const dislikeComment = (commentId: number) => {
 }
 
 export const getProfileInfo = (token: string) => {
-  return axios.get<ProfileData>('http://165.227.169.19:5173/users/me', {
+  return axios.get<ProfileData>('https://cuber.me/users/me', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -176,7 +176,7 @@ export const getProfileInfo = (token: string) => {
 }
 
 export const updatePasswordServer = (currentPassword: string, password: string, repeatedPassword: string) => {
-  return axios.put('http://165.227.169.19:5173/users/update-password', {
+  return axios.put('https://cuber.me/users/update-password', {
     currentPassword,
     password,
     repeatedPassword,
@@ -188,7 +188,7 @@ export const updatePasswordServer = (currentPassword: string, password: string, 
 }
 
 export const updateNameServer = (firstName: string) => {
-  return axios.patch('http://165.227.169.19:5173/users/me/update/first-name', {
+  return axios.patch('https://cuber.me/users/me/update/first-name', {
     firstName,
   }, {
     headers: {
@@ -198,7 +198,7 @@ export const updateNameServer = (firstName: string) => {
 }
 
 export const updateLastNameServer = (lastName: string) => {
-  return axios.patch('http://165.227.169.19:5173/users/me/update/last-name', {
+  return axios.patch('https://cuber.me/users/me/update/last-name', {
     lastName,
   }, {
     headers: {
